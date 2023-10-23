@@ -1,0 +1,2 @@
+INSERT INTO user_tb (`id`,`username`, `password`, `email`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (1, 'ssar', '12345678', 'ssar@nate.com', 'ssar_profile.png', '부전동', true, NOW());
+INSERT INTO user_tb (`id`,`username`, `password`, `email`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (2, 'cos', '12345678', 'cos@nate.com', 'cos_profile.png', '전포동', true, NOW());
