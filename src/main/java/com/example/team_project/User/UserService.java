@@ -1,5 +1,6 @@
 package com.example.team_project.User;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,12 +12,16 @@ import com.example.team_project._core.erroes.exception.Exception400;
 @RequiredArgsConstructor
 @Service
 public class UserService {
-
     private final UserJPARepository userJPARepository;
 
     @Transactional
-    public void join() {
+    public void join(UserRequest.JoinDTO requestDTO) {
 
+        try {
+            userJPARepository.save(requestDTO.toEntity());
+        } catch (Exception e) {
+            throw new Exception400("존재하는 이메일입니다.");
+        }
     }
 
     public User login(LoginDTO loginDTO) {
@@ -32,6 +37,9 @@ public class UserService {
         }
 
         return user;
+
+
+
 
     }
 }
