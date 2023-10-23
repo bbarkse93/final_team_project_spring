@@ -1,8 +1,7 @@
-package com.example.team_project.User;
+package com.example.team_project.user;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 

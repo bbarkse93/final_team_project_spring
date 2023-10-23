@@ -1,4 +1,4 @@
-package com.example.team_project.User;
+package com.example.team_project.user;
 
 import lombok.Getter;
 import lombok.Setter;

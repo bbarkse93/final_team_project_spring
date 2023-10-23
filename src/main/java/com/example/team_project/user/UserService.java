@@ -1,11 +1,11 @@
-package com.example.team_project.User;
+package com.example.team_project.user;
 
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.team_project.User.UserRequest.LoginDTO;
+import com.example.team_project.user.UserRequest.LoginDTO;
 import com.example.team_project._core.erroes.exception.Exception400;
 
 @Transactional

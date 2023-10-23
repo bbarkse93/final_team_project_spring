@@ -1,4 +1,4 @@
-package com.example.team_project.User;
+package com.example.team_project.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
