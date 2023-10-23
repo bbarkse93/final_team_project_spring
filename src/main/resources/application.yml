@@ -34,8 +34,8 @@ spring:
 
 logging:
   level:
-    '[com.example.kakao]': DEBUG
-    '[org.hibernate.type]': TRACE
+    "[com.example]": DEBUG
+    "[org.hibernate.type]": TRACE
 
 file:
   path: ./images/
