@@ -28,7 +28,6 @@ public class ProductService {
         List<ProductPic> productPics = productPicJPARepository.findAll();
         ProductResponse.FindAllDTO responseDTO = new ProductResponse.FindAllDTO(productPics);
 
-
         return responseDTO;
     }
 
