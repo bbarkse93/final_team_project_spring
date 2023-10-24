@@ -36,10 +36,15 @@ public class Product {
     private User user;
 
     // @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    // private List<ProductPic> productPicUrls = new ArrayList<>();
+    // private List<ProductPic> productPics = new ArrayList<>();
+
+    // public void addProductPic(ProductPic productPic) {
+    // productPics.add(productPic);
+    // }
 
     @Builder
-    public Product(Integer id, String productName, String productDescription, Integer productPrice, Timestamp productCreatedAt, User user) {
+    public Product(Integer id, String productName, String productDescription, Integer productPrice,
+            Timestamp productCreatedAt, User user) {
         this.id = id;
         this.productName = productName;
         this.productDescription = productDescription;
