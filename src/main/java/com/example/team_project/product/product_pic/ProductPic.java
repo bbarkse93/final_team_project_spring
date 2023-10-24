@@ -23,7 +23,7 @@ public class ProductPic {
 
     public ProductPic(Integer id, String productPicUrl, Product product) {
         this.id = id;
-        ProductPicUrl = productPicUrl;
+        this.ProductPicUrl = productPicUrl;
         this.product = product;
     }
 }

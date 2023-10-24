@@ -27,7 +27,6 @@ public class UserService {
     public User login(LoginDTO loginDTO) {
 
         User user = userJPARepository.findByUsername(loginDTO.getUsername());
-
         if (user == null) {
             throw new Exception400("유저네임이 없습니다.");
         }
