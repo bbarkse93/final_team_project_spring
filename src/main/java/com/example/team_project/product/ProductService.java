@@ -1,14 +1,12 @@
 package com.example.team_project.product;
 
 import java.util.List;
-
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
-
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.product.product_pic.ProductPicJPARepository;
 
@@ -22,15 +20,16 @@ public class ProductService {
     private final ProductJPARepository productJPARepository;
     private final ProductPicJPARepository productPicJPARepository;
 
-
     // (기능1) 상품 목록보기
-    public ProductResponse.FindAllDTO findAll() {
-        List<ProductPic> productPics = productPicJPARepository.findAll();
-        ProductResponse.FindAllDTO responseDTO = new ProductResponse.FindAllDTO(productPics);
+    public List<ProductResponse.FindAllDTO> findAll() {
+        List<Product> dtos = productJPARepository.findAll();
+
+        List<ProductResponse.FindAllDTO> responseDTO = dtos.stream()
+                .map(t -> new ProductResponse.FindAllDTO(t))
+                .collect(Collectors.toList());
 
         return responseDTO;
     }
-
 
     public ProductResponse.FindByIdDTO FindById(Integer id) {
 
@@ -43,13 +42,3 @@ public class ProductService {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
