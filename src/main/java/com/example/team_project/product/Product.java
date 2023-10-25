@@ -1,6 +1,7 @@
 package com.example.team_project.product;
 
 
+import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;

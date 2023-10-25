@@ -1,5 +1,6 @@
 package com.example.team_project.product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.stream.Collectors;
@@ -42,6 +43,18 @@ public class ProductService {
         return new ProductResponse.FindByIdDTO(product, productPic);
     }
 
+    @Transactional
+    public void saveProductWithProductPics(ProductRequest.ProductRequestDTO productRequestDTO) {
+        Product product = productJPARepository.save(productRequestDTO.toEntity());
+        List<ProductPic> productPics = productRequestDTO.getProductPics();
+        System.out.println("test"+product.getId());
+
+
+        for (ProductPic productPic : productPics) {
+            System.out.println(productPic.getProductPicUrl());
+            productPicJPARepository.save(productPic);
+        }
+    }
 }
 
 
