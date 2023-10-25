@@ -1,5 +1,6 @@
-package com.example.team_project.product.product_pic;
+package com.example.team_project.board.board_pic;
 
+import com.example.team_project.board.Board;
 import com.example.team_project.product.Product;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,21 +12,21 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "product_pic_tb")
-public class ProductPic {
+@Table(name = "board_pic_tb")
+public class BoardPic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String ProductPicUrl;
+    private String BoardPicUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;
+    private Board board;
 
     @Builder
-    public ProductPic(Integer id, String productPicUrl, Product product) {
+    public BoardPic(Integer id, String boardPicUrl, Board board) {
         this.id = id;
-        this.ProductPicUrl = productPicUrl;
-        this.product = product;
+        this.BoardPicUrl = boardPicUrl;
+        this.board = board;
     }
 }

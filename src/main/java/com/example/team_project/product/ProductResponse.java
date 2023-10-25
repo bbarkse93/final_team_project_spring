@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 public class ProductResponse {
 
-
+    // TODO 1: 메서드 네이밍 수정 필요
     // 상품 리스트
     @Getter
     @Setter
