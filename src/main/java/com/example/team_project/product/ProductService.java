@@ -2,14 +2,12 @@ package com.example.team_project.product;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
-
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.product.product_pic.ProductPicJPARepository;
 
@@ -23,16 +21,18 @@ public class ProductService {
     private final ProductJPARepository productJPARepository;
     private final ProductPicJPARepository productPicJPARepository;
 
+    // 상품 목록보기
+    public List<ProductResponse.FindAllDTO> findAll() {
+        List<Product> dtos = productJPARepository.findAll();
 
-    // (기능1) 상품 목록보기
-    public ProductResponse.FindAllDTO findAll() {
-        List<ProductPic> productPics = productPicJPARepository.findAll();
-        ProductResponse.FindAllDTO responseDTO = new ProductResponse.FindAllDTO(productPics);
+        List<ProductResponse.FindAllDTO> responseDTO = dtos.stream()
+                .map(t -> new ProductResponse.FindAllDTO(t))
+                .collect(Collectors.toList());
 
         return responseDTO;
     }
-
-
+    
+    // 상품 상세보기
     public ProductResponse.FindByIdDTO FindById(Integer id) {
 
         Product product = productJPARepository.findById(id)
@@ -43,11 +43,11 @@ public class ProductService {
         return new ProductResponse.FindByIdDTO(product, productPic);
     }
 
+    // 상품 등록
     @Transactional
     public void saveProductWithProductPics(ProductRequest.ProductRequestDTO productRequestDTO) {
         Product product = productJPARepository.save(productRequestDTO.toEntity());
         List<ProductPic> productPics = productRequestDTO.getProductPics();
-        System.out.println("test"+product.getId());
 
 
         for (ProductPic productPic : productPics) {
@@ -56,13 +56,4 @@ public class ProductService {
         }
     }
 }
-
-
-
-
-
-
-
-
-
 
