@@ -1,7 +1,7 @@
-package com.example.team_project.board.board_pic;
+package com.example.team_project.board.board_like;
 
 import com.example.team_project.board.Board;
-import com.example.team_project.product.Product;
+import com.example.team_project.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,21 +12,22 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "board_pic_tb")
-public class BoardPic {
+@Table(name="board_like_tb")
+public class BoardLike {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String BoardPicUrl;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
     @Builder
-    public BoardPic(Integer id, String boardPicUrl, Board board) {
+
+    public BoardLike(Integer id, User user, Board board) {
         this.id = id;
-        this.BoardPicUrl = boardPicUrl;
+        this.user = user;
         this.board = board;
     }
 }
