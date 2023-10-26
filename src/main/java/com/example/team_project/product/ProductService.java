@@ -1,6 +1,5 @@
 package com.example.team_project.product;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,27 +20,17 @@ public class ProductService {
     private final ProductJPARepository productJPARepository;
     private final ProductPicJPARepository productPicJPARepository;
 
-<<<<<<< HEAD
     // 상품 리스트
-=======
-    // 상품 목록보기
->>>>>>> dev
-    public List<ProductResponse.FindAllDTO> findAll() {
+     public List<ProductResponse.FindAllDTO> findAll() {
         List<Product> dtos = productJPARepository.findAll();
 
         List<ProductResponse.FindAllDTO> responseDTO = dtos.stream()
                 .map(t -> new ProductResponse.FindAllDTO(t))
                 .collect(Collectors.toList());
-                
 
         return responseDTO;
     }
-<<<<<<< HEAD
 
-
-=======
-    
->>>>>>> dev
     // 상품 상세보기
     public ProductResponse.FindByIdDTO FindById(Integer id) {
 
@@ -59,11 +48,9 @@ public class ProductService {
         Product product = productJPARepository.save(productRequestDTO.toEntity());
         List<ProductPic> productPics = productRequestDTO.getProductPics();
 
-
         for (ProductPic productPic : productPics) {
             System.out.println(productPic.getProductPicUrl());
             productPicJPARepository.save(productPic);
         }
     }
 }
-
