@@ -21,7 +21,7 @@ public class ProductService {
     private final ProductPicJPARepository productPicJPARepository;
 
     // 상품 리스트
-     public List<ProductResponse.FindAllDTO> findAll() {
+    public List<ProductResponse.FindAllDTO> findAll() {
         List<Product> dtos = productJPARepository.findAll();
 
         List<ProductResponse.FindAllDTO> responseDTO = dtos.stream()

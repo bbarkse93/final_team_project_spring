@@ -1,6 +1,7 @@
 package com.example.team_project.board;
 
 import com.example.team_project.board.board_category.BoardCategory;
+import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,11 +10,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="board_tb")
+@Table(name = "board_tb")
 public class Board {
 
     @Id
@@ -33,8 +36,12 @@ public class Board {
 
     private Timestamp boardCreatedAt;
 
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<BoardPic> boardpics = new ArrayList<>();
+
     @Builder
-    public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory, Timestamp boardCreatedAt) {
+    public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory,
+            Timestamp boardCreatedAt) {
         this.id = id;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
@@ -42,6 +49,5 @@ public class Board {
         this.boardCategory = boardCategory;
         this.boardCreatedAt = boardCreatedAt;
     }
-
 
 }
