@@ -9,4 +9,6 @@ public class BoardRestController {
 
     private final BoardService boardService;
 
+    // 동네생활 상세보기
+
 }
