@@ -10,8 +10,7 @@ import com.example.team_project.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
-
-    // TODO 1: 메서드 네이밍 수정 필요
+// TODO 1: 메서드 네이밍 수정 필요
 public class ProductResponse {
 
     // 상품 리스트
@@ -35,10 +34,6 @@ public class ProductResponse {
                     .limit(1)
                     .map(p -> new ProductPicDTO(p))
                     .collect(Collectors.toList());
-            if (this.productPics.isEmpty()) {
-                ProductPicDTO emptyPic = new ProductPicDTO(null);
-                this.productPics.add(emptyPic);
-            }
         }
 
         @Getter
@@ -48,10 +43,8 @@ public class ProductResponse {
             private String productPicUrl;
 
             public ProductPicDTO(ProductPic productPic) {
-                if (productPic != null) {
-                    this.id = productPic.getId();
-                    this.productPicUrl = productPic.getProductPicUrl();
-                }
+                this.id = productPic.getId();
+                this.productPicUrl = productPic.getProductPicUrl();
             }
         }
 
