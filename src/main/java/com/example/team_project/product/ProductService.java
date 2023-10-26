@@ -20,17 +20,20 @@ public class ProductService {
     private final ProductJPARepository productJPARepository;
     private final ProductPicJPARepository productPicJPARepository;
 
-    // (기능1) 상품 목록보기
+    // 상품 리스트
     public List<ProductResponse.FindAllDTO> findAll() {
         List<Product> dtos = productJPARepository.findAll();
 
         List<ProductResponse.FindAllDTO> responseDTO = dtos.stream()
                 .map(t -> new ProductResponse.FindAllDTO(t))
                 .collect(Collectors.toList());
+                
 
         return responseDTO;
     }
 
+
+    // 상품 상세보기
     public ProductResponse.FindByIdDTO FindById(Integer id) {
 
         Product product = productJPARepository.findById(id)

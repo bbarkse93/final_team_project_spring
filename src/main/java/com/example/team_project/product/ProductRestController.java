@@ -16,7 +16,7 @@ public class ProductRestController {
 
     private final ProductService productService;
 
-    // (기능1) 상품 목록보기
+    // 상품 리스트
     @GetMapping("/products")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok().body(ApiUtils.success(productService.findAll()));
