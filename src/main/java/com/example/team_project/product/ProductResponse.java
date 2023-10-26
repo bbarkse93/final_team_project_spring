@@ -35,6 +35,10 @@ public class ProductResponse {
                     .limit(1)
                     .map(p -> new ProductPicDTO(p))
                     .collect(Collectors.toList());
+            if (this.productPics.isEmpty()) {
+                ProductPicDTO emptyPic = new ProductPicDTO(null);
+                this.productPics.add(emptyPic);
+            }
         }
 
         @Getter
@@ -44,8 +48,10 @@ public class ProductResponse {
             private String productPicUrl;
 
             public ProductPicDTO(ProductPic productPic) {
-                this.id = productPic.getId();
-                this.productPicUrl = productPic.getProductPicUrl();
+                if (productPic != null) {
+                    this.id = productPic.getId();
+                    this.productPicUrl = productPic.getProductPicUrl();
+                }
             }
         }
 
