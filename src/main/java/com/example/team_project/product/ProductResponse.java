@@ -10,6 +10,8 @@ import com.example.team_project.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
+
+    // TODO 1: 메서드 네이밍 수정 필요
 public class ProductResponse {
 
     // 상품 리스트
