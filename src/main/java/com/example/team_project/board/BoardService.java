@@ -7,9 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project.board.BoardRequest.WriteReqDTO;
 import com.example.team_project.board.BoardResponse.BoardDetailRespDTO;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.board.board_pic.BoardPicJPARepository;
+import com.example.team_project.product.product_pic.ProductPic;
 
 @Transactional
 @RequiredArgsConstructor
@@ -31,6 +33,18 @@ public class BoardService {
         }
 
         return new BoardResponse.BoardDetailRespDTO(board, boardPics);
+    }
+
+    // 동네생활글등록
+    @Transactional
+    public void saveBoardWithBoardtPics(BoardRequest.WriteReqDTO writeReqDTO) {
+        Board board = boardJPARepository.save(writeReqDTO.toEntity());
+        List<BoardPic> boardPics = writeReqDTO.getBoardPics();
+
+        for (BoardPic boardPic : boardPics) {
+            System.out.println(boardPic.getBoardPicUrl());
+            boardPicJPARepository.save(boardPic);
+        }
     }
 
 }

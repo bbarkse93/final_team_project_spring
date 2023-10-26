@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.example.team_project.board.board_pic.BoardPic;
 
+// d, s, f
 public interface BoardJPARepository extends JpaRepository<Board, Integer> {
 
     @Query("select p from BoardPic p where p.board.id = :id")
