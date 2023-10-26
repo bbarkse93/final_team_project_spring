@@ -1,12 +1,19 @@
 package com.example.team_project.product.product_pic;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import com.example.team_project.product.Product;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,7 +24,7 @@ public class ProductPic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String ProductPicUrl;
+    private String productPicUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
@@ -25,7 +32,7 @@ public class ProductPic {
     @Builder
     public ProductPic(Integer id, String productPicUrl, Product product) {
         this.id = id;
-        this.ProductPicUrl = productPicUrl;
+        this.productPicUrl = productPicUrl;
         this.product = product;
     }
 }
