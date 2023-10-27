@@ -24,7 +24,7 @@ public class BoardPic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String BoardPicUrl;
+    private String boardPicUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
@@ -32,7 +32,7 @@ public class BoardPic {
     @Builder
     public BoardPic(Integer id, String boardPicUrl, Board board) {
         this.id = id;
-        this.BoardPicUrl = boardPicUrl;
+        this.boardPicUrl = boardPicUrl;
         this.board = board;
     }
 }

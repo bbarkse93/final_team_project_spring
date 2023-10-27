@@ -1,7 +1,7 @@
 package com.example.team_project.board;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.team_project.board.board_category.BoardCategory;
@@ -12,10 +12,66 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class BoardResponse {
+
     @Getter
     @Setter
     public static class WriteRespDTO {
+        private Integer id;
+        private String boardTitle;
+        private String boardContent;
+        private BoardCategoryDTO boardCategory;
+        private UserDTO user;
+        private List<BoardPicDTO> boardPics;
 
+        public WriteRespDTO(Board board) {
+            this.id = board.getId();
+            this.boardTitle = board.getBoardTitle();
+            this.boardContent = board.getBoardContent();
+            this.boardCategory = new BoardCategoryDTO(board.getBoardCategory());
+            this.user = new UserDTO(board.getUser());
+            this.boardPics = board.getBoardpics()
+                    .stream()
+                    .map(t -> new BoardPicDTO(t))
+                    .collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public static class BoardCategoryDTO {
+            private Integer boardCategoryId;
+            private String Category;
+
+            public BoardCategoryDTO(BoardCategory category) {
+                this.boardCategoryId = category.getId();
+                Category = category.getCategory();
+            }
+
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO {
+            private Integer userId;
+            private String username;
+
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.username = user.getUsername();
+            }
+        }
+
+        @Getter
+        @Setter
+        public static class BoardPicDTO {
+            private Integer boardPicId;
+            private String boardPicUrl;
+
+            public BoardPicDTO(BoardPic boardPic) {
+                this.boardPicId = boardPic.getId();
+                this.boardPicUrl = boardPic.getBoardPicUrl();
+            }
+
+        }
     }
 
     @Getter
@@ -102,5 +158,9 @@ public class BoardResponse {
             }
         }
 
+    }
+
+    public static WriteRespDTO WriteRespDTO(Board board) {
+        return null;
     }
 }

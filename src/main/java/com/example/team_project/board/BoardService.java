@@ -1,17 +1,15 @@
 package com.example.team_project.board;
 
-import lombok.RequiredArgsConstructor;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
 
 import com.example.team_project._core.erroes.exception.Exception404;
-import com.example.team_project.board.BoardRequest.WriteReqDTO;
-import com.example.team_project.board.BoardResponse.BoardDetailRespDTO;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.board.board_pic.BoardPicJPARepository;
-import com.example.team_project.product.product_pic.ProductPic;
+
+import lombok.RequiredArgsConstructor;
 
 @Transactional
 @RequiredArgsConstructor
@@ -28,23 +26,27 @@ public class BoardService {
 
         List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
         System.out.println(boardPics.size());
-        if (boardPics == null) {
-            boardPics = new ArrayList<>(); // boardPics가 null인 경우 빈 리스트로 초기화
-        }
+        // if (boardPics == null) {
+        // boardPics = new ArrayList<>(); // boardPics가 null인 경우 빈 리스트로 초기화
+        // }
 
         return new BoardResponse.BoardDetailRespDTO(board, boardPics);
     }
 
     // 동네생활글등록
     @Transactional
-    public void saveBoardWithBoardtPics(BoardRequest.WriteReqDTO writeReqDTO) {
-        Board board = boardJPARepository.save(writeReqDTO.toEntity());
-        List<BoardPic> boardPics = writeReqDTO.getBoardPics();
+    public void saveBoardWithBoardPics(BoardRequest.WriteReqDTO writeReqDTO) {
+        Board board = boardJPARepository.save(writeReqDTO.toEntity()); // board 등록
+        System.out.println("테스트" + board.getBoardTitle());
 
+        List<BoardPic> boardPics = writeReqDTO.getBoardPics(); // boardPic에 있는 컬렉션을 배열에 담음
+        System.out.println("테스트3 : " + boardPics.get(0).getBoardPicUrl());
         for (BoardPic boardPic : boardPics) {
-            System.out.println(boardPic.getBoardPicUrl());
+            System.out.println("테스트2" + boardPic.getBoardPicUrl());
             boardPicJPARepository.save(boardPic);
-        }
+        } // for문으로 배열에 있는 boardPic를 인서트
+        System.out.println("테스트 " + board.getBoardTitle());
+        // return new BoardResponse.WriteRespDTO(board);
     }
 
 }

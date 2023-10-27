@@ -1,10 +1,10 @@
 package com.example.team_project.board;
 
-import com.example.team_project.board.BoardResponse.BoardDetailRespDTO.BoardCategoryDTO;
+import java.util.List;
+
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.user.User;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ public class BoardRequest {
     public static class WriteReqDTO {
         private String boardTitle;
         private String boardContent;
-        private BoardCategoryDTO boardCategory;
+        private Integer boardCategoryId;
         private Integer userId;
         private List<BoardPic> boardPics;
 
@@ -26,7 +26,6 @@ public class BoardRequest {
             return Board.builder()
                     .boardTitle(boardTitle)
                     .boardContent(boardContent)
-                    .boardCategory(null)
                     .user(User.builder().id(getUserId()).build())
                     .build();
         }

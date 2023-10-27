@@ -1,7 +1,5 @@
 package com.example.team_project.board;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.team_project._core.utils.ApiUtils;
-import com.example.team_project.product.ProductRequest;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,7 +27,10 @@ public class BoardRestController {
     // 동네생활 등록
     @PostMapping("/board/write")
     public ResponseEntity<?> WriteBoard(@RequestBody BoardRequest.WriteReqDTO writeReqDTO) {
-        boardService.saveBoardWithBoardtPics(writeReqDTO);
+        System.out.println("여기는 로고가 나오나요 ? 동네생활 등록 - 컨트롤러");
+        boardService.saveBoardWithBoardPics(writeReqDTO);
+        // System.out.println("테스트::::" + response.getBoardTitle());
+
         return ResponseEntity.ok().body(ApiUtils.success("ok"));
     }
 }
