@@ -2,6 +2,8 @@ package com.example.team_project.product;
 
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.user.User;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,16 +16,15 @@ public class ProductRequest {
     @Getter
     @Setter
     @ToString
-    public static class ProductRequestDTO{
+    public static class ProductWriteReqDTO {
         private String productName;
         private String productDescription;
         private Integer productPrice;
         private Integer userId;
         private List<ProductPic> productPics;
         private Timestamp createdAt;
-        private Integer productId;
 
-        public Product toEntity(){
+        public Product toEntity() {
             return Product.builder()
                     .productName(productName)
                     .productDescription(productDescription)
@@ -33,5 +34,16 @@ public class ProductRequest {
         }
     }
 
+    @Getter
+    @Setter
+    @ToString
+    public static class ProductUpdateReqDTO {
+        private String productName;
+        private String productDescription;
+        private Integer productPrice;
+        private Integer userId;
+        private List<ProductPic> productPics;
+        private Timestamp createdAt;
+    }
 
 }
