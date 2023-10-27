@@ -160,7 +160,4 @@ public class BoardResponse {
 
     }
 
-    public static WriteRespDTO WriteRespDTO(Board board) {
-        return null;
-    }
 }
