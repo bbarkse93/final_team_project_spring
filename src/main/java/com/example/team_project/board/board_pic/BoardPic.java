@@ -18,6 +18,7 @@ public class BoardPic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
     @Lob
     private String boardPicUrl;
 

@@ -14,6 +14,7 @@ import lombok.Setter;
 
 public class BoardResponse {
 
+
     // 동네 생활 게시글 등록
     @Getter
     @Setter

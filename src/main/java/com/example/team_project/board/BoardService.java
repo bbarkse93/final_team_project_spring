@@ -42,6 +42,7 @@ public class BoardService {
         return new BoardResponse.BoardDetailRespDTO(board, boardPics);
     }
 
+
     // 동네 생활 게시글 등록
     @Transactional
     public BoardResponse.WriteRespDTO saveBoardWithBoardPics(BoardRequest.WriteReqDTO writeReqDTO) {
@@ -58,8 +59,8 @@ public class BoardService {
         List<BoardPic> boardPicList = boardPicJPARepository.findByBoardId(board.getId());
         BoardCategory boardcCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
         .orElseThrow(() -> new Exception404("Category를 찾을 수 없습니다."));
-        return new BoardResponse.WriteRespDTO(board, boardPicList, boardcCategory);
 
+        return new BoardResponse.WriteRespDTO(board, boardPicList, boardcCategory);
     }
 
 }
