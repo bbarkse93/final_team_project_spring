@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -28,6 +29,7 @@ public class Product {
 
     private Integer productPrice;
 
+    @CreationTimestamp
     private Timestamp productCreatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)

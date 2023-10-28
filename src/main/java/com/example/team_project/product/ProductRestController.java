@@ -38,7 +38,7 @@ public class ProductRestController {
 
     @PostMapping("/product/write")
     public ResponseEntity<?> WriteProduct(@RequestBody ProductRequest.ProductRequestDTO productRequestDTO){
-        productService.saveProductWithProductPics(productRequestDTO);
-        return ResponseEntity.ok().body(ApiUtils.success("ok"));
+        ProductResponse.WriteRespDTO responseDTO =  productService.saveProductWithProductPics(productRequestDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 }
