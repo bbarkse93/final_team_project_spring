@@ -35,4 +35,10 @@ public class BoardPic {
         this.boardPicUrl = boardPicUrl;
         this.board = board;
     }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    
 }

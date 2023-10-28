@@ -1,8 +1,6 @@
 package com.example.team_project.board;
 
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Locale.Category;
 
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_pic.BoardPic;
@@ -20,15 +18,16 @@ public class BoardRequest {
     public static class WriteReqDTO {
         private String boardTitle;
         private String boardContent;
-        private BoardCategory boardCategory;
+        private Integer boardCategoryId;
         private Integer userId;
         private List<BoardPic> boardPics;
+        
 
         public Board toEntity() {
             return Board.builder()
                     .boardTitle(boardTitle)
                     .boardContent(boardContent)
-                    .boardCategory(boardCategory)
+                    .boardCategory(BoardCategory.builder().id(getBoardCategoryId()).build())
                     .user(User.builder().id(getUserId()).build())
                     .build();
         }

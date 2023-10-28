@@ -15,10 +15,12 @@ INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (6, '�
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (7, '아이폰 사진', 3);
 
 
-INSERT INTO board_category_tb (`id`, `category`) VALUES (1, '공공소식');
-INSERT INTO board_category_tb (`id`, `category`) VALUES (2, '동네생활');
-INSERT INTO board_category_tb (`id`, `category`) VALUES (3, '일상');
+INSERT INTO board_category_tb (`id`, `category`) VALUES (1, '동네맛집');
+INSERT INTO board_category_tb (`id`, `category`) VALUES (2, '동네질문');
+INSERT INTO board_category_tb (`id`, `category`) VALUES (3, '동네소식');
 INSERT INTO board_category_tb (`id`, `category`) VALUES (4, '생활정보');
+INSERT INTO board_category_tb (`id`, `category`) VALUES (5, '취미생활');
+
 
 
 INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (1, '날씨가 좋네용', '산책하기 딱인듯', NOW(), 1, 1);

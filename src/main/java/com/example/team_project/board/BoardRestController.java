@@ -27,10 +27,9 @@ public class BoardRestController {
     // 동네생활 등록
     @PostMapping("/board/write")
     public ResponseEntity<?> WriteBoard(@RequestBody BoardRequest.WriteReqDTO writeReqDTO) {
-        System.out.println("여기는 로고가 나오나요 ? 동네생활 등록 - 컨트롤러");
-        boardService.saveBoardWithBoardPics(writeReqDTO);
+        BoardResponse.WriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(writeReqDTO);
         // System.out.println("테스트::::" + response.getBoardTitle());
 
-        return ResponseEntity.ok().body(ApiUtils.success("ok"));
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 }

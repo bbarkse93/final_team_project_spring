@@ -2,17 +2,10 @@ package com.example.team_project.board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import java.util.List;
-
-import com.example.team_project.board.board_pic.BoardPic;
-
-// d, s, f
 public interface BoardJPARepository extends JpaRepository<Board, Integer> {
 
-    @Query("select p from BoardPic p where p.board.id = :id")
-    List<BoardPic> findByBoardId(@Param("id") Integer id);
+    // @Query("select p from BoardPic p where p.board.id = :id")
+    // List<BoardPic> findByBoardId(@Param("id") Integer id);
 
     @Query("select b from Board b where b.boardTitle = :boardTitle")
     Board findByBoardTitle(String boardTitle);
