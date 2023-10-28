@@ -20,8 +20,7 @@ public class ProductRequest {
         private Integer productPrice;
         private Integer userId;
         private List<ProductPic> productPics;
-        private Timestamp createdAt;
-        private Integer productId;
+
 
         public Product toEntity(){
             return Product.builder()

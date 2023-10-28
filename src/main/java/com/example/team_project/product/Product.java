@@ -22,6 +22,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,6 +41,7 @@ public class Product {
 
     private Integer productPrice;
 
+    @CreationTimestamp
     private Timestamp productCreatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
