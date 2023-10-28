@@ -13,4 +13,7 @@ public interface BoardJPARepository extends JpaRepository<Board, Integer> {
 
     @Query("select p from BoardPic p where p.board.id = :id")
     List<BoardPic> findByBoardId(@Param("id") Integer id);
+
+    @Query(value = "SELECT b, c, p , u FROM Board b INNER JOIN b.boardCategory c LEFT JOIN b.boardpics p INNER JOIN b.user u")
+    List<Board> mFindAllJoinBoardCategoryAndBoardPic();
 }

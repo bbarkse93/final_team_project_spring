@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_pic.BoardPic;
+import com.example.team_project.product.ProductResponse;
 import com.example.team_project.user.User;
 
 import lombok.Getter;
@@ -81,7 +82,50 @@ public class BoardResponse {
     @Getter
     @Setter
     public static class BoardListRespDTO {
+        private Integer id;
+        private String boardTitle;
+        private String boardContent;
+        private Timestamp createdAt;
+        private String boardCategory;
+        private UserDTO user;
+        private List<BoardPicDTO> boardPics;
 
+
+        public BoardListRespDTO(Board board) {
+            this.id = board.getId();
+            this.boardTitle = board.getBoardTitle();
+            this.boardContent = board.getBoardContent();
+            this.createdAt = board.getBoardCreatedAt();
+            this.boardCategory = board.getBoardCategory().getCategory();
+            this.user = new UserDTO(board.getUser());
+            this.boardPics = board.getBoardpics().stream().map(b -> new BoardPicDTO(b)).collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public static class BoardPicDTO{
+            private Integer boardId;
+            private String boardPicUrl;
+
+            public BoardPicDTO(BoardPic boardPic) {
+                this.boardId = boardPic.getId();
+                this.boardPicUrl = boardPic.getBoardPicUrl();
+            }
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO{
+            private Integer userId;
+            private String username;
+            private String location;
+
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.username = user.getUsername();
+                this.location = user.getLocation();
+            }
+        }
     }
 
     // 동네생활상세보기
