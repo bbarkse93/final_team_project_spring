@@ -30,10 +30,10 @@ public class UserRestController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors) {
-            userService.login(requestDTO);
+            String jwt = userService.login(requestDTO);
             LoginResponseDTO responseDTO = new LoginResponseDTO(requestDTO);
 
-        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(responseDTO));
         }
 
     }
