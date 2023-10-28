@@ -41,27 +41,20 @@ public class BoardService {
     public BoardResponse.WriteRespDTO saveBoardWithBoardPics(BoardRequest.WriteReqDTO writeReqDTO) {
         Board board = boardJPARepository.save(writeReqDTO.toEntity()); // board 등록
        System.out.println("글등록 : "+ board.getBoardTitle()); 
-        // 사진리스트 값 확인 테스팅
-        List<BoardPic> boardPics = writeReqDTO.getBoardPics();
-       System.out.println("사진 등록 : "+ board.getBoardTitle()); 
-        for (BoardPic boardPic : boardPics) {
-            boardPic.setBoard(board);
-            boardPicJPARepository.save(boardPic);
-        }
+       // 사진리스트 값 확인 테스팅
+    //  List<BoardPic> boardPics = writeReqDTO.getBoardPics();
+    //    System.out.println("사진" + writeReqDTO.getBoardPics().get(0).getBoardPicUrl());
+    //    System.out.println("사진 등록 : "+ boardPics.get(0).getBoardPicUrl()); 
+        // for (BoardPic boardPic : writeReqDTO.getBoardPics()) {
+            // boardPic.setBoard(board);
+            // boardPicJPARepository.save(boardPic);
+        // }
     
         List<BoardPic> boardPicList = boardPicJPARepository.findByBoardId(board.getId());
-        BoardCategory boardcCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId()).orElseThrow();
+        BoardCategory boardcCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
+        .orElseThrow(() -> new Exception404("Category를 찾을 수 없습니다."));
         return new BoardResponse.WriteRespDTO(board, boardPicList, boardcCategory);
 
-
-        // 사진 등록 구현 로직
-        // List<BoardPic> boardPics = writeReqDTO.getBoardPics(); // boardPic에 있는 컬렉션을 배열에 담음
-        // for (BoardPic boardPic : boardPics) {
-        //     System.out.println("테스트2" + boardPic.getBoardPicUrl());
-        //     boardPicJPARepository.save();
-        // } // for문으로 배열에 있는 boardPic를 인서트
-        // System.out.println("테스트 " + board.getBoardTitle());
-        // return new BoardResponse.WriteRespDTO(board);
     }
 
 }
