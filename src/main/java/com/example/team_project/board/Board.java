@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.ArrayList;
@@ -23,7 +26,6 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
     private String boardTitle;
 
     private String boardContent;
@@ -34,6 +36,7 @@ public class Board {
     @ManyToOne(fetch = FetchType.LAZY)
     private BoardCategory boardCategory;
 
+    @CreationTimestamp
     private Timestamp boardCreatedAt;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)

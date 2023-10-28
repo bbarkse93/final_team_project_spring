@@ -34,7 +34,7 @@ spring:
 
 logging:
   level:
-    "[com.example]": DEBUG
+    "[com.example]": ERROR
     "[org.hibernate.type]": TRACE
 
 file:

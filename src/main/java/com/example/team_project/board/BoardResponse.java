@@ -1,7 +1,8 @@
 package com.example.team_project.board;
 
 import java.sql.Timestamp;
-import java.util.*;
+
+import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.team_project.board.board_category.BoardCategory;
@@ -12,9 +13,56 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class BoardResponse {
+
+    // 동네생활 글등록
     @Getter
     @Setter
     public static class WriteRespDTO {
+        private Integer id;
+        private String boardTitle;
+        private String boardContent;
+        private String boardCategory;
+        private UserDTO user;
+        private List<BoardPicDTO> boardPics;
+        
+        public WriteRespDTO(Board board, List<BoardPic> boardPics, BoardCategory category) {
+            this.id = board.getId();
+            this.boardTitle = board.getBoardTitle();
+            this.boardContent = board.getBoardContent();
+            this.boardCategory = category.getCategory();
+            this.user = new UserDTO(board.getUser());
+            this.boardPics = boardPics.stream()
+                    .map(t -> new BoardPicDTO(t))
+                    .collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO{
+            private Integer userId;
+            private String username;
+            private String location;
+        
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.username = user.getUsername();
+                this.location = user.getLocation();
+            }
+        
+        }
+
+        @Getter
+        @Setter
+        public static class BoardPicDTO{
+            private Integer boardPicId;
+            private String boardPicUrl;
+            
+            public BoardPicDTO(BoardPic boardPic) {
+                this.boardPicId = boardPic.getId();
+                this.boardPicUrl = boardPic.getBoardPicUrl();
+            }
+   
+        }
 
     }
 
