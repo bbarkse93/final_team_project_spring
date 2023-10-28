@@ -4,6 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+
+import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project.board.BoardResponse.BoardDetailRespDTO;
+import com.example.team_project.board.board_pic.BoardPic;
+import com.example.team_project.board.board_pic.BoardPicJPARepository;
 
 import com.example.team_project._core.erroes.exception.Exception404;
 import com.example.team_project.board.board_category.BoardCategory;
@@ -26,7 +32,7 @@ public class BoardService {
     public BoardResponse.BoardDetailRespDTO FindById(Integer id) {
         Board board = boardJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("게시물을 찾을 수 없습니다. ID:" + id));
-
+      
         List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
         System.out.println(boardPics.size());
         // if (boardPics == null) {

@@ -1,6 +1,7 @@
 package com.example.team_project.board;
 
 import java.sql.Timestamp;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -150,5 +151,4 @@ public class BoardResponse {
         }
 
     }
-
 }

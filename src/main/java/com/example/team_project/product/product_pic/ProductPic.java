@@ -35,4 +35,8 @@ public class ProductPic {
         this.productPicUrl = productPicUrl;
         this.product = product;
     }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

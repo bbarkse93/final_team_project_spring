@@ -1,5 +1,6 @@
 package com.example.team_project.board;
 
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,4 +33,5 @@ public class BoardRestController {
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
+
 }
