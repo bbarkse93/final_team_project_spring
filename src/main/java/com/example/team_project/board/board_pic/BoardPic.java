@@ -1,4 +1,4 @@
-package com.example.team_project.product.product_pic;
+package com.example.team_project.board.board_pic;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.example.team_project.product.Product;
+import com.example.team_project.board.Board;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -18,25 +18,21 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "product_pic_tb")
-public class ProductPic {
+@Table(name = "board_pic_tb")
+public class BoardPic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String productPicUrl;
+    private String BoardPicUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;
+    private Board board;
 
     @Builder
-    public ProductPic(Integer id, String productPicUrl, Product product) {
+    public BoardPic(Integer id, String boardPicUrl, Board board) {
         this.id = id;
-        this.productPicUrl = productPicUrl;
-        this.product = product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
+        this.BoardPicUrl = boardPicUrl;
+        this.board = board;
     }
 }
