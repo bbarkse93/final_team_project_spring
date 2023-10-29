@@ -49,9 +49,9 @@ public class ProductService {
         Product product = productJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("상품을 찾을 수 없습니다. ID: " + id));
 
-        List<ProductPic> productPic = productPicJPARepository.findByProductId(product.getId());
-
-        return new ProductResponse.ProductDetailRespDTO(product, productPic);
+        List<ProductPic> productPics = productPicJPARepository.findByProductId(product.getId());
+        // TODO: productPics에 값이 없으면 빈 리스트가 아닌 null이 출력되게 수정해야 함
+        return new ProductResponse.ProductDetailRespDTO(product, productPics);
     }
 
     // 상품 등록
@@ -75,7 +75,7 @@ public class ProductService {
         Product product = productJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
 
-        productJPARepository.updateProduct(
+        productJPARepository.mUpdateProduct(
                 product.getId(),
                 productUpdateReqDTO.getProductPrice(),
                 productUpdateReqDTO.getProductDescription(),

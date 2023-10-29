@@ -10,14 +10,13 @@ import com.example.team_project.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
-// TODO 1: 메서드 네이밍 수정 필요
 public class ProductResponse {
 
     // 상품 리스트
     @Getter
     @Setter
     public static class ProductListRespDTO {
-        private int id;
+        private Integer id;
         private String productName;
         private Integer productPrice;
         private Timestamp productCreatedAt;
@@ -39,11 +38,11 @@ public class ProductResponse {
         @Getter
         @Setter
         public static class ProductPicDTO {
-            private Integer id;
+            private Integer productPicId;
             private String productPicUrl;
 
             public ProductPicDTO(ProductPic productPic) {
-                this.id = productPic.getId();
+                this.productPicId = productPic.getId();
                 this.productPicUrl = productPic.getProductPicUrl();
             }
         }
@@ -51,11 +50,11 @@ public class ProductResponse {
         @Getter
         @Setter
         public static class UserDTO {
-            private Integer id;
+            private Integer userId;
             private String location;
 
             public UserDTO(User user) {
-                this.id = user.getId();
+                this.userId = user.getId();
                 this.location = user.getLocation();
             }
         }
@@ -70,8 +69,8 @@ public class ProductResponse {
         private String productDescription;
         private Integer productPrice;
         private Timestamp createdAt;
-        private List<ProductPicDTO> ProductPics;
         private UserDTO user;
+        private List<ProductPicDTO> productPics;
 
         public ProductDetailRespDTO(Product product, List<ProductPic> productPics) {
             this.id = product.getId();
@@ -79,20 +78,21 @@ public class ProductResponse {
             this.productDescription = product.getProductDescription();
             this.productPrice = product.getProductPrice();
             this.createdAt = product.getProductCreatedAt();
-            ProductPics = productPics.stream().map(t -> new ProductPicDTO(t)).collect(Collectors.toList());
             this.user = new UserDTO(product.getUser());
+            this.productPics = productPics.stream().map(t -> new ProductPicDTO(t)).collect(Collectors.toList());
+
         }
 
         @Getter
         @Setter
         public static class UserDTO {
-            private Integer id;
+            private Integer userId;
             private String location;
             private String username;
             private String userPicUrl;
 
             public UserDTO(User user) {
-                this.id = user.getId();
+                this.userId = user.getId();
                 this.username = user.getUsername();
                 this.location = user.getLocation();
                 this.userPicUrl = user.getUserPicUrl();
@@ -102,12 +102,12 @@ public class ProductResponse {
         @Getter
         @Setter
         public static class ProductPicDTO {
-            private Integer id;
+            private Integer productPicId;
             private String productPicUrl;
 
-            public ProductPicDTO(ProductPic productPic) {
-                this.id = productPic.getId();
-                this.productPicUrl = productPic.getProductPicUrl();
+            public ProductPicDTO(ProductPic productPicDTOs) {
+                this.productPicId = productPicDTOs.getId();
+                this.productPicUrl = productPicDTOs.getProductPicUrl();
             }
         }
     }
