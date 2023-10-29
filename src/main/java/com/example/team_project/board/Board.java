@@ -9,21 +9,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="board_tb")
+@Table(name = "board_tb")
 public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
     private String boardTitle;
 
     private String boardContent;
@@ -34,13 +37,15 @@ public class Board {
     @ManyToOne(fetch = FetchType.LAZY)
     private BoardCategory boardCategory;
 
+    @CreationTimestamp
     private Timestamp boardCreatedAt;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
-    private List<BoardPic> boardpics = new ArrayList<>();
+    private List<BoardPic> boardPics = new ArrayList<>();
 
     @Builder
-    public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory, Timestamp boardCreatedAt) {
+    public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory,
+            Timestamp boardCreatedAt) {
         this.id = id;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
@@ -48,6 +53,5 @@ public class Board {
         this.boardCategory = boardCategory;
         this.boardCreatedAt = boardCreatedAt;
     }
-
 
 }

@@ -1,6 +1,7 @@
 package com.example.team_project.user;
 
 
+import com.example.team_project._core.utils.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class UserService {
         }
     }
 
-    public User login(LoginDTO loginDTO) {
+    public String login(LoginDTO loginDTO) {
 
         User user = userJPARepository.findByUsername(loginDTO.getUsername());
         if (user == null) {
@@ -35,7 +36,7 @@ public class UserService {
             throw new Exception400("패스워드가 잘못되었습니다.");
         }
 
-        return user;
+        return JwtTokenUtils.create(user);
 
 
 

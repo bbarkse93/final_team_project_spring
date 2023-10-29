@@ -21,7 +21,7 @@ public class ProductService {
     private final ProductJPARepository productJPARepository;
     private final ProductPicJPARepository productPicJPARepository;
 
-    // 상품 목록보기
+    // 상품 리스트
     public List<ProductResponse.FindAllDTO> findAll() {
         List<Product> dtos = productJPARepository.findAll();
 
@@ -45,13 +45,13 @@ public class ProductService {
 
     // 상품 등록
     @Transactional
-    public void saveProductWithProductPics(ProductRequest.ProductWriteReqDTO productWriteReqDTO) {
-        Product product = productJPARepository.save(productWriteReqDTO.toEntity());
-        List<ProductPic> productPics = productWriteReqDTO.getProductPics();
+    public ProductResponse.WriteRespDTO saveProductWithProductPics(ProductRequest.ProductRequestDTO productRequestDTO) {
+        Product product = productJPARepository.save(productRequestDTO.toEntity());
+        List<ProductPic> productPics = productRequestDTO.getProductPics();
 
         for (ProductPic productPic : productPics) {
-            System.out.println(productPic.getProductPicUrl());
-            productPicJPARepository.save(productPic);
+            productPic.setProduct(product);
+           productPicJPARepository.save(productPic);
         }
     }
 

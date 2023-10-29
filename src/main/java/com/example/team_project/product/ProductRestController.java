@@ -18,6 +18,7 @@ public class ProductRestController {
 
     private final ProductService productService;
 
+
     // 상품 목록보기
     @GetMapping("/products")
     public ResponseEntity<?> findAll() {
@@ -25,7 +26,7 @@ public class ProductRestController {
     }
 
     // 상품상세보기
-    @GetMapping("/product/{id}")
+    @GetMapping("/products/{id}")
     public ResponseEntity<?> FindById(@PathVariable Integer id) {
         ProductResponse.FindByIdDTO responseDTO = productService.FindById(id);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
@@ -37,6 +38,7 @@ public class ProductRestController {
         productService.saveProductWithProductPics(productWriteReqDTO);        
         // responseDTO = productService.FindById(productWriteReqDTO.get);
         return ResponseEntity.ok().body(ApiUtils.success("ok"));
+
     }
 
     // 상품 수정

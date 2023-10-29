@@ -12,16 +12,16 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="board_category_tb")
+@Table(name = "board_category_tb")
 public class BoardCategory {
     @Id
     private Integer id;
 
-    private String boardCategory;
+    private String Category;
 
     @Builder
-    public BoardCategory(Integer id, String boardCategory) {
+    public BoardCategory(Integer id, String Category) {
         this.id = id;
-        this.boardCategory = boardCategory;
+        this.Category = Category;
     }
 }
