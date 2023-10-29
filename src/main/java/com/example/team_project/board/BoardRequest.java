@@ -39,7 +39,11 @@ public class BoardRequest {
     @Setter
     @ToString
     public static class UpdateReqDTO {
-
+        private String boardTitle;
+        private String boardContent;
+        private Integer boardCategoryId;
+        private Integer userId;
+        private List<BoardPic> boardPics;
     }
 
     @Getter

@@ -1,7 +1,5 @@
 package com.example.team_project.board;
 
-
-import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project.board.BoardRequest.UpdateReqDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -49,4 +48,11 @@ public class BoardRestController {
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
+    // 동네 생활 게시글 수정
+    @PostMapping("/board/update/{id}")
+    public ResponseEntity<?> updateBoard(@PathVariable Integer id,
+            @RequestBody UpdateReqDTO updateReqDTO) {
+        boardService.updateBoardWithBoardPics(id, updateReqDTO);
+        return ResponseEntity.ok().body(ApiUtils.success("ok"));
+    }
 }
