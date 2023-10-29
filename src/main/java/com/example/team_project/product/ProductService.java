@@ -65,7 +65,7 @@ public class ProductService {
            productPicJPARepository.save(productPic);
         }
       
-      return new ProductResponse.ProductWriteRespDTO(product, productPicList);
+      return new ProductResponse.ProductWriteRespDTO(product, productPics);
       
     }
 

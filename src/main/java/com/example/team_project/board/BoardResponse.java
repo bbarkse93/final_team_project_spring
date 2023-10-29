@@ -35,7 +35,7 @@ public class BoardResponse {
             this.boardCreatedAt = board.getBoardCreatedAt();
             this.user = new UserDTO(board.getUser());
             this.boardCategory = new BoardCategoryDTO(board.getBoardCategory());
-            this.boardPics = board.getBoardpics().stream()
+            this.boardPics = board.getBoardPics().stream()
                     .limit(1)
                     .map(b -> new BoardPicDTO(b))
                     .collect(Collectors.toList());            
@@ -61,7 +61,7 @@ public class BoardResponse {
 
             public BoardCategoryDTO(BoardCategory boardCategory) {
                 this.id = boardCategory.getId();
-                this.boardCategory = boardCategory.getBoardCategory();
+                this.boardCategory = boardCategory.getCategory();
 
             }
         }

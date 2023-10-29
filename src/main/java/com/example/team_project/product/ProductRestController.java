@@ -37,9 +37,10 @@ public class ProductRestController {
 
     // 상품 등록
     @PostMapping("/products/write")
-    public ResponseEntity<?> WriteProduct(@RequestBody ProductRequest.ProductWriteReqDTO productWriteReqDTO){
-        ProductResponse.ProductWriteRespDTO responseDTO =  productService.saveProductWithProductPics(productWriteReqDTO);
+    public ResponseEntity<?> WriteProduct(@RequestBody ProductRequest.ProductWriteReqDTO productWriteReqDTO) {
+        ProductResponse.ProductWriteRespDTO responseDTO = productService.saveProductWithProductPics(productWriteReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 
     // 상품 수정
     @PostMapping("/product/update/{id}")
