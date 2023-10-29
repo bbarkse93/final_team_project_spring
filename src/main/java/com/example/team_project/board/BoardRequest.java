@@ -12,6 +12,7 @@ import lombok.ToString;
 
 public class BoardRequest {
 
+    // 동네 생활 게시글 등록
     @Getter
     @Setter
     @ToString
