@@ -16,7 +16,7 @@ public class ProductResponse {
     // 상품 리스트
     @Getter
     @Setter
-    public static class FindAllDTO {
+    public static class ProductListRespDTO {
         private int id;
         private String productName;
         private Integer productPrice;
@@ -24,13 +24,13 @@ public class ProductResponse {
         private UserDTO user;
         private List<ProductPicDTO> productPics;
 
-        public FindAllDTO(Product product) {
+        public ProductListRespDTO(Product product) {
             this.id = product.getId();
             this.productName = product.getProductName();
             this.productPrice = product.getProductPrice();
             this.productCreatedAt = product.getProductCreatedAt();
             this.user = new UserDTO(product.getUser());
-            this.productPics = product.getProductpics().stream()
+            this.productPics = product.getProductPics().stream()
                     .limit(1)
                     .map(p -> new ProductPicDTO(p))
                     .collect(Collectors.toList());
@@ -64,7 +64,7 @@ public class ProductResponse {
     // 상품상세보기
     @Getter
     @Setter
-    public static class FindByIdDTO {
+    public static class ProductDetailRespDTO {
         private Integer id;
         private String productName;
         private String productDescription;
@@ -73,7 +73,7 @@ public class ProductResponse {
         private List<ProductPicDTO> ProductPics;
         private UserDTO user;
 
-        public FindByIdDTO(Product product, List<ProductPic> productPics) {
+        public ProductDetailRespDTO(Product product, List<ProductPic> productPics) {
             this.id = product.getId();
             this.productName = product.getProductName();
             this.productDescription = product.getProductDescription();
@@ -115,7 +115,7 @@ public class ProductResponse {
     // 상품 등록
     @Getter
     @Setter
-    public static class WriteRespDTO{
+    public static class ProductWriteRespDTO{
         private Integer id;
         private String productName;
         private String productDescription;
@@ -123,7 +123,7 @@ public class ProductResponse {
         private Timestamp createdAt;
         private List<ProductPicDTO> productPics;
 
-        public WriteRespDTO(Product product, List<ProductPic> productPics) {
+        public ProductWriteRespDTO(Product product, List<ProductPic> productPics) {
             this.id = product.getId();
             this.productName = product.getProductName();
             this.productDescription = product.getProductDescription();

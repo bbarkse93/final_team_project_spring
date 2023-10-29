@@ -15,19 +15,7 @@ import lombok.Setter;
 
 public class BoardResponse {
 
-
-    @Getter
-    @Setter
-    public static class UpdateRespDTO {
-
-    }
-
-    @Getter
-    @Setter
-    public static class DeleteRespDTO {
-
-    }
-
+    // 동네생활 전체보기
     @Getter
     @Setter
     public static class BoardListRespDTO {
@@ -92,7 +80,7 @@ public class BoardResponse {
         }
     }
 
-    // 동네생활상세보기
+    // 동네생활 상세보기
     @Getter
     @Setter
     public static class BoardDetailRespDTO {
@@ -160,11 +148,10 @@ public class BoardResponse {
 
     }
 
-
-    // 동네 생활 게시글 등록
+    // 동네생활 게시글 등록
     @Getter
     @Setter
-    public static class WriteRespDTO {
+    public static class BoardWriteRespDTO {
         private Integer id;
         private String boardTitle;
         private String boardContent;
@@ -172,7 +159,7 @@ public class BoardResponse {
         private UserDTO user;
         private List<BoardPicDTO> boardPics;
 
-        public WriteRespDTO(Board board, List<BoardPic> boardPics, BoardCategory category) {
+        public BoardWriteRespDTO(Board board, List<BoardPic> boardPics, BoardCategory category) {
             this.id = board.getId();
             this.boardTitle = board.getBoardTitle();
             this.boardContent = board.getBoardContent();
@@ -210,6 +197,20 @@ public class BoardResponse {
             }
 
         }
+
+    }
+
+    // 동네생활 게시글 수정
+    @Getter
+    @Setter
+    public static class BoardUpdateRespDTO {
+
+    }
+
+    // 동네생활 게시글 삭제
+    @Getter
+    @Setter
+    public static class BoardDeleteRespDTO {
 
     }
   

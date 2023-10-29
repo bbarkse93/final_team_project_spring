@@ -23,7 +23,7 @@ public class BoardRestController {
     private final BoardService boardService;
 
 
-    // 동네 생활 전체보기
+    // 동네생활 전체보기
     @GetMapping("/boards")
     public ResponseEntity<?> BoardList(){
         List<BoardResponse.BoardListRespDTO> responseDTO = boardService.FindAll();
@@ -32,19 +32,19 @@ public class BoardRestController {
     }
 
 
-    // 동네 생활 상세 보기
+    // 동네생활 상세보기
     @GetMapping("/boards/{id}")
-    public ResponseEntity<?> FindById(@PathVariable Integer id) {
+    public ResponseEntity<?> BoardDetail(@PathVariable Integer id) {
         BoardResponse.BoardDetailRespDTO responseDTO = boardService.FindById(id);
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
 
-    // 동네 생활 게시글 등록
+    // 동네생활 게시글 등록
     @PostMapping("/boards/write")
-    public ResponseEntity<?> WriteBoard(@RequestBody BoardRequest.WriteReqDTO writeReqDTO) {
-        BoardResponse.WriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(writeReqDTO);
+    public ResponseEntity<?> WriteBoard(@RequestBody BoardRequest.ProductWriteReqDTO ProductWriteReqDTO) {
+        BoardResponse.BoardWriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(ProductWriteReqDTO);
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
