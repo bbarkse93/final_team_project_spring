@@ -61,4 +61,24 @@ public class Product {
         this.user = user;
     }
 
+    // // 2. 생성자 몰아넣기
+    //     public void setUpdate(String productName, String productDescription, Integer productPrice) {
+    //     this.productName = productName;
+    //     this.productDescription = productDescription;
+    //     this.productPrice = productPrice;
+    // }
+
+    // // 1. 하나씩 생성자.
+    // public void setProductName(String productName) {
+    //     this.productName = productName;
+    // }
+
+    // public void setProductDescription(String productDescription) {
+    //     this.productDescription = productDescription;
+    // }
+
+    // public void setProductPrice(Integer productPrice) {
+    //     this.productPrice = productPrice;
+    // }
+
 }

@@ -19,48 +19,63 @@ public class BoardResponse {
     @Getter
     @Setter
     public static class BoardListRespDTO {
-        private Integer id;
+
+        private int id;
         private String boardTitle;
         private String boardContent;
-        private Timestamp createdAt;
-        private String boardCategory;
+        private Timestamp boardCreatedAt;
         private UserDTO user;
+        private BoardCategoryDTO boardCategory;
         private List<BoardPicDTO> boardPics;
-
 
         public BoardListRespDTO(Board board) {
             this.id = board.getId();
             this.boardTitle = board.getBoardTitle();
             this.boardContent = board.getBoardContent();
-            this.createdAt = board.getBoardCreatedAt();
-            this.boardCategory = board.getBoardCategory().getCategory();
+            this.boardCreatedAt = board.getBoardCreatedAt();
             this.user = new UserDTO(board.getUser());
-            this.boardPics = board.getBoardPics().stream().map(b -> new BoardPicDTO(b)).collect(Collectors.toList());
+            this.boardCategory = new BoardCategoryDTO(board.getBoardCategory());
+            this.boardPics = board.getBoardpics().stream()
+                    .limit(1)
+                    .map(b -> new BoardPicDTO(b))
+                    .collect(Collectors.toList());            
         }
 
         @Getter
         @Setter
-        public static class BoardPicDTO{
-            private Integer boardId;
-            private String boardPicUrl;
+        public static class UserDTO {
+            private Integer id;
+            private String location;
 
-            public BoardPicDTO(BoardPic boardPic) {
-                this.boardId = boardPic.getId();
-                this.boardPicUrl = boardPic.getBoardPicUrl();
+            public UserDTO(User user) {
+                this.id = user.getId();
+                this.location = user.getLocation();
             }
         }
 
         @Getter
         @Setter
-        public static class UserDTO{
-            private Integer userId;
-            private String username;
-            private String location;
+        public static class BoardCategoryDTO {
+            private Integer id;
+            private String boardCategory;
 
-            public UserDTO(User user) {
-                this.userId = user.getId();
-                this.username = user.getUsername();
-                this.location = user.getLocation();
+            public BoardCategoryDTO(BoardCategory boardCategory) {
+                this.id = boardCategory.getId();
+                this.boardCategory = boardCategory.getBoardCategory();
+
+            }
+        }
+
+        @Getter
+        @Setter
+        public static class BoardPicDTO {
+            private Integer id;
+            private String boardPicUrl;
+
+            public BoardPicDTO(BoardPic boardPics) {
+                this.id = boardPics.getId();
+                this.boardPicUrl = boardPics.getBoardPicUrl();
+
             }
         }
     }
@@ -198,4 +213,5 @@ public class BoardResponse {
     public static class BoardDeleteRespDTO {
 
     }
+  
 }

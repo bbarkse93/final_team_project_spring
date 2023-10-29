@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.product.product_pic.ProductPicJPARepository;
 
@@ -63,9 +64,47 @@ public class ProductService {
             productPic.setProduct(product);
            productPicJPARepository.save(productPic);
         }
-
-        List<ProductPic> productPicList = productPicJPARepository.findByProductId(product.getId());
-
-        return new ProductResponse.ProductWriteRespDTO(product, productPicList);
+      
+      return new ProductResponse.ProductWriteRespDTO(product, productPicList);
+      
     }
+
+    // 상품 수정
+    @Transactional
+    public void updateProductWithProductPics(Integer id, ProductUpdateReqDTO productUpdateReqDTO) {
+        Product product = productJPARepository.findById(id)
+                .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
+
+        productJPARepository.updateProduct(
+                product.getId(),
+                productUpdateReqDTO.getProductPrice(),
+                productUpdateReqDTO.getProductDescription(),
+                productUpdateReqDTO.getProductName());
+
+
+        List<ProductPic> productPics = productUpdateReqDTO.getProductPics();
+
+        for (ProductPic productPic : productPics) {
+            System.out.println(productPic.getProductPicUrl());
+            // productPicJPARepository.updateProductPic(productPic);
+            productPicJPARepository.updateProductPic(product.getId(),
+            productPic.getProductPicUrl());
+        }
+
+    }
+
 }
+
+// @Transactional
+// public void deleteProduct(int productId) {
+// // 먼저 해당 게시글의 이미지를 삭제
+// List<ProductPic> productPics =
+// productPicJPARepository.findByProduct_Id(productId);
+// for (ProductPic productPic : productPics) {
+// productPicJPARepository.delete(productPic);
+// }
+
+// // 그 다음 게시글을 삭제
+// productJPARepository.deleteById(productId);
+// }
+// }

@@ -13,8 +13,9 @@ import javax.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
