@@ -1,6 +1,5 @@
 package com.example.team_project.product;
 
-import java.util.Optional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,17 +66,6 @@ public class ProductService {
                 productUpdateReqDTO.getProductPrice(),
                 productUpdateReqDTO.getProductDescription(),
                 productUpdateReqDTO.getProductName());
-
-        // 하나씩
-        // product.setProductName(productUpdateReqDTO.getProductName());
-        // product.setProductDescription(productUpdateReqDTO.getProductDescription());
-        // product.setProductPrice(productUpdateReqDTO.getProductPrice());
-
-        // 한방에
-        // product.setUpdate(
-        // productUpdateReqDTO.getProductName(),
-        // productUpdateReqDTO.getProductDescription(),
-        // productUpdateReqDTO.getProductPrice());
 
         List<ProductPic> productPics = productUpdateReqDTO.getProductPics();
 

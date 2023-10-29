@@ -1,15 +1,14 @@
 package com.example.team_project.product;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.user.User;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 public class ProductRequest {
 
