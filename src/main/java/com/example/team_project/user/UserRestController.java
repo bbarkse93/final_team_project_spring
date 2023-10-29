@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.example.team_project.user.UserResponse.LoginResponseDTO;
-import com.example.team_project.user.UserResponse.JoinResponseDTO;
 import com.example.team_project._core.utils.ApiUtils;
 
 @RequiredArgsConstructor
@@ -27,15 +25,15 @@ public class UserRestController {
     private final HttpSession session;
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinReqDTO joinReqDTO, Errors errors) {
-        UserResponse.JoinResponseDTO responseDTO = userService.join(joinReqDTO);
+    public ResponseEntity<?> join(@RequestBody @Valid UserRequest.UserJoinReqDTO userJoinReqDTO, Errors errors) {
+        UserResponse.UserJoinRespDTO responseDTO = userService.join(userJoinReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
         }
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginReqDTO loginReqDTO, Errors errors) {
-            LoginResponseDTO responseDTO = userService.login(loginReqDTO);
+    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.UserLoginReqDTO userLoginReqDTO, Errors errors) {
+        UserResponse.UserLoginRespDTO responseDTO = userService.login(userLoginReqDTO);
             String jwt = responseDTO.getJwt();
 
         return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(responseDTO));

@@ -17,33 +17,33 @@ public class UserService {
 
     // 회원가입
     @Transactional
-    public UserResponse.JoinResponseDTO join(UserRequest.JoinReqDTO joinReqDTO) {
+    public UserResponse.UserJoinRespDTO join(UserRequest.UserJoinReqDTO userJoinReqDTO) {
 
         User user;
         try {
-            user = userJPARepository.save(joinReqDTO.toEntity());
+            user = userJPARepository.save(userJoinReqDTO.toEntity());
         } catch (Exception e) {
             throw new Exception400("존재하는 이메일입니다.");
         }
-        return new UserResponse.JoinResponseDTO(user);
+        return new UserResponse.UserJoinRespDTO(user);
     }
 
     // 로그인
-    public UserResponse.LoginResponseDTO login(UserRequest.LoginReqDTO loginReqDTO) {
+    public UserResponse.UserLoginRespDTO login(UserRequest.UserLoginReqDTO userLoginReqDTO) {
 
-        User user = userJPARepository.findByUsername(loginReqDTO.getUsername());
+        User user = userJPARepository.findByUsername(userLoginReqDTO.getUsername());
         if (user == null) {
             throw new Exception400("유저네임이 없습니다.");
         }
 
-        if (!user.getPassword().equals(loginReqDTO.getPassword())) {
+        if (!user.getPassword().equals(userLoginReqDTO.getPassword())) {
             throw new Exception400("패스워드가 잘못되었습니다.");
         }
 
         //TODO 1 : JWT토큰 body에 안나오고 header에만 나오도록 수정
         String jwt = JwtTokenUtils.create(user);
 
-        return new UserResponse.LoginResponseDTO(user, jwt);
+        return new UserResponse.UserLoginRespDTO(user, jwt);
     }
 
 }

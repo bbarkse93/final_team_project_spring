@@ -15,7 +15,7 @@ public class UserRequest {
     @Getter
     @Setter
     @ToString
-    public static class LoginReqDTO {
+    public static class UserLoginReqDTO {
         @NotEmpty
         private String username;
 
@@ -29,7 +29,7 @@ public class UserRequest {
     @Getter
     @Setter
     @ToString
-    public static class JoinReqDTO {
+    public static class UserJoinReqDTO {
 
         @NotEmpty
         private String username;

@@ -56,13 +56,9 @@ public class BoardService {
     public BoardResponse.BoardDetailRespDTO FindById(Integer id) {
         Board board = boardJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("게시물을 찾을 수 없습니다. ID:" + id));
-      
-        List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
-        System.out.println(boardPics.size());
-        // if (boardPics == null) {
-        // boardPics = new ArrayList<>(); // boardPics가 null인 경우 빈 리스트로 초기화
-        // }
 
+        List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
+        // TODO: boardPics에 값이 없으면 빈 리스트가 아닌 null이 출력되게 수정해야 함
         return new BoardResponse.BoardDetailRespDTO(board, boardPics);
     }
 
