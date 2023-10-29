@@ -2,9 +2,11 @@ package com.example.team_project.board;
 
 import java.util.List;
 
+import com.example.team_project.product.ProductResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import com.example.team_project._core.erroes.exception.Exception404;
 import com.example.team_project.board.BoardResponse.BoardDetailRespDTO;
@@ -27,6 +29,27 @@ public class BoardService {
     private final BoardJPARepository boardJPARepository;
     private final BoardPicJPARepository boardPicJPARepository;
     private final BoardCategoryJPARepository boardCategoryJPARepository;
+
+    // 동네 생활 전체 보기
+    public List<BoardResponse.BoardListRespDTO> FindAll() {
+        List<Board> boards = boardJPARepository.mFindAllJoinBoardCategoryAndBoardPic();
+
+        List<BoardResponse.BoardListRespDTO> responseDTO = boards.stream()
+                .distinct()
+                .map(b -> {
+                    BoardResponse.BoardListRespDTO boardDTO = new BoardResponse.BoardListRespDTO(b);
+                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs =
+                            b.getBoardpics().isEmpty() ? null : b.getBoardpics().stream()
+                            .limit(1)
+                            .map(bp -> new BoardResponse.BoardListRespDTO.BoardPicDTO(bp))
+                            .collect(Collectors.toList());
+                    boardDTO.setBoardPics(boardPicDTOs);
+                    return boardDTO;
+                })
+                .collect(Collectors.toList());
+
+        return responseDTO;
+    }
 
     // 동네생활 상세보기
     public BoardResponse.BoardDetailRespDTO FindById(Integer id) {
