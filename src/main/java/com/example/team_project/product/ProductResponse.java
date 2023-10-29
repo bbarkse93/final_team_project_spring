@@ -112,7 +112,7 @@ public class ProductResponse {
         }
     }
 
-
+    // 상품 등록
     @Getter
     @Setter
     public static class WriteRespDTO{

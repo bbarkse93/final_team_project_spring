@@ -60,4 +60,5 @@ public class Product {
         this.productCreatedAt = productCreatedAt;
         this.user = user;
     }
+
 }

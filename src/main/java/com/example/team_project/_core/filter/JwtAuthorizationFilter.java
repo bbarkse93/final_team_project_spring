@@ -32,9 +32,9 @@ public class JwtAuthorizationFilter implements Filter {
         try {
             DecodedJWT decodedJWT = JwtTokenUtils.verify(jwt);
             int userId = decodedJWT.getClaim("id").asInt();
-            String email = decodedJWT.getClaim("email").asString();
+            String username = decodedJWT.getClaim("username").asString();
 
-            User sessionUser = User.builder().id(userId).email(email).build();
+            User sessionUser = User.builder().id(userId).username(username).build();
 
             HttpSession session = request.getSession();
             session.setAttribute("sessionUser", sessionUser);

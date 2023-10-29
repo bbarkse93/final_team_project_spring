@@ -2,9 +2,12 @@ package com.example.team_project.board;
 
 import java.util.List;
 
+import com.example.team_project.product.ProductResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.example.team_project._core.erroes.exception.Exception404;
 import com.example.team_project.board.BoardResponse.BoardDetailRespDTO;
@@ -28,6 +31,27 @@ public class BoardService {
     private final BoardPicJPARepository boardPicJPARepository;
     private final BoardCategoryJPARepository boardCategoryJPARepository;
 
+    // 동네 생활 전체 보기
+    public List<BoardResponse.BoardListRespDTO> FindAll() {
+        List<Board> boards = boardJPARepository.mFindAllJoinBoardCategoryAndBoardPic();
+
+        List<BoardResponse.BoardListRespDTO> responseDTO = boards.stream()
+                .distinct()
+                .map(b -> {
+                    BoardResponse.BoardListRespDTO boardDTO = new BoardResponse.BoardListRespDTO(b);
+                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs =
+                            b.getBoardPics().isEmpty() ? null : b.getBoardPics().stream()
+                            .limit(1)
+                            .map(bp -> new BoardResponse.BoardListRespDTO.BoardPicDTO(bp))
+                            .collect(Collectors.toList());
+                    boardDTO.setBoardPics(boardPicDTOs);
+                    return boardDTO;
+                })
+                .collect(Collectors.toList());
+
+        return responseDTO;
+    }
+
     // 동네생활 상세보기
     public BoardResponse.BoardDetailRespDTO FindById(Integer id) {
         Board board = boardJPARepository.findById(id)
@@ -42,25 +66,26 @@ public class BoardService {
         return new BoardResponse.BoardDetailRespDTO(board, boardPics);
     }
 
-    // 동네생활글등록
+
+    // 동네 생활 게시글 등록
     @Transactional
     public BoardResponse.WriteRespDTO saveBoardWithBoardPics(BoardRequest.WriteReqDTO writeReqDTO) {
         Board board = boardJPARepository.save(writeReqDTO.toEntity()); // board 등록
-       System.out.println("글등록 : "+ board.getBoardTitle()); 
-       // 사진리스트 값 확인 테스팅
-    //  List<BoardPic> boardPics = writeReqDTO.getBoardPics();
-    //    System.out.println("사진" + writeReqDTO.getBoardPics().get(0).getBoardPicUrl());
-    //    System.out.println("사진 등록 : "+ boardPics.get(0).getBoardPicUrl()); 
-        // for (BoardPic boardPic : writeReqDTO.getBoardPics()) {
-            // boardPic.setBoard(board);
-            // boardPicJPARepository.save(boardPic);
-        // }
-    
+        System.out.println("글등록 : "+ board.getBoardTitle());
+
+        List<BoardPic> boardPics = writeReqDTO.getBoardPics();
+
+        for (BoardPic boardPic : boardPics) {
+            boardPic.setBoard(board);
+            boardPicJPARepository.save(boardPic);
+        }
+
+
         List<BoardPic> boardPicList = boardPicJPARepository.findByBoardId(board.getId());
         BoardCategory boardcCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
         .orElseThrow(() -> new Exception404("Category를 찾을 수 없습니다."));
-        return new BoardResponse.WriteRespDTO(board, boardPicList, boardcCategory);
 
+        return new BoardResponse.WriteRespDTO(board, boardPicList, boardcCategory);
     }
 
 }
