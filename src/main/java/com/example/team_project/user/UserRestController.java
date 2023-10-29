@@ -1,10 +1,14 @@
 package com.example.team_project.user;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +23,7 @@ import com.example.team_project._core.utils.ApiUtils;
 public class UserRestController {
 
     private final UserService userService;
+    private final HttpSession session;
 
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors) {
@@ -34,6 +39,12 @@ public class UserRestController {
             LoginResponseDTO responseDTO = new LoginResponseDTO(requestDTO);
 
         return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(responseDTO));
-        }
-
     }
+
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(){
+        session.invalidate();
+        return ResponseEntity.ok().body(ApiUtils.success(null));
+    }
+
+}
