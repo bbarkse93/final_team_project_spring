@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,17 +27,16 @@ public class UserRestController {
     private final HttpSession session;
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors) {
-            userService.join(requestDTO);
-            JoinResponseDTO response = new JoinResponseDTO(requestDTO);
-        return ResponseEntity.ok().body(ApiUtils.success(response));
+    public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinReqDTO joinReqDTO, Errors errors) {
+        UserResponse.JoinResponseDTO responseDTO = userService.join(joinReqDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
         }
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors) {
-            String jwt = userService.login(requestDTO);
-            LoginResponseDTO responseDTO = new LoginResponseDTO(requestDTO);
+    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginReqDTO loginReqDTO, Errors errors) {
+            LoginResponseDTO responseDTO = userService.login(loginReqDTO);
+            String jwt = responseDTO.getJwt();
 
         return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(responseDTO));
     }

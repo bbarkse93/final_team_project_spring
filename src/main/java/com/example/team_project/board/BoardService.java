@@ -69,7 +69,7 @@ public class BoardService {
 
     // 동네 생활 게시글 등록
     @Transactional
-    public BoardResponse.WriteRespDTO saveBoardWithBoardPics(BoardRequest.WriteReqDTO writeReqDTO) {
+    public BoardResponse.BoardWriteRespDTO saveBoardWithBoardPics(BoardRequest.ProductWriteReqDTO writeReqDTO) {
         Board board = boardJPARepository.save(writeReqDTO.toEntity()); // board 등록
         System.out.println("글등록 : "+ board.getBoardTitle());
 
@@ -85,7 +85,7 @@ public class BoardService {
         BoardCategory boardcCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
         .orElseThrow(() -> new Exception404("Category를 찾을 수 없습니다."));
 
-        return new BoardResponse.WriteRespDTO(board, boardPicList, boardcCategory);
+        return new BoardResponse.BoardWriteRespDTO(board, boardPicList, boardcCategory);
     }
 
 }

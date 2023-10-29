@@ -14,7 +14,7 @@ public class ProductRequest {
     @Getter
     @Setter
     @ToString
-    public static class ProductRequestDTO{
+    public static class ProductWriteReqDTO{
         private String productName;
         private String productDescription;
         private Integer productPrice;

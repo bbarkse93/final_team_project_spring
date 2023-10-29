@@ -16,7 +16,7 @@ public class BoardRequest {
     @Getter
     @Setter
     @ToString
-    public static class WriteReqDTO {
+    public static class ProductWriteReqDTO {
         private String boardTitle;
         private String boardContent;
         private Integer boardCategoryId;
