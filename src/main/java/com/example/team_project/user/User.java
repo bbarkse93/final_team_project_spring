@@ -26,6 +26,7 @@ public class User{
 
     private String email;
 
+    @Lob
     private String userPicUrl;
 
     private String location;

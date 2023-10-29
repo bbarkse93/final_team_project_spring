@@ -1,12 +1,6 @@
 package com.example.team_project.board.board_pic;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.example.team_project.board.Board;
 
@@ -24,6 +18,8 @@ public class BoardPic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
+    @Lob
     private String boardPicUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)

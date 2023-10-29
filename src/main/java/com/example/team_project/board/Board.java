@@ -40,7 +40,7 @@ public class Board {
     private Timestamp boardCreatedAt;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
-    private List<BoardPic> boardpics = new ArrayList<>();
+    private List<BoardPic> boardPics = new ArrayList<>();
 
     @Builder
     public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory,

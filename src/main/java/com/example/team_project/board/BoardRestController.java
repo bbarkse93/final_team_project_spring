@@ -18,18 +18,18 @@ public class BoardRestController {
 
     private final BoardService boardService;
 
-    // 동네생활 상세보기
+    // 동네 생활 상세 보기
     @GetMapping("/board/{id}")
     public ResponseEntity<?> FindById(@PathVariable Integer id) {
         BoardResponse.BoardDetailRespDTO responseDTO = boardService.FindById(id);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
-    // 동네생활 등록
+
+    // 동네 생활 게시글 등록
     @PostMapping("/board/write")
     public ResponseEntity<?> WriteBoard(@RequestBody BoardRequest.WriteReqDTO writeReqDTO) {
         BoardResponse.WriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(writeReqDTO);
-        // System.out.println("테스트::::" + response.getBoardTitle());
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
