@@ -105,13 +105,13 @@ public class BoardResponse {
         @Getter
         @Setter
         public static class UserDTO {
-            private Integer id;
+            private Integer userId;
             private String location;
             private String username;
             private String userPicUrl;
 
             public UserDTO(User user) {
-                this.id = user.getId();
+                this.userId = user.getId();
                 this.username = user.getUsername();
                 this.location = user.getLocation();
                 this.userPicUrl = user.getUserPicUrl();
