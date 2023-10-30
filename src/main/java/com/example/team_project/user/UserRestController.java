@@ -33,10 +33,8 @@ public class UserRestController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.UserLoginReqDTO userLoginReqDTO, Errors errors) {
-        UserResponse.UserLoginRespDTO responseDTO = userService.login(userLoginReqDTO);
-            String jwt = responseDTO.getJwt();
-
-        return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(responseDTO));
+        UserResponse.UserLoginRespDTO responseDTO  = userService.login(userLoginReqDTO);
+        return ResponseEntity.ok().header("Authorization", responseDTO.getJwt()).body(ApiUtils.success(responseDTO.getUser()));
     }
 
     @GetMapping("/logout")

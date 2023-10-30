@@ -28,7 +28,7 @@ public class BoardRestController {
     public ResponseEntity<?> BoardList(){
         List<BoardResponse.BoardListRespDTO> responseDTO = boardService.FindAll();
 
-        return ResponseEntity.ok().body(responseDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
 
