@@ -2,6 +2,8 @@ package com.example.team_project.board;
 
 import lombok.Getter;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project.board.BoardRequest.BoardUpdateReqDTO;
 
 import lombok.RequiredArgsConstructor;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,7 +28,7 @@ public class BoardRestController {
     public ResponseEntity<?> BoardList() {
         List<BoardResponse.BoardListRespDTO> responseDTO = boardService.FindAll();
 
-        return ResponseEntity.ok().body(responseDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
     // 동네생활 상세보기
@@ -47,15 +47,14 @@ public class BoardRestController {
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
+    // 동네 생활 게시글 수정
+    @PostMapping("/boards/update/{id}")
+    public ResponseEntity<?> updateBoard(@PathVariable Integer id,
+            @RequestBody BoardUpdateReqDTO updateReqDTO) {
+        BoardResponse.BoardUpdateRespDTO responseDTO = boardService.updateBoardWithBoardPics(id, updateReqDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 
-
-
-
-
-
-
-
-    
     // 동네생활 게시글 삭제
     @PostMapping("/boards/delete/{id}")
     public ResponseEntity<?> deleteBoard(@PathVariable Integer id) {

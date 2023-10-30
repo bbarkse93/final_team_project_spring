@@ -43,11 +43,11 @@ public class ProductRestController {
     }
 
     // 상품 수정
-    @PostMapping("/product/update/{id}")
+    @PostMapping("/products/update/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable Integer id,
             @RequestBody ProductUpdateReqDTO productUpdateReqDTO) {
-        productService.updateProductWithProductPics(id, productUpdateReqDTO);
-        return ResponseEntity.ok().body(ApiUtils.success("ok"));
+        ProductResponse.ProductUpdateRespDTO responseDTO = productService.updateProductWithProductPics(id, productUpdateReqDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
 
     }
 
