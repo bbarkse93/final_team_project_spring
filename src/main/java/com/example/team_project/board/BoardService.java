@@ -1,26 +1,18 @@
 package com.example.team_project.board;
 
 import java.util.List;
-
-import com.example.team_project.product.ProductResponse;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.example.team_project._core.erroes.exception.Exception404;
-import com.example.team_project.board.BoardResponse.BoardDetailRespDTO;
-import com.example.team_project.board.board_pic.BoardPic;
-import com.example.team_project.board.board_pic.BoardPicJPARepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project.board.BoardRequest.BoardUpdateReqDTO;
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_category.BoardCategoryJPARepository;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.board.board_pic.BoardPicJPARepository;
-import com.example.team_project.product.Product;
-import com.example.team_project.product.product_pic.ProductPic;
 
 import lombok.RequiredArgsConstructor;
 
@@ -66,19 +58,17 @@ public class BoardService {
 
     // 동네 생활 게시글 등록
     @Transactional
-    public BoardResponse.WriteRespDTO saveBoardWithBoardPics(BoardRequest.WriteReqDTO writeReqDTO) {
-        Board board = boardJPARepository.save(writeReqDTO.toEntity()); // board 등록
-        System.out.println("글등록 : "+ board.getBoardTitle());
+    public BoardResponse.BoardWriteRespDTO saveBoardWithBoardPics(BoardRequest.BoardWriteReqDTO boardWriteReqDTO) {
+        Board board = boardJPARepository.save(boardWriteReqDTO.toEntity()); // board 등록
 
-        List<BoardPic> boardPics = writeReqDTO.getBoardPics();
+        List<String> boardPicList = boardWriteReqDTO.getBoardPics();
 
         for (String boardPic : boardPicList) {
 
             boardPicJPARepository.mSave(boardPic, board.getId());
         }
 
-
-        List<BoardPic> boardPicList = boardPicJPARepository.findByBoardId(board.getId());
+        List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
         BoardCategory boardcCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
                 .orElseThrow(() -> new Exception404("Category를 찾을 수 없습니다."));
 
@@ -86,21 +76,29 @@ public class BoardService {
     }
 
         // 동네 생활 게시글 수정
-    @Transactional
-    public BoardResponse.BoardUpdateRespDTO updateBoardWithBoardPics(Integer id, BoardUpdateReqDTO updateReqDTO) {
-        Board board = boardJPARepository.findById(id)
-                .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
-
-        boardJPARepository.updateBoard(
-                board.getId(),
-                updateReqDTO.getBoardContent(),
-                updateReqDTO.getBoardTitle());
-
-        List<BoardPic> boardPics = updateReqDTO.getBoardPics();
-
-        for (BoardPic boardPic : boardPics) {
-            boardPicJPARepository.updateBoardPic(board.getId(),
-                    boardPic.getBoardPicUrl());
+        @Transactional
+        public BoardResponse.BoardUpdateRespDTO updateBoardWithBoardPics(Integer id, BoardUpdateReqDTO updateReqDTO) {
+            Board board = boardJPARepository.findById(id)
+                    .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
+    
+            boardJPARepository.updateBoard(
+                    board.getId(),
+                    updateReqDTO.getBoardContent(),
+                    updateReqDTO.getBoardTitle());
+    
+            List<BoardPic> boardPics = updateReqDTO.getBoardPics();
+    
+            for (BoardPic boardPic : boardPics) {
+                boardPicJPARepository.updateBoardPic(board.getId(),
+                        boardPic.getBoardPicUrl());
+            }
+    
+            Integer boardCategoryId = updateReqDTO.getBoardCategoryId();
+            Optional<BoardCategory> optionalCategory = boardCategoryJPARepository.findById(boardCategoryId);
+            BoardCategory newCategory = optionalCategory.get();
+            board.setBoardCategory(newCategory);
+            boardJPARepository.save(board);
+    
+            return new BoardResponse.BoardUpdateRespDTO(board, boardPics);
         }
-
 }
