@@ -1,20 +1,14 @@
 package com.example.team_project.board;
 
 import java.util.List;
-
-import com.example.team_project.product.ProductResponse;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.example.team_project._core.erroes.exception.Exception404;
-import com.example.team_project.board.BoardResponse.BoardDetailRespDTO;
-import com.example.team_project.board.board_pic.BoardPic;
-import com.example.team_project.board.board_pic.BoardPicJPARepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project.board.BoardRequest.BoardUpdateReqDTO;
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_category.BoardCategoryJPARepository;
 import com.example.team_project.board.board_pic.BoardPic;
@@ -81,6 +75,47 @@ public class BoardService {
         .orElseThrow(() -> new Exception404("Category를 찾을 수 없습니다."));
 
         return new BoardResponse.BoardWriteRespDTO(board, boardPics, boardcCategory);
+    }
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // 동네 생활 게시글 삭제
+    @Transactional
+    public void deleteBoard(int boardId) {
+            // 먼저 해당 게시글의 이미지를 삭제
+        List<BoardPic> boardPics =boardPicJPARepository.findByBoardId(boardId);
+            for (BoardPic boardPic : boardPics) {
+                boardPicJPARepository.delete(boardPic);
+            }
+
+            // 그 다음 게시글을 삭제
+            boardJPARepository.deleteById(boardId);
     }
 
 }

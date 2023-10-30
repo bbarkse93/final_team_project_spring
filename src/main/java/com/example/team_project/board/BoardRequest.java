@@ -3,7 +3,6 @@ package com.example.team_project.board;
 import java.util.List;
 
 import com.example.team_project.board.board_category.BoardCategory;
-import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.user.User;
 
 import lombok.Getter;

@@ -6,11 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface BoardPicJPARepository extends JpaRepository<BoardPic, Integer> {
 
-    List<BoardPic> findByBoardId(Integer boardId);
+    @Query(value = "select b from BoardPic b where b.board.id = :id")
+    List<BoardPic> findByBoardId(@Param("id") Integer id);
+
+    // List<BoardPic> findByBoardId(Integer boardId);
 
     @Modifying
     @Query(value = "INSERT INTO board_pic_tb (`board_pic_url`, `board_id`) VALUES (:boardPicUrl, :boardId)", nativeQuery = true)
