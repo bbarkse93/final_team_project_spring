@@ -3,7 +3,6 @@ package com.example.team_project.product;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.team_project.board.BoardResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,13 +27,14 @@ public class ProductService {
 
         List<ProductResponse.ProductListRespDTO> responseDTO = dtos.stream()
                 .distinct()
-                .map(p ->{
+                .map(p -> {
                     ProductResponse.ProductListRespDTO productDTO = new ProductResponse.ProductListRespDTO(p);
-                    List<ProductResponse.ProductListRespDTO.ProductPicDTO> productPicDTOs =
-                            p.getProductPics().isEmpty() ? null : p.getProductPics().stream()
-                            .limit(1)
-                            .map(pp -> new ProductResponse.ProductListRespDTO.ProductPicDTO(pp))
-                            .collect(Collectors.toList());
+                    List<ProductResponse.ProductListRespDTO.ProductPicDTO> productPicDTOs = p.getProductPics().isEmpty()
+                            ? null
+                            : p.getProductPics().stream()
+                                    .limit(1)
+                                    .map(pp -> new ProductResponse.ProductListRespDTO.ProductPicDTO(pp))
+                                    .collect(Collectors.toList());
                     productDTO.setProductPics((productPicDTOs));
                     return productDTO;
                 })
@@ -56,7 +56,8 @@ public class ProductService {
 
     // 상품 등록
     @Transactional
-    public ProductResponse.ProductWriteRespDTO saveProductWithProductPics(ProductRequest.ProductWriteReqDTO productWriteReqDTO) {
+    public ProductResponse.ProductWriteRespDTO saveProductWithProductPics(
+            ProductRequest.ProductWriteReqDTO productWriteReqDTO) {
         Product product = productJPARepository.save(productWriteReqDTO.toEntity());
         List<String> productPicList = productWriteReqDTO.getProductPics();
 
@@ -71,7 +72,8 @@ public class ProductService {
 
     // 상품 수정
     @Transactional
-    public void updateProductWithProductPics(Integer id, ProductUpdateReqDTO productUpdateReqDTO) {
+    public ProductResponse.ProductUpdateRespDTO updateProductWithProductPics(Integer id,
+            ProductUpdateReqDTO productUpdateReqDTO) {
         Product product = productJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
 
@@ -81,16 +83,16 @@ public class ProductService {
                 productUpdateReqDTO.getProductDescription(),
                 productUpdateReqDTO.getProductName());
 
-
         List<ProductPic> productPics = productUpdateReqDTO.getProductPics();
 
         for (ProductPic productPic : productPics) {
-            System.out.println(productPic.getProductPicUrl());
-            // productPicJPARepository.updateProductPic(productPic);
             productPicJPARepository.updateProductPic(product.getId(),
-            productPic.getProductPicUrl());
+                    productPic.getProductPicUrl());
         }
+        
+        List<ProductPic> productPicsUpdate = productPicJPARepository.findByProductId(product.getId());
 
+        return new ProductResponse.ProductUpdateRespDTO(product, productPicsUpdate);
     }
 
 }

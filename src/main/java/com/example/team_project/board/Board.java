@@ -54,4 +54,7 @@ public class Board {
         this.boardCreatedAt = boardCreatedAt;
     }
 
+    public void setBoardCategory(BoardCategory boardCategory) {
+        this.boardCategory = boardCategory;
+    }
 }
