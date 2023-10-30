@@ -1,13 +1,11 @@
 package com.example.team_project.board;
 
 import java.sql.Timestamp;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_pic.BoardPic;
-import com.example.team_project.product.ProductResponse;
 import com.example.team_project.user.User;
 
 import lombok.Getter;

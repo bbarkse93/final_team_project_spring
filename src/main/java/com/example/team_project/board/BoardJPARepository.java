@@ -1,6 +1,7 @@
 package com.example.team_project.board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.repository.query.Param;
@@ -16,4 +17,19 @@ public interface BoardJPARepository extends JpaRepository<Board, Integer> {
 
     @Query(value = "SELECT b, c, p , u FROM Board b INNER JOIN b.boardCategory c LEFT JOIN b.boardPics p INNER JOIN b.user u")
     List<Board> mFindAllJoinBoardCategoryAndBoardPic();
+
+    @Modifying
+    @Query("UPDATE Board b SET b.boardContent = :boardContent, b.boardTitle = :boardTitle WHERE b.id = :boardId")
+    int updateBoard(@Param("boardId") int boardId, @Param("boardContent") String boardContent, @Param("boardTitle") String boardTitle);
+
+    // @Modifying
+    // @Query("UPDATE Board b SET b.boardContent = :boardContent, b.boardTitle = :boardTitle, b.boardCategory = :boardCategory WHERE b.id = :boardId")
+    // int updateBoard(@Param("boardId") int boardId, @Param("boardContent") String boardContent, @Param("boardTitle") String boardTitle, @Param("boardCategory") int boardCategory);
+
+    // @Modifying
+    // @Query("UPDATE Board b SET b.boardCategoryId = :boardCategoryId WHERE b.id = :boardId")
+    // int updateBoardCategory(@Param("boardId") Integer boardId, @Param("boardCategoryId") Integer boardCategoryId);
+
+    // Board findByBoardCategoryId(Integer boardCategoryId);
+
 }
