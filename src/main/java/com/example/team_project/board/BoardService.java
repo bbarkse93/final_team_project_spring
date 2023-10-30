@@ -65,23 +65,22 @@ public class BoardService {
 
     // 동네 생활 게시글 등록
     @Transactional
-    public BoardResponse.BoardWriteRespDTO saveBoardWithBoardPics(BoardRequest.ProductWriteReqDTO writeReqDTO) {
-        Board board = boardJPARepository.save(writeReqDTO.toEntity()); // board 등록
-        System.out.println("글등록 : "+ board.getBoardTitle());
+    public BoardResponse.BoardWriteRespDTO saveBoardWithBoardPics(BoardRequest.BoardWriteReqDTO boardWriteReqDTO) {
+        Board board = boardJPARepository.save(boardWriteReqDTO.toEntity()); // board 등록
 
-        List<BoardPic> boardPics = writeReqDTO.getBoardPics();
+        List<String> boardPicList = boardWriteReqDTO.getBoardPics();
 
-        for (BoardPic boardPic : boardPics) {
-            boardPic.setBoard(board);
-            boardPicJPARepository.save(boardPic);
+        for (String boardPic : boardPicList) {
+
+            boardPicJPARepository.mSave(boardPic, board.getId());
         }
 
 
-        List<BoardPic> boardPicList = boardPicJPARepository.findByBoardId(board.getId());
+        List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
         BoardCategory boardcCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
         .orElseThrow(() -> new Exception404("Category를 찾을 수 없습니다."));
 
-        return new BoardResponse.BoardWriteRespDTO(board, boardPicList, boardcCategory);
+        return new BoardResponse.BoardWriteRespDTO(board, boardPics, boardcCategory);
     }
 
 }

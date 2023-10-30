@@ -15,6 +15,8 @@ public interface ProductPicJPARepository extends JpaRepository<ProductPic, Integ
     @Modifying
     @Query("UPDATE ProductPic p SET p.productPicUrl = :productPicUrl WHERE p.product.id = :id")
     int updateProductPic(@Param("id") int id, @Param("productPicUrl") String productPicUrl);
-    // List<ProductPic> findByProduct_Id(Integer productId);
 
+    @Modifying
+    @Query(value = "INSERT INTO product_pic_tb (`product_pic_url`, `product_id`) VALUES (:productPicUrl, :productId)", nativeQuery = true)
+    int mSave(@Param("productPicUrl") String productPicUrl, @Param("productId") Integer productId);
 }

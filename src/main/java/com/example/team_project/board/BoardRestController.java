@@ -43,8 +43,8 @@ public class BoardRestController {
 
     // 동네생활 게시글 등록
     @PostMapping("/boards/write")
-    public ResponseEntity<?> WriteBoard(@RequestBody BoardRequest.ProductWriteReqDTO ProductWriteReqDTO) {
-        BoardResponse.BoardWriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(ProductWriteReqDTO);
+    public ResponseEntity<?> WriteBoard(@RequestBody BoardRequest.BoardWriteReqDTO boardWriteReqDTO) {
+        BoardResponse.BoardWriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(boardWriteReqDTO);
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }

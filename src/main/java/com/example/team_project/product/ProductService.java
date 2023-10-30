@@ -58,14 +58,14 @@ public class ProductService {
     @Transactional
     public ProductResponse.ProductWriteRespDTO saveProductWithProductPics(ProductRequest.ProductWriteReqDTO productWriteReqDTO) {
         Product product = productJPARepository.save(productWriteReqDTO.toEntity());
-        List<ProductPic> productPics = productWriteReqDTO.getProductPics();
+        List<String> productPicList = productWriteReqDTO.getProductPics();
 
-        for (ProductPic productPic : productPics) {
-            productPic.setProduct(product);
-           productPicJPARepository.save(productPic);
+        for (String productPic : productPicList) {
+            productPicJPARepository.mSave(productPic, product.getId());
         }
-      
-      return new ProductResponse.ProductWriteRespDTO(product, productPics);
+        List<ProductPic> productPics = productPicJPARepository.findByProductId(product.getId());
+
+        return new ProductResponse.ProductWriteRespDTO(product, productPics);
       
     }
 
