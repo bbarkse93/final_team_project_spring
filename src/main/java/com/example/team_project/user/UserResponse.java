@@ -58,12 +58,4 @@ public class UserResponse {
 
     }
 
-
-
-//    @Getter
-//    @AllArgsConstructor
-//    public static class TokenDTO{
-//        private String jwt;
-//        private User user;
-//    }
 }

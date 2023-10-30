@@ -20,7 +20,7 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String content;
+    private String comment;
 
     @CreationTimestamp
     private Timestamp createdAt;
@@ -32,9 +32,9 @@ public class Reply {
     private Board board;
 
     @Builder
-    public Reply(Integer id, String content, Timestamp createdAt, User user, Board board) {
+    public Reply(Integer id, String comment, Timestamp createdAt, User user, Board board) {
         this.id = id;
-        this.content = content;
+        this.comment = comment;
         this.createdAt = createdAt;
         this.user = user;
         this.board = board;

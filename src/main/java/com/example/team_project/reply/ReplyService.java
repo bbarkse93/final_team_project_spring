@@ -21,9 +21,9 @@ public class ReplyService {
     }
 
     // 댓글 등록
-    public ReplyResponse.ReplyWriteRespDTO save(){
-
-        return null;
+    public ReplyResponse.ReplyWriteRespDTO save(ReplyRequest.ReplyWriteReqDTO replyWriteReqDTO){
+        Reply reply = replyJPARepository.save(replyWriteReqDTO.toEntity());
+        return new ReplyResponse.ReplyWriteRespDTO(reply);
     }
 
     // 댓글 수정
