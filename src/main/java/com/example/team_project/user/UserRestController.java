@@ -10,10 +10,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import com.example.team_project._core.utils.ApiUtils;
 
@@ -28,21 +28,27 @@ public class UserRestController {
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.UserJoinReqDTO userJoinReqDTO, Errors errors) {
         UserResponse.UserJoinRespDTO responseDTO = userService.join(userJoinReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
-        }
-
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.UserLoginReqDTO userLoginReqDTO, Errors errors) {
         UserResponse.UserLoginRespDTO responseDTO = userService.login(userLoginReqDTO);
-            String jwt = responseDTO.getJwt();
+        String jwt = responseDTO.getJwt();
 
         return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(responseDTO));
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<?> logout(){
+    public ResponseEntity<?> logout() {
         session.invalidate();
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
+    // 회원정보 수정
+    @PostMapping("/user/update/{id}")
+    public ResponseEntity<?> update(@RequestBody @Valid UserRequest.UserUpdateReqDTO userUpdateReqDTO,
+            @PathVariable Integer id, Error error) {
+        UserResponse.UserUpdateRespDTO responseDTO = userService.update(userUpdateReqDTO, id);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 }

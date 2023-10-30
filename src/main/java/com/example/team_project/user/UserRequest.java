@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 public class UserRequest {
 
     @Getter
@@ -47,5 +46,21 @@ public class UserRequest {
                     .password(password)
                     .build();
         }
+    }
+
+    @Getter
+    @Setter
+    @ToString
+    public static class UserUpdateReqDTO {
+        private String username;
+        private String password;
+
+        public User toEntity() {
+            return User.builder()
+                    .username(username)
+                    .password(password)
+                    .build();
+        }
+
     }
 }

@@ -44,4 +44,19 @@ public class UserResponse {
         }
     }
 
+    @Getter
+    @Setter
+    public static class UserUpdateRespDTO {
+        private Integer id;
+        private String username;
+        private String password;
+
+        public UserUpdateRespDTO(User user) {
+            this.id = user.getId();
+            this.username = user.getUsername();
+            this.password = user.getPassword();
+        }
+
+    }
+
 }
