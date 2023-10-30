@@ -121,6 +121,7 @@ public class ProductResponse {
         private String productDescription;
         private Integer productPrice;
         private Timestamp createdAt;
+        private UserDTO user;
         private List<ProductPicDTO> productPics;
 
         public ProductWriteRespDTO(Product product, List<ProductPic> productPics) {
@@ -129,6 +130,7 @@ public class ProductResponse {
             this.productDescription = product.getProductDescription();
             this.productPrice = product.getProductPrice();
             this.createdAt = product.getProductCreatedAt();
+            this.user = new UserDTO(product.getUser());
             this.productPics = productPics.stream().map(p -> new ProductPicDTO(p)).collect(Collectors.toList());
         }
 
@@ -141,6 +143,20 @@ public class ProductResponse {
             public ProductPicDTO(ProductPic productPic) {
                 this.productPicId = productPic.getId();
                 this.productPicUrl = productPic.getProductPicUrl();
+            }
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO{
+            private Integer userId;
+            private String username;
+            private String location;
+
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.username = user.getUsername();
+                this.location = user.getLocation();
             }
         }
     }

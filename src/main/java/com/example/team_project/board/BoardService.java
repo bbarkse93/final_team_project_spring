@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
-import com.example.team_project.board.BoardRequest.UpdateReqDTO;
+import com.example.team_project.board.BoardRequest.BoardUpdateReqDTO;
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_category.BoardCategoryJPARepository;
 import com.example.team_project.board.board_pic.BoardPic;
@@ -58,27 +58,26 @@ public class BoardService {
 
     // 동네 생활 게시글 등록
     @Transactional
-    public BoardResponse.BoardWriteRespDTO saveBoardWithBoardPics(BoardRequest.ProductWriteReqDTO writeReqDTO) {
-        Board board = boardJPARepository.save(writeReqDTO.toEntity()); // board 등록
-        System.out.println("글등록 : " + board.getBoardTitle());
+    public BoardResponse.BoardWriteRespDTO saveBoardWithBoardPics(BoardRequest.BoardWriteReqDTO boardWriteReqDTO) {
+        Board board = boardJPARepository.save(boardWriteReqDTO.toEntity()); // board 등록
 
-        List<BoardPic> boardPics = writeReqDTO.getBoardPics();
+        List<String> boardPicList = boardWriteReqDTO.getBoardPics();
 
-        for (BoardPic boardPic : boardPics) {
-            boardPic.setBoard(board);
-            boardPicJPARepository.save(boardPic);
+        for (String boardPic : boardPicList) {
+
+            boardPicJPARepository.mSave(boardPic, board.getId());
         }
 
-        List<BoardPic> boardPicList = boardPicJPARepository.findByBoardId(board.getId());
+        List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
         BoardCategory boardcCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
                 .orElseThrow(() -> new Exception404("Category를 찾을 수 없습니다."));
 
-        return new BoardResponse.BoardWriteRespDTO(board, boardPicList, boardcCategory);
+        return new BoardResponse.BoardWriteRespDTO(board, boardPics, boardcCategory);
     }
 
-    // 동네 생활 게시글 수정
+        // 동네 생활 게시글 수정
     @Transactional
-    public BoardResponse.BoardUpdateRespDTO updateBoardWithBoardPics(Integer id, UpdateReqDTO updateReqDTO) {
+    public BoardResponse.BoardUpdateRespDTO updateBoardWithBoardPics(Integer id, BoardUpdateReqDTO updateReqDTO) {
         Board board = boardJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
 

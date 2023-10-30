@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.team_project._core.utils.ApiUtils;
-import com.example.team_project.board.BoardRequest.UpdateReqDTO;
+import com.example.team_project.board.BoardRequest.BoardUpdateReqDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,8 +42,8 @@ public class BoardRestController {
 
     // 동네생활 게시글 등록
     @PostMapping("/boards/write")
-    public ResponseEntity<?> WriteBoard(@RequestBody BoardRequest.ProductWriteReqDTO ProductWriteReqDTO) {
-        BoardResponse.BoardWriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(ProductWriteReqDTO);
+    public ResponseEntity<?> WriteBoard(@RequestBody BoardRequest.BoardWriteReqDTO boardWriteReqDTO) {
+        BoardResponse.BoardWriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(boardWriteReqDTO);
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
@@ -51,7 +51,7 @@ public class BoardRestController {
         // 동네 생활 게시글 수정
     @PostMapping("/boards/update/{id}")
     public ResponseEntity<?> updateBoard(@PathVariable Integer id,
-            @RequestBody UpdateReqDTO updateReqDTO) {
+            @RequestBody BoardUpdateReqDTO updateReqDTO) {
         BoardResponse.BoardUpdateRespDTO responseDTO = boardService.updateBoardWithBoardPics(id, updateReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
