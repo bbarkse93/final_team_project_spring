@@ -54,7 +54,7 @@ public class UserResponse {
         public UserUpdateRespDTO(User user) {
             this.id = user.getId();
             this.username = user.getUsername();
-            this.password = user.getPassword();
+            this.password = null;
         }
 
     }
