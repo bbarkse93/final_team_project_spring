@@ -144,6 +144,39 @@ public class ProductResponse {
             }
         }
     }
+
+    // 상품 수정        
+    @Getter
+    @Setter
+    public static class ProductUpdateRespDTO{
+        private Integer id;
+        private String productName;
+        private String productDescription;
+        private Integer productPrice;
+        private Timestamp createdAt;
+        private List<ProductPicDTO> productPics;
+
+        public ProductUpdateRespDTO(Product product, List<ProductPic> productPics) {
+            this.id = product.getId();
+            this.productName = product.getProductName();
+            this.productDescription = product.getProductDescription();
+            this.productPrice = product.getProductPrice();
+            this.createdAt = product.getProductCreatedAt();
+            this.productPics = productPics.stream().map(p -> new ProductPicDTO(p)).collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public static class ProductPicDTO{
+            private Integer productPicId;
+            private String productPicUrl;
+
+            public ProductPicDTO(ProductPic productPic) {
+                this.productPicId = productPic.getId();
+                this.productPicUrl = productPic.getProductPicUrl();
+            }
+        }
+    }
 }
 
 

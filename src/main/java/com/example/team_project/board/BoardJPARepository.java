@@ -21,15 +21,4 @@ public interface BoardJPARepository extends JpaRepository<Board, Integer> {
     @Modifying
     @Query("UPDATE Board b SET b.boardContent = :boardContent, b.boardTitle = :boardTitle WHERE b.id = :boardId")
     int updateBoard(@Param("boardId") int boardId, @Param("boardContent") String boardContent, @Param("boardTitle") String boardTitle);
-
-    // @Modifying
-    // @Query("UPDATE Board b SET b.boardContent = :boardContent, b.boardTitle = :boardTitle, b.boardCategory = :boardCategory WHERE b.id = :boardId")
-    // int updateBoard(@Param("boardId") int boardId, @Param("boardContent") String boardContent, @Param("boardTitle") String boardTitle, @Param("boardCategory") int boardCategory);
-
-    // @Modifying
-    // @Query("UPDATE Board b SET b.boardCategoryId = :boardCategoryId WHERE b.id = :boardId")
-    // int updateBoardCategory(@Param("boardId") Integer boardId, @Param("boardCategoryId") Integer boardCategoryId);
-
-    // Board findByBoardCategoryId(Integer boardCategoryId);
-
 }

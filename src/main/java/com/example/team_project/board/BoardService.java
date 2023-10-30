@@ -78,7 +78,7 @@ public class BoardService {
 
     // 동네 생활 게시글 수정
     @Transactional
-    public void updateBoardWithBoardPics(Integer id, UpdateReqDTO updateReqDTO) {
+    public BoardResponse.BoardUpdateRespDTO updateBoardWithBoardPics(Integer id, UpdateReqDTO updateReqDTO) {
         Board board = boardJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
 
@@ -99,5 +99,7 @@ public class BoardService {
         BoardCategory newCategory = optionalCategory.get();
         board.setBoardCategory(newCategory);
         boardJPARepository.save(board);
+
+        return new BoardResponse.BoardUpdateRespDTO(board, boardPics);
     }
 }

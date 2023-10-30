@@ -27,7 +27,7 @@ public class BoardRestController {
     public ResponseEntity<?> BoardList(){
         List<BoardResponse.BoardListRespDTO> responseDTO = boardService.FindAll();
 
-        return ResponseEntity.ok().body(responseDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
 
@@ -49,10 +49,10 @@ public class BoardRestController {
     }
 
         // 동네 생활 게시글 수정
-    @PostMapping("/board/update/{id}")
+    @PostMapping("/boards/update/{id}")
     public ResponseEntity<?> updateBoard(@PathVariable Integer id,
             @RequestBody UpdateReqDTO updateReqDTO) {
-        boardService.updateBoardWithBoardPics(id, updateReqDTO);
-        return ResponseEntity.ok().body(ApiUtils.success("ok"));
+        BoardResponse.BoardUpdateRespDTO responseDTO = boardService.updateBoardWithBoardPics(id, updateReqDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 }
