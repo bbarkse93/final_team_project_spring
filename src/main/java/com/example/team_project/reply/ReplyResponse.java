@@ -1,5 +1,6 @@
 package com.example.team_project.reply;
 
+import com.example.team_project.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,15 +22,29 @@ public class ReplyResponse {
         private Integer id;
         private String comment;
         private Integer boardId;
-        private Integer userId;
         private Timestamp createdAt;
+        private UserDTO user;
 
         public ReplyWriteRespDTO(Reply reply) {
             this.id = reply.getId();
             this.comment = reply.getComment();
             this.boardId = reply.getBoard().getId();
-            this.userId = reply.getUser().getId();
+            this.user = new UserDTO(reply.getUser());
             this.createdAt = reply.getCreatedAt();
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO{
+            private Integer userId;
+            private String username;
+            private String userPicUrl;
+
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.username = user.getUsername();
+                this.userPicUrl = user.getUserPicUrl();
+            }
         }
     }
 
