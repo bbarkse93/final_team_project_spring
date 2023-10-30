@@ -41,9 +41,10 @@ public class UserService {
         }
 
         //TODO 1 : JWT토큰 body에 안나오고 header에만 나오도록 수정
+
         String jwt = JwtTokenUtils.create(user);
 
-        return new UserResponse.UserLoginRespDTO(user, jwt);
+        return new UserResponse.UserLoginRespDTO(jwt, user);
     }
 
 }

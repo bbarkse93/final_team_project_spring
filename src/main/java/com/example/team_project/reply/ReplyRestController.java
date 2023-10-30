@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,9 +27,9 @@ public class ReplyRestController {
 
     // 댓글 등록
     @PostMapping("/replies/write")
-    public ResponseEntity<?> WriteReply() {
-
-        return ResponseEntity.ok().body(ApiUtils.success(null));
+    public ResponseEntity<?> WriteReply(@RequestBody ReplyRequest.ReplyWriteReqDTO replyWriteReqDTO) {
+        ReplyResponse.ReplyWriteRespDTO responseDTO = replyService.save(replyWriteReqDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
 

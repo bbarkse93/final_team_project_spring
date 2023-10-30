@@ -1,5 +1,7 @@
 package com.example.team_project.reply;
 
+import com.example.team_project.board.Board;
+import com.example.team_project.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +13,16 @@ public class ReplyRequest {
     @Setter
     @ToString
     public static class ReplyWriteReqDTO{
-
+        private Integer boardId;
+        private String comment;
+        private Integer userId;
+        public Reply toEntity(){
+            return Reply.builder()
+                    .comment(comment)
+                    .board(Board.builder().id(getBoardId()).build())
+                    .user(User.builder().id(getUserId()).build())
+                    .build();
+        }
     }
 
     @Getter
