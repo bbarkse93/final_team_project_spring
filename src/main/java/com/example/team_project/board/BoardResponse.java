@@ -1,13 +1,11 @@
 package com.example.team_project.board;
 
 import java.sql.Timestamp;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_pic.BoardPic;
-import com.example.team_project.product.ProductResponse;
 import com.example.team_project.user.User;
 
 import lombok.Getter;
@@ -176,7 +174,51 @@ public class BoardResponse {
     @Getter
     @Setter
     public static class BoardUpdateRespDTO {
+        private Integer id;
+        private String boardTitle;
+        private String boardContent;
+        private String boardCategory;
+        private UserDTO user;
+        private List<BoardPicDTO> boardPics;
 
+        public BoardUpdateRespDTO(Board board, List<BoardPic> boardPics) {
+            this.id = board.getId();
+            this.boardTitle = board.getBoardTitle();
+            this.boardContent = board.getBoardContent();
+            this.boardCategory = board.getBoardCategory().getCategory();
+            this.user = new UserDTO(board.getUser());
+            this.boardPics = boardPics.stream()
+                    .map(t -> new BoardPicDTO(t))
+                    .collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO{
+            private Integer userId;
+            private String username;
+            private String location;
+
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.username = user.getUsername();
+                this.location = user.getLocation();
+            }
+
+        }
+
+        @Getter
+        @Setter
+        public static class BoardPicDTO{
+            private Integer boardPicId;
+            private String boardPicUrl;
+
+            public BoardPicDTO(BoardPic boardPic) {
+                this.boardPicId = boardPic.getId();
+                this.boardPicUrl = boardPic.getBoardPicUrl();
+            }
+
+        }
     }
 
     // 동네생활 게시글 삭제

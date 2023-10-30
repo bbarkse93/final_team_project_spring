@@ -1,7 +1,8 @@
 package com.example.team_project.board;
 
 
-import lombok.Getter;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.team_project._core.utils.ApiUtils;
 
 import lombok.RequiredArgsConstructor;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
