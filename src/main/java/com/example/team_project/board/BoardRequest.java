@@ -38,12 +38,8 @@ public class BoardRequest {
     @Getter
     @Setter
     @ToString
-    public static class BoardUpdateReqDTO {
-        private String boardTitle;
-        private String boardContent;
-        private Integer boardCategoryId;
-        private Integer userId;
-        private List<BoardPic> boardPics;
+    public static class UpdateReqDTO {
+
     }
 
     @Getter
