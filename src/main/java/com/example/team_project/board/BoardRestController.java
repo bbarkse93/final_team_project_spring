@@ -1,7 +1,5 @@
 package com.example.team_project.board;
 
-import lombok.Getter;
-
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.team_project._core.utils.ApiUtils;
@@ -66,4 +65,10 @@ public class BoardRestController {
         }
     }
 
+    // 동네생활 게시글 검색
+    @GetMapping("/boards/search")
+    public ResponseEntity<?> searchProducts(@RequestParam("keyword") String keyword) {
+        List<BoardResponse.BoardSearchRespDTO> responseDTO = boardService.searchBoardsByKeyword(keyword);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 }
