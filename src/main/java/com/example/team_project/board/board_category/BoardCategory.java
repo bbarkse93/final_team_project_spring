@@ -17,11 +17,11 @@ public class BoardCategory {
     @Id
     private Integer id;
 
-    private String Category;
+    private String category;
 
     @Builder
-    public BoardCategory(Integer id, String Category) {
+    public BoardCategory(Integer id, String category) {
         this.id = id;
-        this.Category = Category;
+        this.category = category;
     }
 }

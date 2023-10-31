@@ -45,17 +45,15 @@ public class UserService {
             throw new Exception400("패스워드가 잘못되었습니다.");
         }
 
-        // TODO 1 : JWT토큰 body에 안나오고 header에만 나오도록 수정
         String jwt = JwtTokenUtils.create(user);
 
-        return new UserResponse.UserLoginRespDTO(user, jwt);
+        return new UserResponse.UserLoginRespDTO(jwt, user);
     }
 
     // 회원정보수정
     @Transactional
     public UserResponse.UserUpdateRespDTO update(UserRequest.UserUpdateReqDTO userUpdateReqDTO, Integer userId) {
 
-        // 사용자디비에서 찾아보기
         User user = userJPARepository.findByUsername(userUpdateReqDTO.getUsername());
         if (user.getUsername() == null) {
             throw new Exception404("사용자를 찾을 수 없습니다.");
@@ -66,24 +64,6 @@ public class UserService {
             return new UserResponse.UserUpdateRespDTO(userOP);
         }
 
-        // }
-
-        // if (userUpdateReqDTO.getUsername() == null || userUpdateReqDTO.getPassword()
-        // == null) {
-        // 오류 처리 또는 예외 발생
-        // }
-
-        // System.out.println("유저 아이디: " + userdto.getId());
-        // System.out.println("유저 네임: " + userdto.getUsername());
-        // System.out.println("유저 비밀번호: " + userdto.getPassword());
-        // 사용자정보업데이트
-        // UserRequest.(userUpdateReqDTO.getUsername());
-        // user.setPassword(userUpdateReqDTO.getPassword());
-
-        // 디비에 업데이트된 사용자 정보 저장
-        // userJPARepository.save(user);
-
-        // 업데이트된 사용자정보를 응답dto로 변환하여반환
     }
 
 }
