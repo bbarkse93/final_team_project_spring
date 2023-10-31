@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.team_project._core.utils.ApiUtils;
@@ -19,7 +20,6 @@ import java.util.List;
 public class ProductRestController {
 
     private final ProductService productService;
-
 
     // 상품 목록보기
     @GetMapping("/products")
@@ -46,7 +46,8 @@ public class ProductRestController {
     @PostMapping("/products/update/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable Integer id,
             @RequestBody ProductUpdateReqDTO productUpdateReqDTO) {
-        ProductResponse.ProductUpdateRespDTO responseDTO = productService.updateProductWithProductPics(id, productUpdateReqDTO);
+        ProductResponse.ProductUpdateRespDTO responseDTO = productService.updateProductWithProductPics(id,
+                productUpdateReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
 
     }
@@ -61,4 +62,11 @@ public class ProductRestController {
     // return new ResponseEntity<>("게시글 삭제 실패", HttpStatus.INTERNAL_SERVER_ERROR);
     // }
     // }
+
+    // 상품 검색
+    @GetMapping("/products/search")
+    public ResponseEntity<?> searchProducts(@RequestParam("keyword") String keyword) {
+        List<ProductResponse.ProductSearchRespDTO> responseDTO = productService.searchProductsByKeyword(keyword);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 }

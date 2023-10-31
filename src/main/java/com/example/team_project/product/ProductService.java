@@ -67,7 +67,7 @@ public class ProductService {
         List<ProductPic> productPics = productPicJPARepository.findByProductId(product.getId());
 
         return new ProductResponse.ProductWriteRespDTO(product, productPics);
-      
+
     }
 
     // 상품 수정
@@ -89,24 +89,47 @@ public class ProductService {
             productPicJPARepository.updateProductPic(product.getId(),
                     productPic.getProductPicUrl());
         }
-        
+
         List<ProductPic> productPicsUpdate = productPicJPARepository.findByProductId(product.getId());
 
         return new ProductResponse.ProductUpdateRespDTO(product, productPicsUpdate);
     }
 
+    // @Transactional
+    // public void deleteProduct(int productId) {
+    // // 먼저 해당 게시글의 이미지를 삭제
+    // List<ProductPic> productPics =
+    // productPicJPARepository.findByProduct_Id(productId);
+    // for (ProductPic productPic : productPics) {
+    // productPicJPARepository.delete(productPic);
+    // }
+
+    // // 그 다음 게시글을 삭제
+    // productJPARepository.deleteById(productId);
+    // }
+    // }
+
+    // 상품 검색
+    public List<ProductResponse.ProductSearchRespDTO> searchProductsByKeyword(String keyword) {
+        List<Product> productList = productJPARepository.findByProductNameContaining(keyword);
+
+        List<ProductResponse.ProductSearchRespDTO> responseDTO = productList.stream()
+                .distinct()
+                .map(p -> {
+                    ProductResponse.ProductSearchRespDTO productDTO = new ProductResponse.ProductSearchRespDTO(p);
+                    List<ProductResponse.ProductSearchRespDTO.ProductPicDTO> productPicDTOs = p.getProductPics()
+                            .isEmpty()
+                                    ? null
+                                    : p.getProductPics().stream()
+                                            .limit(1)
+                                            .map(pp -> new ProductResponse.ProductSearchRespDTO.ProductPicDTO(pp))
+                                            .collect(Collectors.toList());
+                    productDTO.setProductPics((productPicDTOs));
+                    return productDTO;
+                })
+                .collect(Collectors.toList());
+
+        return responseDTO;
+    }
+
 }
-
-// @Transactional
-// public void deleteProduct(int productId) {
-// // 먼저 해당 게시글의 이미지를 삭제
-// List<ProductPic> productPics =
-// productPicJPARepository.findByProduct_Id(productId);
-// for (ProductPic productPic : productPics) {
-// productPicJPARepository.delete(productPic);
-// }
-
-// // 그 다음 게시글을 삭제
-// productJPARepository.deleteById(productId);
-// }
-// }

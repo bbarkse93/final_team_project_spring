@@ -50,6 +50,7 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductPic> productPics = new ArrayList<>();
 
+
     @Builder
     public Product(Integer id, String productName, String productDescription, Integer productPrice,
             Timestamp productCreatedAt, User user) {

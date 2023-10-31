@@ -193,6 +193,53 @@ public class ProductResponse {
             }
         }
     }
+
+    @Getter
+    @Setter
+    public static class ProductSearchRespDTO{
+        private Integer id;
+        private String productName;
+        private Integer productPrice;
+        private Timestamp productCreatedAt;
+        private UserDTO user;
+        private List<ProductPicDTO> productPics;
+
+        public ProductSearchRespDTO(Product product) {
+            this.id = product.getId();
+            this.productName = product.getProductName();
+            this.productPrice = product.getProductPrice();
+            this.productCreatedAt = product.getProductCreatedAt();
+            this.user = new UserDTO(product.getUser());
+            this.productPics = product.getProductPics().stream()
+                    .limit(1)
+                    .map(p -> new ProductPicDTO(p))
+                    .collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public static class ProductPicDTO {
+            private Integer productPicId;
+            private String productPicUrl;
+
+            public ProductPicDTO(ProductPic productPic) {
+                this.productPicId = productPic.getId();
+                this.productPicUrl = productPic.getProductPicUrl();
+            }
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO {
+            private Integer userId;
+            private String location;
+
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.location = user.getLocation();
+            }
+        }
+    }
 }
 
 
