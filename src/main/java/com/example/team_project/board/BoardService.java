@@ -75,30 +75,43 @@ public class BoardService {
         return new BoardResponse.BoardWriteRespDTO(board, boardPics, boardcCategory);
     }
 
-        // 동네 생활 게시글 수정
-        @Transactional
-        public BoardResponse.BoardUpdateRespDTO updateBoardWithBoardPics(Integer id, BoardUpdateReqDTO updateReqDTO) {
-            Board board = boardJPARepository.findById(id)
-                    .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
-    
-            boardJPARepository.updateBoard(
-                    board.getId(),
-                    updateReqDTO.getBoardContent(),
-                    updateReqDTO.getBoardTitle());
-    
-            List<BoardPic> boardPics = updateReqDTO.getBoardPics();
-    
-            for (BoardPic boardPic : boardPics) {
-                boardPicJPARepository.updateBoardPic(board.getId(),
-                        boardPic.getBoardPicUrl());
-            }
-    
-            Integer boardCategoryId = updateReqDTO.getBoardCategoryId();
-            Optional<BoardCategory> optionalCategory = boardCategoryJPARepository.findById(boardCategoryId);
-            BoardCategory newCategory = optionalCategory.get();
-            board.setBoardCategory(newCategory);
-            boardJPARepository.save(board);
-    
-            return new BoardResponse.BoardUpdateRespDTO(board, boardPics);
+    // 동네 생활 게시글 수정
+    @Transactional
+    public BoardResponse.BoardUpdateRespDTO updateBoardWithBoardPics(Integer id, BoardUpdateReqDTO updateReqDTO) {
+        Board board = boardJPARepository.findById(id)
+                .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
+
+        boardJPARepository.updateBoard(
+                board.getId(),
+                updateReqDTO.getBoardContent(),
+                updateReqDTO.getBoardTitle());
+
+        List<BoardPic> boardPics = updateReqDTO.getBoardPics();
+
+        for (BoardPic boardPic : boardPics) {
+            boardPicJPARepository.updateBoardPic(board.getId(),
+                    boardPic.getBoardPicUrl());
         }
+
+        Integer boardCategoryId = updateReqDTO.getBoardCategoryId();
+        Optional<BoardCategory> optionalCategory = boardCategoryJPARepository.findById(boardCategoryId);
+        BoardCategory newCategory = optionalCategory.get();
+        board.setBoardCategory(newCategory);
+        boardJPARepository.save(board);
+
+        return new BoardResponse.BoardUpdateRespDTO(board, boardPics);
+    }
+
+    // 동네 생활 게시글 삭제
+    @Transactional
+    public void deleteBoard(int boardId) {
+        // 먼저 해당 게시글의 이미지를 삭제
+        List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(boardId);
+        for (BoardPic boardPic : boardPics) {
+            boardPicJPARepository.delete(boardPic);
+        }
+
+        // 그 다음 게시글을 삭제
+        boardJPARepository.deleteById(boardId);
+    }
 }
