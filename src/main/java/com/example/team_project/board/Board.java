@@ -1,6 +1,7 @@
 package com.example.team_project.board;
 
 import com.example.team_project.board.board_category.BoardCategory;
+import com.example.team_project.board.board_like.BoardLike;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.user.User;
 import lombok.AccessLevel;
@@ -42,6 +43,9 @@ public class Board {
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<BoardPic> boardPics = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<BoardLike> boardLikes = new ArrayList<>();
 
     @Builder
     public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory,
