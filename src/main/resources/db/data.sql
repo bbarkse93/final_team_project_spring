@@ -17,6 +17,12 @@ INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (5, '�
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (6, '아이폰 사진', 3);
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (7, '아이폰 사진', 3);
 
+-- Product 좋아요
+INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (1, 1, 1);
+INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (2, 1, 2);
+INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (3, 2, 1);
+INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (4, 3, 2);
+
 -- Category 코드 테이블
 INSERT INTO board_category_tb (`id`, `category`) VALUES (1, '동네맛집');
 INSERT INTO board_category_tb (`id`, `category`) VALUES (2, '동네질문');
