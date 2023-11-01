@@ -17,6 +17,8 @@ public class BoardLike {
     @Id
     private Integer id;
 
+    private boolean status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -24,9 +26,9 @@ public class BoardLike {
     private Board board;
 
     @Builder
-
-    public BoardLike(Integer id, User user, Board board) {
+    public BoardLike(Integer id, boolean status, User user, Board board) {
         this.id = id;
+        this.status = status;
         this.user = user;
         this.board = board;
     }

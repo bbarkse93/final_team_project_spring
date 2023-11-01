@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_pic.BoardPic;
+import com.example.team_project.reply.Reply;
 import com.example.team_project.user.User;
 
 import lombok.Getter;
@@ -74,16 +75,21 @@ public class BoardResponse {
         private Timestamp boardCreatedAt;
         private UserDTO user;
         private List<BoardPicDTO> boardPics;
+        private List<ReplyDTO> replies;
 
-        public BoardDetailRespDTO(Board board, List<BoardPic> boardPics) {
+        public BoardDetailRespDTO(Board board) {
             this.id = board.getId();
             this.boardTitle = board.getBoardTitle();
             this.boardContent = board.getBoardContent();
             this.boardCategory = board.getBoardCategory().getCategory();
             this.boardCreatedAt = board.getBoardCreatedAt();
             this.user = new UserDTO(board.getUser());
-            this.boardPics = boardPics.stream()
+            this.boardPics = board.getBoardPics().stream()
                     .map(t -> new BoardPicDTO(t))
+                    .collect(Collectors.toList());
+            this.replies = board.getReplies()
+                    .stream()
+                    .map(r -> new ReplyDTO((r)))
                     .collect(Collectors.toList());
         }
 
@@ -115,6 +121,39 @@ public class BoardResponse {
                 this.userPicUrl = user.getUserPicUrl();
             }
         }
+
+        @Getter
+        @Setter
+        public static class ReplyDTO{
+            private Integer replyId;
+            private String comment;
+            private Timestamp replyCreatedAt;
+            private UserDTO user;
+
+            public ReplyDTO(Reply reply) {
+                this.replyId = reply.getId();
+                this.comment = reply.getComment();
+                this.user = new UserDTO(reply.getUser());
+                this.replyCreatedAt = reply.getReplyCreatedAt();
+            }
+
+            @Getter
+            @Setter
+            public static class UserDTO{
+                private Integer replyUserId;
+                private String userPicUrl;
+                private String nickname;
+                private String location;
+
+                public UserDTO(User user) {
+                    this.replyUserId = user.getId();
+                    this.userPicUrl = user.getUserPicUrl();
+                    this.nickname = user.getNickname();
+                    this.location = user.getLocation();
+                }
+            }
+        }
+
 
     }
 

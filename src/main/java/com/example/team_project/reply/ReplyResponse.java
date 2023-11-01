@@ -22,7 +22,7 @@ public class ReplyResponse {
         private Integer id;
         private String comment;
         private Integer boardId;
-        private Timestamp createdAt;
+        private Timestamp replyCreatedAt;
         private UserDTO user;
 
         public ReplyWriteRespDTO(Reply reply) {
@@ -30,7 +30,7 @@ public class ReplyResponse {
             this.comment = reply.getComment();
             this.boardId = reply.getBoard().getId();
             this.user = new UserDTO(reply.getUser());
-            this.createdAt = reply.getCreatedAt();
+            this.replyCreatedAt = reply.getReplyCreatedAt();
         }
 
         @Getter

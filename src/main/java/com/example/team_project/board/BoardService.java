@@ -51,9 +51,7 @@ public class BoardService {
         Board board = boardJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("게시물을 찾을 수 없습니다. ID:" + id));
 
-        List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
-        // TODO: boardPics에 값이 없으면 빈 리스트가 아닌 null이 출력되게 수정해야 함
-        return new BoardResponse.BoardDetailRespDTO(board, boardPics);
+        return new BoardResponse.BoardDetailRespDTO(board);
     }
 
     // 동네 생활 게시글 등록
@@ -69,10 +67,10 @@ public class BoardService {
         }
 
         List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
-        BoardCategory boardcCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
+        BoardCategory boardCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
                 .orElseThrow(() -> new Exception404("Category를 찾을 수 없습니다."));
 
-        return new BoardResponse.BoardWriteRespDTO(board, boardPics, boardcCategory);
+        return new BoardResponse.BoardWriteRespDTO(board, boardPics, boardCategory);
     }
 
     // 동네 생활 게시글 수정

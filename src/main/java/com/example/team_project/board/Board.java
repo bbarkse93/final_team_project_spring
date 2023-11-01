@@ -2,6 +2,7 @@ package com.example.team_project.board;
 
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_pic.BoardPic;
+import com.example.team_project.reply.Reply;
 import com.example.team_project.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -43,17 +44,20 @@ public class Board {
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<BoardPic> boardPics = new ArrayList<>();
 
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<Reply> replies = new ArrayList<>();
+
     @Builder
-    public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory,
-            Timestamp boardCreatedAt) {
+    public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory, Timestamp boardCreatedAt, List<BoardPic> boardPics, List<Reply> replies) {
         this.id = id;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
         this.user = user;
         this.boardCategory = boardCategory;
         this.boardCreatedAt = boardCreatedAt;
+        this.boardPics = boardPics;
+        this.replies = replies;
     }
-
     public void setBoardCategory(BoardCategory boardCategory) {
         this.boardCategory = boardCategory;
     }

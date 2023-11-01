@@ -23,7 +23,7 @@ public class Reply {
     private String comment;
 
     @CreationTimestamp
-    private Timestamp createdAt;
+    private Timestamp replyCreatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -32,10 +32,10 @@ public class Reply {
     private Board board;
 
     @Builder
-    public Reply(Integer id, String comment, Timestamp createdAt, User user, Board board) {
+    public Reply(Integer id, String comment, Timestamp replyCreatedAt, User user, Board board) {
         this.id = id;
         this.comment = comment;
-        this.createdAt = createdAt;
+        this.replyCreatedAt = replyCreatedAt;
         this.user = user;
         this.board = board;
     }
