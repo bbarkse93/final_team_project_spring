@@ -1,6 +1,5 @@
 package com.example.team_project.product;
 
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.example.team_project.product.product_like.ProductLike;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.user.User;
 
@@ -22,7 +24,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -50,6 +51,8 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductPic> productPics = new ArrayList<>();
 
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<ProductLike> productLikes = new ArrayList<>();
 
     @Builder
     public Product(Integer id, String productName, String productDescription, Integer productPrice,

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.team_project.product.product_like.ProductLike;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.user.User;
 
@@ -19,6 +20,7 @@ public class ProductResponse {
         private Integer id;
         private String productName;
         private Integer productPrice;
+        private long productLikes;
         private Timestamp productCreatedAt;
         private UserDTO user;
         private List<ProductPicDTO> productPics;
@@ -29,6 +31,7 @@ public class ProductResponse {
             this.productPrice = product.getProductPrice();
             this.productCreatedAt = product.getProductCreatedAt();
             this.user = new UserDTO(product.getUser());
+            this.productLikes = product.getProductLikes().stream().map(bl -> new ProductLikeDTO(bl)).count();           
             this.productPics = product.getProductPics().stream()
                     .limit(1)
                     .map(p -> new ProductPicDTO(p))
@@ -58,6 +61,18 @@ public class ProductResponse {
                 this.location = user.getLocation();
             }
         }
+
+        @Getter
+        @Setter
+        public static class ProductLikeDTO {
+            private Integer likeId;
+            private Integer userId;
+
+            public ProductLikeDTO(ProductLike boardLike) {
+                this.likeId = likeId;
+                this.userId = userId;
+            }
+        }
     }
 
     // 상품상세보기
@@ -67,7 +82,8 @@ public class ProductResponse {
         private Integer id;
         private String productName;
         private String productDescription;
-        private Integer productPrice;
+        private Integer productPrice;        
+        private long productLikes;
         private Timestamp productCreatedAt;
         private UserDTO user;
         private List<ProductPicDTO> productPics;
@@ -76,9 +92,10 @@ public class ProductResponse {
             this.id = product.getId();
             this.productName = product.getProductName();
             this.productDescription = product.getProductDescription();
-            this.productPrice = product.getProductPrice();
+            this.productPrice = product.getProductPrice();            
             this.productCreatedAt = product.getProductCreatedAt();
             this.user = new UserDTO(product.getUser());
+            this.productLikes = product.getProductLikes().stream().map(bl -> new ProductLikeDTO(bl)).count();  
             this.productPics = productPics.stream().map(t -> new ProductPicDTO(t)).collect(Collectors.toList());
 
         }
@@ -110,12 +127,24 @@ public class ProductResponse {
                 this.productPicUrl = productPicDTOs.getProductPicUrl();
             }
         }
+
+        @Getter
+        @Setter
+        public static class ProductLikeDTO {
+            private Integer likeId;
+            private Integer userId;
+
+            public ProductLikeDTO(ProductLike boardLike) {
+                this.likeId = likeId;
+                this.userId = userId;
+            }
+        }
     }
 
     // 상품 등록
     @Getter
     @Setter
-    public static class ProductWriteRespDTO{
+    public static class ProductWriteRespDTO {
         private Integer id;
         private String productName;
         private String productDescription;
@@ -136,7 +165,7 @@ public class ProductResponse {
 
         @Getter
         @Setter
-        public static class ProductPicDTO{
+        public static class ProductPicDTO {
             private Integer productPicId;
             private String productPicUrl;
 
@@ -148,7 +177,7 @@ public class ProductResponse {
 
         @Getter
         @Setter
-        public static class UserDTO{
+        public static class UserDTO {
             private Integer userId;
             private String username;
             private String location;
@@ -161,10 +190,10 @@ public class ProductResponse {
         }
     }
 
-    // 상품 수정        
+    // 상품 수정
     @Getter
     @Setter
-    public static class ProductUpdateRespDTO{
+    public static class ProductUpdateRespDTO {
         private Integer id;
         private String productName;
         private String productDescription;
@@ -183,7 +212,7 @@ public class ProductResponse {
 
         @Getter
         @Setter
-        public static class ProductPicDTO{
+        public static class ProductPicDTO {
             private Integer productPicId;
             private String productPicUrl;
 
@@ -196,7 +225,7 @@ public class ProductResponse {
 
     @Getter
     @Setter
-    public static class ProductSearchRespDTO{
+    public static class ProductSearchRespDTO {
         private Integer id;
         private String productName;
         private Integer productPrice;
@@ -241,5 +270,3 @@ public class ProductResponse {
         }
     }
 }
-
-
