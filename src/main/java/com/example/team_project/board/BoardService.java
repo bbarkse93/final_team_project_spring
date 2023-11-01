@@ -33,12 +33,21 @@ public class BoardService {
                 .distinct()
                 .map(b -> {
                     BoardResponse.BoardListRespDTO boardDTO = new BoardResponse.BoardListRespDTO(b);
-                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null
+                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null                    
                             : b.getBoardPics().stream()
                                     .limit(1)
                                     .map(bp -> new BoardResponse.BoardListRespDTO.BoardPicDTO(bp))
                                     .collect(Collectors.toList());
                     boardDTO.setBoardPics(boardPicDTOs);
+                    // List<BoardResponse.BoardListRespDTO.BoardLikeDTO> boardLikeDTOs = b.getBoardLikes().isEmpty() ? null
+                    //         : b.getBoardLikes().stream()
+                    //                 .map(bl -> new BoardResponse.BoardListRespDTO.BoardLikeDTO(bl))
+                    //                 .collect(Collectors.toList());
+                    // int boardLikeDTOs = b.getBoardLikes().isEmpty() ? 0
+                    //         : b.getBoardLikes().stream()
+                    //                 .map(bl -> new BoardResponse.BoardListRespDTO.BoardLikeDTO(bl))
+                    //                 .count();
+                    // boardDTO.setBoardLikes(boardLikeDTOs);
                     return boardDTO;
                 })
                 .collect(Collectors.toList());
