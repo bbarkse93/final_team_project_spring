@@ -38,3 +38,10 @@ INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (4, '꽃 사�
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (5, '고양이 사진 1', 3);
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (6, '고양이 사진 2', 3);
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (7, '고양이 사진 3', 3);
+
+-- Board 좋아요
+INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (1, 1, 1);
+INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (2, 1, 2);
+INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (3, 2, 1);
+INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (4, 2, 2);
+INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (5, 3, 1);

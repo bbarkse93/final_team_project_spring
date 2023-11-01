@@ -22,7 +22,6 @@ public class BoardRequest {
         private Integer boardCategoryId;
         private Integer userId;
         private List<String> boardPics;
-        
 
         public Board toEntity() {
             return Board.builder()
@@ -70,6 +69,22 @@ public class BoardRequest {
         public BoardCategoryDTO(BoardCategory boardCategory) {
             this.id = boardCategory.getId();
             this.boardCategory = boardCategory.getCategory();
+        }
+
+    }
+
+    // 동네생활게시글 좋아요
+    @Getter
+    @Setter
+    public static class BoardLikeReqDTO {
+        private Integer id;
+        private Integer boardId;
+        private Integer userId;
+
+        public BoardLikeReqDTO(Integer id, Integer boardId, Integer userId) {
+            this.id = id;
+            this.boardId = boardId;
+            this.userId = userId;
         }
 
     }

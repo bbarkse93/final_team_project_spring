@@ -25,7 +25,6 @@ public class BoardResponse {
         private UserDTO user;
         private List<BoardPicDTO> boardPics;
 
-
         public BoardListRespDTO(Board board) {
             this.id = board.getId();
             this.boardTitle = board.getBoardTitle();
@@ -38,7 +37,7 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class BoardPicDTO{
+        public static class BoardPicDTO {
             private Integer boardId;
             private String boardPicUrl;
 
@@ -50,7 +49,7 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class UserDTO{
+        public static class UserDTO {
             private Integer userId;
             private String username;
             private String location;
@@ -142,7 +141,7 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class UserDTO{
+        public static class UserDTO {
             private Integer userId;
             private String username;
             private String location;
@@ -157,7 +156,7 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class BoardPicDTO{
+        public static class BoardPicDTO {
             private Integer boardPicId;
             private String boardPicUrl;
 
@@ -194,7 +193,7 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class UserDTO{
+        public static class UserDTO {
             private Integer userId;
             private String username;
             private String location;
@@ -209,7 +208,7 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class BoardPicDTO{
+        public static class BoardPicDTO {
             private Integer boardPicId;
             private String boardPicUrl;
 
@@ -227,7 +226,7 @@ public class BoardResponse {
     public static class BoardDeleteRespDTO {
 
     }
-  
+
     // 동네생활 게시글 검색
     @Getter
     @Setter
@@ -239,7 +238,6 @@ public class BoardResponse {
         private String boardCategory;
         private UserDTO user;
         private List<BoardPicDTO> boardPics;
-
 
         public BoardSearchRespDTO(Board board) {
             this.id = board.getId();
@@ -253,7 +251,7 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class BoardPicDTO{
+        public static class BoardPicDTO {
             private Integer boardId;
             private String boardPicUrl;
 
@@ -265,7 +263,7 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class UserDTO{
+        public static class UserDTO {
             private Integer userId;
             private String username;
             private String location;
@@ -275,6 +273,19 @@ public class BoardResponse {
                 this.username = user.getUsername();
                 this.location = user.getLocation();
             }
+        }
+    }
+
+    // 게시글좋아요
+    public static class BoardLikeRespDTO {
+        private Integer id;
+        private Integer boardId;
+        private Integer userId;
+
+        public BoardLikeRespDTO(Integer id, Integer boardId, Integer userId) {
+            this.id = id;
+            this.boardId = boardId;
+            this.userId = userId;
         }
     }
 }
