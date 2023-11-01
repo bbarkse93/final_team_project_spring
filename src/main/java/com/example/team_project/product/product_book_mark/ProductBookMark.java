@@ -1,19 +1,20 @@
-package com.example.team_project.board.board_like;
+package com.example.team_project.product.product_book_mark;
 
-import com.example.team_project.board.Board;
+import javax.persistence.*;
+
+import com.example.team_project.product.Product;
 import com.example.team_project.user.User;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="board_like_tb")
-public class BoardLike {
+@Table(name="product_like_tb")
+public class ProductBookMark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,12 +23,12 @@ public class BoardLike {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Board board;
+    private Product product;
 
     @Builder
-    public BoardLike(Integer id, User user, Board board) {
+    public ProductBookMark(Integer id, User user, Product product) {
         this.id = id;
         this.user = user;
-        this.board = board;
+        this.product = product;
     }
 }

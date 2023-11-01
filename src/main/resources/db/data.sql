@@ -9,6 +9,7 @@ INSERT INTO board_category_tb (`id`, `category`) VALUES (5, '취미생활');
 INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (1, 'ssar', '1q2w3e4r!', 'ssar@nate.com', '쌀', 'ssar_profile.png', '부전동', true, NOW());
 INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (2, 'cos', '12345678', 'cos@nate.com', '코스',  'cos_profile.png', '전포동', true, NOW());
 
+
 -- Product 정보
 INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`) VALUES (1, '다이슨 에어랩', '혹시 머리를 길러볼까해서 미리 구매했는데 팔려구요', 350000, NOW(), 1);
 INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`) VALUES (2, '상품권 팝니다.', '신세계 상품권 10만원권 팝니다', 95000, NOW(), 1);
@@ -39,5 +40,27 @@ INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (5, '고양�
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (6, '고양이 사진 2', 3);
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (7, '고양이 사진 3', 3);
 
+-- Reply 등록
 INSERT INTO reply_tb (`id`, `comment`, `reply_created_at`, `board_id`, `user_id`) VALUES (1, '댓글 1',NOW(), 1, 2);
 INSERT INTO reply_tb (`id`, `comment`, `reply_created_at`, `board_id`, `user_id`) VALUES (2, '댓글 2',NOW(), 1, 1);
+
+-- Product 북마크
+INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (1, 1, 1);
+INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (2, 1, 2);
+INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (3, 2, 1);
+INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (4, 3, 2);
+
+-- Board 좋아요
+INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (1, 1, 1);
+INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (2, 1, 2);
+INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (3, 2, 1);
+INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (4, 2, 2);
+INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (5, 3, 1);
+
+
+INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (1, 1, 1);
+INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (2, 1, 2);
+INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (3, 2, 1);
+INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (4, 2, 2);
+
+

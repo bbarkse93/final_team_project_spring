@@ -1,6 +1,7 @@
-package com.example.team_project.board.board_like;
+package com.example.team_project.reply.reply_like;
 
 import com.example.team_project.board.Board;
+import com.example.team_project.reply.Reply;
 import com.example.team_project.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,8 +13,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="board_like_tb")
-public class BoardLike {
+@Table(name="reply_like_tb")
+public class ReplyLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,12 +23,12 @@ public class BoardLike {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Board board;
+    private Reply reply;
 
     @Builder
-    public BoardLike(Integer id, User user, Board board) {
+    public ReplyLike(Integer id, User user, Reply reply) {
         this.id = id;
         this.user = user;
-        this.board = board;
+        this.reply = reply;
     }
 }

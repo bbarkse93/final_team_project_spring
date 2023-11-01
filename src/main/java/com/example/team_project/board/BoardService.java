@@ -16,6 +16,8 @@ import com.example.team_project.board.board_pic.BoardPicJPARepository;
 
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.EntityManager;
+
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -24,6 +26,7 @@ public class BoardService {
     private final BoardJPARepository boardJPARepository;
     private final BoardPicJPARepository boardPicJPARepository;
     private final BoardCategoryJPARepository boardCategoryJPARepository;
+    private final EntityManager em;
 
     // 동네 생활 전체 보기
     public List<BoardResponse.BoardListRespDTO> FindAll() {
@@ -33,12 +36,13 @@ public class BoardService {
                 .distinct()
                 .map(b -> {
                     BoardResponse.BoardListRespDTO boardDTO = new BoardResponse.BoardListRespDTO(b);
-                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null
+                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null                    
                             : b.getBoardPics().stream()
                                     .limit(1)
                                     .map(bp -> new BoardResponse.BoardListRespDTO.BoardPicDTO(bp))
                                     .collect(Collectors.toList());
                     boardDTO.setBoardPics(boardPicDTOs);
+
                     return boardDTO;
                 })
                 .collect(Collectors.toList());
@@ -84,20 +88,24 @@ public class BoardService {
                 updateReqDTO.getBoardContent(),
                 updateReqDTO.getBoardTitle());
 
-        List<BoardPic> boardPics = updateReqDTO.getBoardPics();
+        List<String> boardPics = updateReqDTO.getBoardPics();
 
-        for (BoardPic boardPic : boardPics) {
+        for (String boardPic : boardPics) {
             boardPicJPARepository.updateBoardPic(board.getId(),
-                    boardPic.getBoardPicUrl());
+                    boardPic);
         }
 
         Integer boardCategoryId = updateReqDTO.getBoardCategoryId();
-        Optional<BoardCategory> optionalCategory = boardCategoryJPARepository.findById(boardCategoryId);
-        BoardCategory newCategory = optionalCategory.get();
-        board.setBoardCategory(newCategory);
-        boardJPARepository.save(board);
 
-        return new BoardResponse.BoardUpdateRespDTO(board, boardPics);
+        Optional<BoardCategory> optionalCategory = boardCategoryJPARepository.findById(boardCategoryId);
+
+        BoardCategory newCategory = optionalCategory.orElseThrow(() -> new Exception404("카테고리를 찾을 수 없습니다."));
+
+        board.setBoardCategory(newCategory);
+
+        Board boardDTO = boardJPARepository.save(board);
+
+        return new BoardResponse.BoardUpdateRespDTO(boardDTO);
     }
 
     // 동네 생활 게시글 삭제
