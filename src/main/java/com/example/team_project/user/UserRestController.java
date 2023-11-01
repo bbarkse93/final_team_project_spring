@@ -33,8 +33,9 @@ public class UserRestController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.UserLoginReqDTO userLoginReqDTO, Errors errors) {
 
-        UserResponse.UserLoginRespDTO responseDTO  = userService.login(userLoginReqDTO);
-        return ResponseEntity.ok().header("Authorization", responseDTO.getJwt()).body(ApiUtils.success(responseDTO.getUser()));
+        UserResponse.UserLoginRespDTO responseDTO = userService.login(userLoginReqDTO);
+        return ResponseEntity.ok().header("Authorization", responseDTO.getJwt())
+                .body(ApiUtils.success(responseDTO.getUser()));
 
     }
 
