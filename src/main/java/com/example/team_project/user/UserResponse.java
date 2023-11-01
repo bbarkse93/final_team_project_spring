@@ -63,11 +63,13 @@ public class UserResponse {
     public static class UserUpdateRespDTO {
         private Integer id;
         private String username;
+        private String nickname;
         private String password;
 
         public UserUpdateRespDTO(User user) {
             this.id = user.getId();
             this.username = user.getUsername();
+            this.nickname = user.getNickname();
             this.password = null;
         }
 

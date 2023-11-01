@@ -20,8 +20,8 @@ public class ProductResponse {
         private Integer id;
         private String productName;
         private Integer productPrice;
-        private Timestamp productCreatedAt;
         private long productLikes;
+        private Timestamp productCreatedAt;
         private UserDTO user;
         private List<ProductPicDTO> productPics;
 
@@ -30,8 +30,8 @@ public class ProductResponse {
             this.productName = product.getProductName();
             this.productPrice = product.getProductPrice();
             this.productCreatedAt = product.getProductCreatedAt();
-            this.productLikes = product.getProductLikes().stream().map(bl -> new ProductLikeDTO(bl)).count();
             this.user = new UserDTO(product.getUser());
+            this.productLikes = product.getProductLikes().stream().map(bl -> new ProductLikeDTO(bl)).count();           
             this.productPics = product.getProductPics().stream()
                     .limit(1)
                     .map(p -> new ProductPicDTO(p))
@@ -82,9 +82,9 @@ public class ProductResponse {
         private Integer id;
         private String productName;
         private String productDescription;
-        private Integer productPrice;
-        private Timestamp createdAt;
+        private Integer productPrice;        
         private long productLikes;
+        private Timestamp productCreatedAt;
         private UserDTO user;
         private List<ProductPicDTO> productPics;
 
@@ -92,10 +92,10 @@ public class ProductResponse {
             this.id = product.getId();
             this.productName = product.getProductName();
             this.productDescription = product.getProductDescription();
-            this.productPrice = product.getProductPrice();
-            this.createdAt = product.getProductCreatedAt();
-            this.productLikes = product.getProductLikes().stream().map(bl -> new ProductLikeDTO(bl)).count();
+            this.productPrice = product.getProductPrice();            
+            this.productCreatedAt = product.getProductCreatedAt();
             this.user = new UserDTO(product.getUser());
+            this.productLikes = product.getProductLikes().stream().map(bl -> new ProductLikeDTO(bl)).count();  
             this.productPics = productPics.stream().map(t -> new ProductPicDTO(t)).collect(Collectors.toList());
 
         }
