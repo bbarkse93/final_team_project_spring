@@ -13,12 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.team_project._core.erroes.exception.Exception400;
 import com.example.team_project._core.erroes.exception.Exception404;
 
+import javax.persistence.EntityManager;
+
 @Transactional
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserJPARepository userJPARepository;
+    private final EntityManager em;
 
     // 회원가입
     @Transactional
@@ -57,12 +60,14 @@ public class UserService {
         User user = userJPARepository.findByUsername(userUpdateReqDTO.getUsername());
         if (user.getUsername() == null) {
             throw new Exception404("사용자를 찾을 수 없습니다.");
-        } else {
+        }
             userJPARepository.mUpdateUser(userId, userUpdateReqDTO.getUsername(),
-                    userUpdateReqDTO.getPassword());
+                    userUpdateReqDTO.getPassword(), userUpdateReqDTO.getNickname());
+
+
             User userOP = userJPARepository.findById(userId).orElseThrow(() -> new Exception400("유저정보가 없습니다."));
             return new UserResponse.UserUpdateRespDTO(userOP);
-        }
+
 
     }
 

@@ -28,6 +28,8 @@ public class User {
 
     private String email;
 
+    private String nickname;
+
     @Lob
     private String userPicUrl;
 
@@ -39,12 +41,12 @@ public class User {
     private Timestamp userCreatedAt;
 
     @Builder
-    public User(Integer id, String username, String password, String email, String userPicUrl, String location,
-            Boolean distinguish, Timestamp userCreatedAt) {
+    public User(Integer id, String username, String password, String email, String nickname, String userPicUrl, String location, Boolean distinguish, Timestamp userCreatedAt) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.nickname = nickname;
         this.userPicUrl = userPicUrl;
         this.location = location;
         this.distinguish = distinguish;

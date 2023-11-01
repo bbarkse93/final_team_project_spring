@@ -68,7 +68,7 @@ public class ProductResponse {
         private String productName;
         private String productDescription;
         private Integer productPrice;
-        private Timestamp createdAt;
+        private Timestamp productCreatedAt;
         private UserDTO user;
         private List<ProductPicDTO> productPics;
 
@@ -77,7 +77,7 @@ public class ProductResponse {
             this.productName = product.getProductName();
             this.productDescription = product.getProductDescription();
             this.productPrice = product.getProductPrice();
-            this.createdAt = product.getProductCreatedAt();
+            this.productCreatedAt = product.getProductCreatedAt();
             this.user = new UserDTO(product.getUser());
             this.productPics = productPics.stream().map(t -> new ProductPicDTO(t)).collect(Collectors.toList());
 
