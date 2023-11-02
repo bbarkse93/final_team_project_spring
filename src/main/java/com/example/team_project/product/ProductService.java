@@ -13,6 +13,9 @@ import com.example.team_project.product.product_pic.ProductPicJPARepository;
 
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.EntityManager;
+import javax.swing.text.html.parser.Entity;
+
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -20,6 +23,7 @@ public class ProductService {
 
     private final ProductJPARepository productJPARepository;
     private final ProductPicJPARepository productPicJPARepository;
+    private final EntityManager em;
 
     // 상품 리스트
     public List<ProductResponse.ProductListRespDTO> findAll() {
@@ -83,13 +87,12 @@ public class ProductService {
                 productUpdateReqDTO.getProductDescription(),
                 productUpdateReqDTO.getProductName());
 
-        List<ProductPic> productPics = productUpdateReqDTO.getProductPics();
+        List<String> productPics = productUpdateReqDTO.getProductPics();
 
-        for (ProductPic productPic : productPics) {
-            productPicJPARepository.updateProductPic(product.getId(),
-                    productPic.getProductPicUrl());
+        for (String productPic : productPics) {
+            productPicJPARepository.updateProductPic(product.getId(), productPic);
         }
-
+        em.refresh(product);
         List<ProductPic> productPicsUpdate = productPicJPARepository.findByProductId(product.getId());
 
         return new ProductResponse.ProductUpdateRespDTO(product, productPicsUpdate);

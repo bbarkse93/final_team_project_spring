@@ -43,12 +43,14 @@ public class UserResponse {
         public static class UserDTO {
             private Integer id;
             private String username;
+            private String nickname;
             private String password;
             private Timestamp createdAt;
 
             public UserDTO(User user) {
                 this.id = user.getId();
                 this.username = user.getUsername();
+                this.nickname = user.getNickname();
                 this.password = null;
                 this.createdAt = user.getUserCreatedAt();
 

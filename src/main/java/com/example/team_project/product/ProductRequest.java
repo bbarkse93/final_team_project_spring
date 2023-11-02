@@ -40,8 +40,7 @@ public class ProductRequest {
         private String productDescription;
         private Integer productPrice;
         private Integer userId;
-        private List<ProductPic> productPics;
-        private Timestamp createdAt;
+        private List<String> productPics;
     }
 
 }

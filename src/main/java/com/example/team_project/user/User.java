@@ -10,10 +10,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "user_tb")
-@Access(AccessType.FIELD)
 public class User {
 
     @Id
