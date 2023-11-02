@@ -2,13 +2,19 @@ package com.example.team_project.board;
 
 import java.util.List;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.example.team_project.board.board_category.BoardCategory;
+import com.example.team_project.board.board_like.BoardLike;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import net.bytebuddy.implementation.bytecode.constant.IntegerConstant;
 
 public class BoardRequest {
 
@@ -76,15 +82,20 @@ public class BoardRequest {
     // 동네생활게시글 좋아요
     @Getter
     @Setter
+
     public static class BoardLikeReqDTO {
-        private Integer id;
+        @Id
+        // @GeneratedValue(strategy = GenerationType.IDENTITY) // 또는 다른 ID 생성 전략을 선택
+        private Integer Id;
         private Integer boardId;
         private Integer userId;
 
-        public BoardLikeReqDTO(Integer id, Integer boardId, Integer userId) {
-            this.id = id;
-            this.boardId = boardId;
-            this.userId = userId;
+        public BoardLike toEntiy() {
+            return BoardLike.builder()
+                    .board(Board.builder().id(Id).build())
+                    .board(Board.builder().id(getBoardId()).build())
+                    .user(User.builder().id(getUserId()).build())
+                    .build();
         }
 
     }

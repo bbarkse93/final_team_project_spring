@@ -75,8 +75,9 @@ public class BoardRestController {
     }
 
     // 게시글 좋아요
-    @PostMapping("/boards/like")
-    public ResponseEntity<?> LikeBoard(@RequestBody @Valid BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
+    @PostMapping("/boards/like/{id}")
+    public ResponseEntity<?> LikeBoard(@PathVariable Integer id,
+            @RequestBody @Valid BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
         BoardResponse.BoardLikeRespDTO responseDTO = boardService.LikeBoard(boardLikeReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="board_like_tb")
+@Table(name = "board_like_tb")
 public class BoardLike {
     @Id
     private Integer id;
@@ -24,10 +24,15 @@ public class BoardLike {
     private Board board;
 
     @Builder
-
     public BoardLike(Integer id, User user, Board board) {
         this.id = id;
         this.user = user;
         this.board = board;
+    }
+
+    @Builder
+    public BoardLike(Integer id, Integer userid) {
+        this.id = id;
+        this.id = userid;
     }
 }

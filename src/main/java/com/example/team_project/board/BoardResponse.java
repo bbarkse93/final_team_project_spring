@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.team_project.board.board_category.BoardCategory;
+import com.example.team_project.board.board_like.BoardLike;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.user.User;
 
@@ -276,16 +277,18 @@ public class BoardResponse {
         }
     }
 
+    @Getter
+    @Setter
     // 게시글좋아요
     public static class BoardLikeRespDTO {
         private Integer id;
         private Integer boardId;
         private Integer userId;
 
-        public BoardLikeRespDTO(Integer id, Integer boardId, Integer userId) {
-            this.id = id;
-            this.boardId = boardId;
-            this.userId = userId;
+        public BoardLikeRespDTO(BoardLike boardLike) {
+            this.id = boardLike.getId();
+            this.boardId = boardLike.getBoard().getId();
+            this.userId = boardLike.getUser().getId();
         }
     }
 }
