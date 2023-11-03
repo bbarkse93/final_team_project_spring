@@ -25,6 +25,7 @@ public class BoardResponse {
         private Timestamp createdAt;
         private String boardCategory;
         private long boardLikes;
+        private long replyCount;
         private UserDTO user;
         private List<BoardPicDTO> boardPics;
 
@@ -35,6 +36,7 @@ public class BoardResponse {
             this.createdAt = board.getBoardCreatedAt();
             this.boardCategory = board.getBoardCategory().getCategory();
             this.boardLikes = board.getBoardLikes().stream().map(bl -> new BoardLikeDTO(bl)).count();
+            this.replyCount = board.getReplies().stream().map(bl -> new ReplyDTO(bl)).count();
             this.user = new UserDTO(board.getUser());
             this.boardPics = board.getBoardPics().stream().map(b -> new BoardPicDTO(b)).collect(Collectors.toList());
 
@@ -77,6 +79,16 @@ public class BoardResponse {
                 this.userId = boardLike.getUser().getId();
             }
         }
+
+        @Getter
+        @Setter
+        public static class ReplyDTO{
+            private Integer replyId;
+
+            public ReplyDTO(Reply reply) {
+                this.replyId = reply.getId();
+            }
+        }
     }
 
     // 동네생활 상세보기
@@ -89,6 +101,7 @@ public class BoardResponse {
         private String boardCategory;
         private Timestamp boardCreatedAt;
         private long boardLikes;
+        private long replyCount;
         private UserDTO user;
         private List<BoardPicDTO> boardPics;
         private List<ReplyDTO> replies;
@@ -100,6 +113,7 @@ public class BoardResponse {
             this.boardCategory = board.getBoardCategory().getCategory();
             this.boardCreatedAt = board.getBoardCreatedAt();
             this.boardLikes = board.getBoardLikes().stream().map(bl -> new BoardLikeDTO(bl)).count();
+            this.replyCount = board.getReplies().stream().map(bl -> new ReplyDTO(bl)).count();
             this.user = new UserDTO(board.getUser());
             this.boardPics = board.getBoardPics().stream()
                     .map(t -> new BoardPicDTO(t))
