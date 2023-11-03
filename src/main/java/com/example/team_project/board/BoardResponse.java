@@ -375,3 +375,4 @@ public class BoardResponse {
         }
     }
 }
+
