@@ -9,7 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface BoardPicJPARepository extends JpaRepository<BoardPic, Integer> {
 
-    List<BoardPic> findByBoardId(Integer boardId);
+    @Query(value = "select b from BoardPic b where b.board.id = :id")
+    List<BoardPic> findByBoardId(@Param("id") Integer id);
 
     @Modifying
     @Query(value = "INSERT INTO board_pic_tb (`board_pic_url`, `board_id`) VALUES (:boardPicUrl, :boardId)", nativeQuery = true)
