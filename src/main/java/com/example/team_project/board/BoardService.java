@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
+
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -31,7 +32,8 @@ public class BoardService {
     private final BoardJPARepository boardJPARepository;
     private final BoardPicJPARepository boardPicJPARepository;
     private final BoardCategoryJPARepository boardCategoryJPARepository;
-     private final BoardLikeJPARepository boardLikeJPARepository;
+    private final BoardLikeJPARepository boardLikeJPARepository;
+    private final EntityManager em;
 
 
     // 동네 생활 전체 보기
