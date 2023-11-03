@@ -19,4 +19,6 @@ public interface BoardPicJPARepository extends JpaRepository<BoardPic, Integer> 
     @Modifying
     @Query("UPDATE BoardPic b SET b.boardPicUrl = :boardPicUrl WHERE b.id = :id")
     int updateBoardPic(@Param("id") int id, @Param("boardPicUrl") String boardPicUrl);
+
+    void deleteByBoardId(Integer boardId);
 }
