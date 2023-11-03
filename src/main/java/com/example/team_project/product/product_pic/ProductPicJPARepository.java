@@ -15,7 +15,7 @@ public interface ProductPicJPARepository extends JpaRepository<ProductPic, Integ
     List<ProductPic> findByProductId(@Param("id") Integer id);
 
     @Modifying
-    @Query("UPDATE ProductPic p SET p.productPicUrl = :productPicUrl WHERE p.product.id = :id")
+    @Query("UPDATE ProductPic p SET p.productPicUrl = :productPicUrl WHERE p.id = :id")
     int updateProductPic(@Param("id") int id, @Param("productPicUrl") String productPicUrl);
     
     @Query("SELECT p FROM ProductPic p WHERE p.product.id = :id")
