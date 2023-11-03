@@ -343,4 +343,19 @@ public class BoardResponse {
             }
         }
     }
+
+    @Getter
+    @Setter
+    // 게시글좋아요
+    public static class BoardLikeRespDTO {
+        private Integer id;
+        private Integer boardId;
+        private Integer userId;
+
+        public BoardLikeRespDTO(BoardLike boardLike) {
+            this.id = boardLike.getId();
+            this.boardId = boardLike.getBoard().getId();
+            this.userId = boardLike.getUser().getId();
+        }
+    }
 }
