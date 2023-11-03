@@ -1,42 +1,34 @@
-package com.example.team_project.reply;
+package com.example.team_project.reply.reply_like;
 
 import com.example.team_project.board.Board;
+import com.example.team_project.reply.Reply;
 import com.example.team_project.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "reply_tb")
-public class Reply {
+@Table(name="reply_like_tb")
+public class ReplyLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    private String comment;
-
-    @CreationTimestamp
-    private Timestamp replyCreatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Board board;
+    private Reply reply;
 
     @Builder
-    public Reply(Integer id, String comment, Timestamp replyCreatedAt, User user, Board board) {
+    public ReplyLike(Integer id, User user, Reply reply) {
         this.id = id;
-        this.comment = comment;
-        this.replyCreatedAt = replyCreatedAt;
         this.user = user;
-        this.board = board;
+        this.reply = reply;
     }
 }

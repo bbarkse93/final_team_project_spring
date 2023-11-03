@@ -1,5 +1,7 @@
 package com.example.team_project.product;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +16,9 @@ public interface ProductJPARepository extends JpaRepository<Product, Object> {
     @Query("SELECT p FROM Product p WHERE p.id = :productId")
     Product findProductById(@Param("productId") int productId);
 
-    
+    List<Product> findByProductName(String keyword);
+
+    List<Product> findByProductNameContaining(String keyword);
+
 }
 

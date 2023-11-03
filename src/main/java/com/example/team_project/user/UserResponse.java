@@ -1,5 +1,6 @@
 package com.example.team_project.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,20 +29,52 @@ public class UserResponse {
 
     @Getter
     @Setter
-    public static class UserLoginRespDTO {
+    public static class UserLoginRespDTO{
+        private String jwt;
+        private UserDTO user;
+
+        public UserLoginRespDTO(String jwt, User user) {
+            this.jwt = jwt;
+            this.user = new UserDTO(user);
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO {
+            private Integer id;
+            private String username;
+            private String nickname;
+            private String password;
+            private Timestamp createdAt;
+
+            public UserDTO(User user) {
+                this.id = user.getId();
+                this.username = user.getUsername();
+                this.nickname = user.getNickname();
+                this.password = null;
+                this.createdAt = user.getUserCreatedAt();
+
+
+            }
+        }
+
+    }
+
+    @Getter
+    @Setter
+    public static class UserUpdateRespDTO {
         private Integer id;
         private String username;
+        private String nickname;
         private String password;
-        private Timestamp createdAt;
-        private String jwt;
 
-        public UserLoginRespDTO(User user, String jwt) {
+        public UserUpdateRespDTO(User user) {
             this.id = user.getId();
             this.username = user.getUsername();
+            this.nickname = user.getNickname();
             this.password = null;
-            this.createdAt = user.getUserCreatedAt();
-            this.jwt = jwt;
         }
+
     }
 
 }

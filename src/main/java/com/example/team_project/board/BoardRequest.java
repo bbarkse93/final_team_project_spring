@@ -44,7 +44,7 @@ public class BoardRequest {
         private String boardContent;
         private Integer boardCategoryId;
         private Integer userId;
-        private List<BoardPic> boardPics;
+        private List<String> boardPics;
     }
 
     @Getter

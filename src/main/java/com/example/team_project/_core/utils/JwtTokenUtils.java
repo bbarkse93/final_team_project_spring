@@ -13,18 +13,18 @@ public class JwtTokenUtils {
 
     public static String create(User user){
         String jwt = JWT.create()
-                .withSubject("carrot-key")
+                .withSubject("metacoding-key")
                 .withClaim("id", user.getId())
                 .withClaim("username", user.getUsername())
                 .withExpiresAt(Instant.now().plusMillis(1000*60*60*24*7L))
-                .sign(Algorithm.HMAC512("carrot"));
+                .sign(Algorithm.HMAC512("meta"));
         return "Bearer " + jwt;
     }
 
     public static DecodedJWT verify(String jwt) throws SignatureVerificationException, TokenExpiredException {
         jwt = jwt.replace("Bearer ", "");
 
-        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512("carrot"))
+        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512("meta"))
                 .build().verify(jwt);
         return decodedJWT;
     }
