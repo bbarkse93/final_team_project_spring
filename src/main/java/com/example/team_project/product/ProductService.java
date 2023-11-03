@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.product.product_pic.ProductPicJPARepository;
@@ -87,11 +88,14 @@ public class ProductService {
                 productUpdateReqDTO.getProductDescription(),
                 productUpdateReqDTO.getProductName());
 
-        List<String> productPics = productUpdateReqDTO.getProductPics();
+        List<ProductPic> productPicsOld = productPicJPARepository.findByProductId(product.getId());
 
-        for (String productPic : productPics) {
-            productPicJPARepository.updateProductPic(product.getId(), productPic);
+        List<String> productPicsDTO = productUpdateReqDTO.getProductPics();
+        for (ProductPic productPic : productPicsOld) {
+            productPicJPARepository.updateProductPic(productPic.getId(),
+                    productPicsDTO.get(productPicsOld.indexOf(productPic))); // 수정
         }
+
         em.refresh(product);
         List<ProductPic> productPicsUpdate = productPicJPARepository.findByProductId(product.getId());
 
