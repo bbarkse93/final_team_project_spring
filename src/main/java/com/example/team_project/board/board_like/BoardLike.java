@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="board_like_tb")
+@Table(name = "board_like_tb")
 public class BoardLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +29,11 @@ public class BoardLike {
         this.id = id;
         this.user = user;
         this.board = board;
+    }
+
+    @Builder
+    public BoardLike(Integer id, Integer userid) {
+        this.id = id;
+        this.id = userid;
     }
 }
