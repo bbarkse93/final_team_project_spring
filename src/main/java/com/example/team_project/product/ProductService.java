@@ -88,14 +88,15 @@ public class ProductService {
                 productUpdateReqDTO.getProductDescription(),
                 productUpdateReqDTO.getProductName());
 
-        List<ProductPic> productPicsOld = productPicJPARepository.findByProductId(product.getId());
+        // 1. 해당 보드 id에 담긴 원래 사진들을 삭제.
+        productPicJPARepository.deleteByProductId(product.getId());
+        // 2. DTO에 담겨있던 사진을 저장.
+        List<String> productPicList = productUpdateReqDTO.getProductPics();
 
-        List<String> productPicsDTO = productUpdateReqDTO.getProductPics();
-        for (ProductPic productPic : productPicsOld) {
-            productPicJPARepository.updateProductPic(productPic.getId(),
-                    productPicsDTO.get(productPicsOld.indexOf(productPic))); // 수정
+        for (String productPic : productPicList) {
+
+            productPicJPARepository.mSave(productPic, product.getId());
         }
-
         em.refresh(product);
         List<ProductPic> productPicsUpdate = productPicJPARepository.findByProductId(product.getId());
 
