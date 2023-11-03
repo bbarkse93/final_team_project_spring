@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
-
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -35,7 +34,6 @@ public class BoardService {
     private final BoardLikeJPARepository boardLikeJPARepository;
     private final EntityManager em;
 
-
     // 동네 생활 전체 보기
     public List<BoardResponse.BoardListRespDTO> FindAll() {
         List<Board> boards = boardJPARepository.mFindAllJoinBoardCategoryAndBoardPic();
@@ -44,7 +42,7 @@ public class BoardService {
                 .distinct()
                 .map(b -> {
                     BoardResponse.BoardListRespDTO boardDTO = new BoardResponse.BoardListRespDTO(b);
-                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null                    
+                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null
                             : b.getBoardPics().stream()
                                     .limit(1)
                                     .map(bp -> new BoardResponse.BoardListRespDTO.BoardPicDTO(bp))
@@ -154,19 +152,16 @@ public class BoardService {
 
     // 게시글 좋아요
     @Transactional
-    public BoardResponse.BoardLikeRespDTO LikeBoard(BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
-        // BoardLike entity 생성 및 저장
-        // BoardLike boardLike = new BoardLike(boardLikeReqDTO.getBoardId(),
-        // boardLikeReqDTO.getUserId());
-        BoardLike boardLike = boardLikeJPARepository.save(boardLikeReqDTO.toEntiy());
+    public BoardResponse.BoardLikeRespDTO likeBoard(BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
+
+        BoardLike boardLike = boardLikeJPARepository.save(boardLikeReqDTO.toEntity());
         return new BoardResponse.BoardLikeRespDTO(boardLike);
     }
 
     @Transactional
-    //게시글 좋아요 삭제
-    public void deleteLikeBoard (BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
-        boardLikeJPARepository.delete(boardLikeReqDTO.toEntiy());
+    // 게시글 좋아요 삭제
+    public void deleteLikeBoard(int bodardsId, int id) {
+        boardLikeJPARepository.deleteById(id);
     }
-        
-    
+
 }
