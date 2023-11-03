@@ -16,12 +16,12 @@ public class BoardRequest {
     @Getter
     @Setter
     @ToString
-    public static class WriteReqDTO {
+    public static class BoardWriteReqDTO {
         private String boardTitle;
         private String boardContent;
         private Integer boardCategoryId;
         private Integer userId;
-        private List<BoardPic> boardPics;
+        private List<String> boardPics;
         
 
         public Board toEntity() {
@@ -35,11 +35,16 @@ public class BoardRequest {
 
     }
 
+    // 동네 생활 게시글 수정
     @Getter
     @Setter
     @ToString
-    public static class UpdateReqDTO {
-
+    public static class BoardUpdateReqDTO {
+        private String boardTitle;
+        private String boardContent;
+        private Integer boardCategoryId;
+        private Integer userId;
+        private List<String> boardPics;
     }
 
     @Getter

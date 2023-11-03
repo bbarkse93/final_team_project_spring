@@ -1,13 +1,13 @@
 package com.example.team_project.board;
 
 import java.sql.Timestamp;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.team_project.board.board_category.BoardCategory;
+import com.example.team_project.board.board_like.BoardLike;
 import com.example.team_project.board.board_pic.BoardPic;
-import com.example.team_project.product.ProductResponse;
+import com.example.team_project.reply.Reply;
 import com.example.team_project.user.User;
 
 import lombok.Getter;
@@ -15,115 +15,109 @@ import lombok.Setter;
 
 public class BoardResponse {
 
-
-    @Getter
-    @Setter
-    public static class UpdateRespDTO {
-
-    }
-
-    @Getter
-    @Setter
-    public static class DeleteRespDTO {
-
-    }
-
+    // 동네생활 전체보기
     @Getter
     @Setter
     public static class BoardListRespDTO {
-
-        private int id;
+        private Integer id;
         private String boardTitle;
         private String boardContent;
-        private Timestamp boardCreatedAt;
+        private Timestamp createdAt;
+        private String boardCategory;
+        private long boardLikes;
         private UserDTO user;
-        private BoardCategoryDTO boardCategory;
         private List<BoardPicDTO> boardPics;
 
         public BoardListRespDTO(Board board) {
             this.id = board.getId();
             this.boardTitle = board.getBoardTitle();
             this.boardContent = board.getBoardContent();
-            this.boardCreatedAt = board.getBoardCreatedAt();
+            this.createdAt = board.getBoardCreatedAt();
+            this.boardCategory = board.getBoardCategory().getCategory();
+            this.boardLikes = board.getBoardLikes().stream().map(bl -> new BoardLikeDTO(bl)).count();
             this.user = new UserDTO(board.getUser());
-            this.boardCategory = new BoardCategoryDTO(board.getBoardCategory());
-            this.boardPics = board.getBoardpics().stream()
-                    .limit(1)
-                    .map(b -> new BoardPicDTO(b))
-                    .collect(Collectors.toList());            
+            this.boardPics = board.getBoardPics().stream().map(b -> new BoardPicDTO(b)).collect(Collectors.toList());
+
+        }
+
+        @Getter
+        @Setter
+        public static class BoardPicDTO {
+            private Integer boardId;
+            private String boardPicUrl;
+
+            public BoardPicDTO(BoardPic boardPic) {
+                this.boardId = boardPic.getId();
+                this.boardPicUrl = boardPic.getBoardPicUrl();
+            }
         }
 
         @Getter
         @Setter
         public static class UserDTO {
-            private Integer id;
+            private Integer userId;
+            private String username;
             private String location;
 
             public UserDTO(User user) {
-                this.id = user.getId();
+                this.userId = user.getId();
+                this.username = user.getUsername();
                 this.location = user.getLocation();
             }
         }
 
         @Getter
         @Setter
-        public static class BoardCategoryDTO {
-            private Integer id;
-            private String boardCategory;
+        public static class BoardLikeDTO {
+            private Integer likeId;
+            private Integer userId;
 
-            public BoardCategoryDTO(BoardCategory boardCategory) {
-                this.id = boardCategory.getId();
-                this.boardCategory = boardCategory.getBoardCategory();
-
-            }
-        }
-
-        @Getter
-        @Setter
-        public static class BoardPicDTO {
-            private Integer id;
-            private String boardPicUrl;
-
-            public BoardPicDTO(BoardPic boardPics) {
-                this.id = boardPics.getId();
-                this.boardPicUrl = boardPics.getBoardPicUrl();
-
+            public BoardLikeDTO(BoardLike boardLike) {
+                this.likeId = boardLike.getId();
+                this.userId = boardLike.getUser().getId();
             }
         }
     }
 
-    // 동네생활상세보기
+    // 동네생활 상세보기
     @Getter
     @Setter
     public static class BoardDetailRespDTO {
         private Integer id;
         private String boardTitle;
         private String boardContent;
+        private String boardCategory;
         private Timestamp boardCreatedAt;
+        private long boardLikes;
         private UserDTO user;
-        private BoardCategoryDTO boardCategory;
         private List<BoardPicDTO> boardPics;
+        private List<ReplyDTO> replies;
 
-        public BoardDetailRespDTO(Board board, List<BoardPic> boardPics) {
+        public BoardDetailRespDTO(Board board) {
             this.id = board.getId();
             this.boardTitle = board.getBoardTitle();
             this.boardContent = board.getBoardContent();
-            this.boardCategory = new BoardCategoryDTO(board.getBoardCategory());
+            this.boardCategory = board.getBoardCategory().getCategory();
             this.boardCreatedAt = board.getBoardCreatedAt();
+            this.boardLikes = board.getBoardLikes().stream().map(bl -> new BoardLikeDTO(bl)).count();
             this.user = new UserDTO(board.getUser());
-            this.boardPics = boardPics.stream()
+            this.boardPics = board.getBoardPics().stream()
                     .map(t -> new BoardPicDTO(t))
+                    .collect(Collectors.toList());
+            this.replies = board.getReplies()
+                    .stream()
+                    .map(r -> new ReplyDTO((r)))
                     .collect(Collectors.toList());
         }
 
         @Getter
         @Setter
         public static class BoardPicDTO {
-            private Integer id;
+            private Integer boardPicId;
             private String boardPicUrl;
 
             public BoardPicDTO(BoardPic boardPic) {
-                this.id = boardPic.getId();
+                this.boardPicId = boardPic.getId();
                 this.boardPicUrl = boardPic.getBoardPicUrl();
             }
 
@@ -131,40 +125,70 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class BoardCategoryDTO {
-            private Integer id;
-            private String boardCategory;
-
-            public BoardCategoryDTO(BoardCategory boardCategory) {
-                this.id = boardCategory.getId();
-                this.boardCategory = boardCategory.getCategory();
-            }
-
-        }
-
-        @Getter
-        @Setter
         public static class UserDTO {
-            private Integer id;
+            private Integer userId;
             private String location;
             private String username;
             private String userPicUrl;
 
             public UserDTO(User user) {
-                this.id = user.getId();
+                this.userId = user.getId();
                 this.username = user.getUsername();
                 this.location = user.getLocation();
                 this.userPicUrl = user.getUserPicUrl();
             }
         }
 
+        @Getter
+        @Setter
+        public static class ReplyDTO{
+            private Integer replyId;
+            private String comment;
+            private Timestamp replyCreatedAt;
+            private UserDTO user;
+
+            public ReplyDTO(Reply reply) {
+                this.replyId = reply.getId();
+                this.comment = reply.getComment();
+                this.user = new UserDTO(reply.getUser());
+                this.replyCreatedAt = reply.getReplyCreatedAt();
+            }
+
+            @Getter
+            @Setter
+            public static class UserDTO{
+                private Integer replyUserId;
+                private String userPicUrl;
+                private String nickname;
+                private String location;
+
+                public UserDTO(User user) {
+                    this.replyUserId = user.getId();
+                    this.userPicUrl = user.getUserPicUrl();
+                    this.nickname = user.getNickname();
+                    this.location = user.getLocation();
+                }
+            }
+        }
+
+
+        @Getter
+        @Setter
+        public static class BoardLikeDTO {
+            private Integer likeId;
+            private Integer userId;
+
+            public BoardLikeDTO(BoardLike boardLike) {
+                this.likeId = boardLike.getId();
+                this.userId = boardLike.getUser().getId();
+            }
+        }
     }
 
-
-    // 동네 생활 게시글 등록
+    // 동네생활 게시글 등록
     @Getter
     @Setter
-    public static class WriteRespDTO {
+    public static class BoardWriteRespDTO {
         private Integer id;
         private String boardTitle;
         private String boardContent;
@@ -172,7 +196,7 @@ public class BoardResponse {
         private UserDTO user;
         private List<BoardPicDTO> boardPics;
 
-        public WriteRespDTO(Board board, List<BoardPic> boardPics, BoardCategory category) {
+        public BoardWriteRespDTO(Board board, List<BoardPic> boardPics, BoardCategory category) {
             this.id = board.getId();
             this.boardTitle = board.getBoardTitle();
             this.boardContent = board.getBoardContent();
@@ -185,7 +209,7 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class UserDTO{
+        public static class UserDTO {
             private Integer userId;
             private String username;
             private String location;
@@ -200,7 +224,7 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class BoardPicDTO{
+        public static class BoardPicDTO {
             private Integer boardPicId;
             private String boardPicUrl;
 
@@ -212,5 +236,126 @@ public class BoardResponse {
         }
 
     }
-  
+
+    // 동네생활 게시글 수정
+    @Getter
+    @Setter
+    public static class BoardUpdateRespDTO {
+        private Integer id;
+        private String boardTitle;
+        private String boardContent;
+        private String boardCategory;
+        private UserDTO user;
+        private List<BoardPicDTO> boardPics;
+
+        public BoardUpdateRespDTO(Board board) {
+            this.id = board.getId();
+            this.boardTitle = board.getBoardTitle();
+            this.boardContent = board.getBoardContent();
+            this.boardCategory = board.getBoardCategory().getCategory();
+            this.user = new UserDTO(board.getUser());
+            this.boardPics = board.getBoardPics().stream()
+                    .map(t -> new BoardPicDTO(t))
+                    .collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO {
+            private Integer userId;
+            private String username;
+            private String location;
+
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.username = user.getUsername();
+                this.location = user.getLocation();
+            }
+
+        }
+
+        @Getter
+        @Setter
+        public static class BoardPicDTO {
+            private Integer boardPicId;
+            private String boardPicUrl;
+
+            public BoardPicDTO(BoardPic boardPic) {
+                this.boardPicId = boardPic.getId();
+                this.boardPicUrl = boardPic.getBoardPicUrl();
+            }
+
+        }
+    }
+
+    // 동네생활 게시글 삭제
+    @Getter
+    @Setter
+    public static class BoardDeleteRespDTO {
+
+    }
+
+    // 동네생활 게시글 검색
+    @Getter
+    @Setter
+    public static class BoardSearchRespDTO {
+        private Integer id;
+        private String boardTitle;
+        private String boardContent;
+        private Timestamp createdAt;
+        private String boardCategory;
+        private UserDTO user;
+        private List<BoardPicDTO> boardPics;
+
+        public BoardSearchRespDTO(Board board) {
+            this.id = board.getId();
+            this.boardTitle = board.getBoardTitle();
+            this.boardContent = board.getBoardContent();
+            this.createdAt = board.getBoardCreatedAt();
+            this.boardCategory = board.getBoardCategory().getCategory();
+            this.user = new UserDTO(board.getUser());
+            this.boardPics = board.getBoardPics().stream().map(b -> new BoardPicDTO(b)).collect(Collectors.toList());
+        }
+
+        @Getter
+        @Setter
+        public static class BoardPicDTO {
+            private Integer boardId;
+            private String boardPicUrl;
+
+            public BoardPicDTO(BoardPic boardPic) {
+                this.boardId = boardPic.getId();
+                this.boardPicUrl = boardPic.getBoardPicUrl();
+            }
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO {
+            private Integer userId;
+            private String username;
+            private String location;
+
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.username = user.getUsername();
+                this.location = user.getLocation();
+            }
+        }
+    }
+
+    @Getter
+    @Setter
+    // 게시글좋아요
+    public static class BoardLikeRespDTO {
+        private Integer id;
+        private Integer boardId;
+        private Integer userId;
+
+        public BoardLikeRespDTO(BoardLike boardLike) {
+            this.id = boardLike.getId();
+            this.boardId = boardLike.getBoard().getId();
+            this.userId = boardLike.getUser().getId();
+        }
+    }
 }

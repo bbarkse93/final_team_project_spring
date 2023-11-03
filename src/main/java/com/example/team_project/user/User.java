@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -11,8 +12,8 @@ import java.sql.Timestamp;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="user_tb")
-public class User{
+@Table(name = "user_tb")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +27,8 @@ public class User{
 
     private String email;
 
+    private String nickname;
+
     @Lob
     private String userPicUrl;
 
@@ -33,14 +36,16 @@ public class User{
 
     private Boolean distinguish;
 
+    @CreationTimestamp
     private Timestamp userCreatedAt;
 
     @Builder
-    public User(Integer id, String username, String password, String email, String userPicUrl, String location, Boolean distinguish, Timestamp userCreatedAt) {
+    public User(Integer id, String username, String password, String email, String nickname, String userPicUrl, String location, Boolean distinguish, Timestamp userCreatedAt) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.nickname = nickname;
         this.userPicUrl = userPicUrl;
         this.location = location;
         this.distinguish = distinguish;
