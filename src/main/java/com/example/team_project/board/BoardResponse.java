@@ -4,10 +4,12 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.team_project.board.BoardResponse.BoardListRespDTO.BoardLikeDTO;
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_like.BoardLike;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.reply.Reply;
+import com.example.team_project.reply.reply_like.ReplyLike;
 import com.example.team_project.user.User;
 
 import lombok.Getter;
@@ -155,10 +157,11 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class ReplyDTO{
+        public static class ReplyDTO {
             private Integer replyId;
             private String comment;
             private Timestamp replyCreatedAt;
+            private long replyLikes;
             private UserDTO user;
 
             public ReplyDTO(Reply reply) {
@@ -166,11 +169,13 @@ public class BoardResponse {
                 this.comment = reply.getComment();
                 this.user = new UserDTO(reply.getUser());
                 this.replyCreatedAt = reply.getReplyCreatedAt();
+                this.replyLikes = reply.getReplyLikes().stream().map(rl -> new ReplyLikeDTO(rl)).count();
+
             }
 
             @Getter
             @Setter
-            public static class UserDTO{
+            public static class UserDTO {
                 private Integer replyUserId;
                 private String userPicUrl;
                 private String nickname;
@@ -183,18 +188,29 @@ public class BoardResponse {
                     this.location = user.getLocation();
                 }
             }
-        }
 
+            @Getter
+            @Setter
+            public static class BoardLikeDTO {
+                private Integer likeId;
+                private Integer userId;
 
-        @Getter
-        @Setter
-        public static class BoardLikeDTO {
-            private Integer likeId;
-            private Integer userId;
+                public BoardLikeDTO(BoardLike boardLike) {
+                    this.likeId = boardLike.getId();
+                    this.userId = boardLike.getUser().getId();
+                }
+            }
 
-            public BoardLikeDTO(BoardLike boardLike) {
-                this.likeId = boardLike.getId();
-                this.userId = boardLike.getUser().getId();
+            @Getter
+            @Setter
+            public static class ReplyLikeDTO {
+                private Integer likeId;
+                private Integer userId;
+
+                public ReplyLikeDTO(ReplyLike replyLike) {
+                    this.likeId = replyLike.getId();
+                    this.userId = replyLike.getUser().getId();
+                }
             }
         }
     }
@@ -373,3 +389,4 @@ public class BoardResponse {
         }
     }
 }
+
