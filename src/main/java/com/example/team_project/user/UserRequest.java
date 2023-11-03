@@ -54,10 +54,12 @@ public class UserRequest {
     public static class UserUpdateReqDTO {
         private String username;
         private String password;
+        private String nickname;
 
         public User toEntity() {
             return User.builder()
                     .username(username)
+                    .nickname(nickname)
                     .password(password)
                     .build();
         }

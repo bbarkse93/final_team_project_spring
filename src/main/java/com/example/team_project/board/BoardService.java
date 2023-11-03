@@ -9,12 +9,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
 import com.example.team_project.board.BoardRequest.BoardUpdateReqDTO;
+import com.example.team_project.board.BoardResponse.BoardDeleteRespDTO;
+import com.example.team_project.board.BoardResponse.BoardLikeRespDTO;
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_category.BoardCategoryJPARepository;
+import com.example.team_project.board.board_like.BoardLike;
+import com.example.team_project.board.board_like.BoardLikeJPARepository;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.board.board_pic.BoardPicJPARepository;
 
 import lombok.RequiredArgsConstructor;
+
+import javax.persistence.EntityManager;
+import javax.validation.Valid;
+
 
 @Transactional
 @RequiredArgsConstructor
@@ -24,6 +32,9 @@ public class BoardService {
     private final BoardJPARepository boardJPARepository;
     private final BoardPicJPARepository boardPicJPARepository;
     private final BoardCategoryJPARepository boardCategoryJPARepository;
+    private final BoardLikeJPARepository boardLikeJPARepository;
+    private final EntityManager em;
+
 
     // 동네 생활 전체 보기
     public List<BoardResponse.BoardListRespDTO> FindAll() {
@@ -33,12 +44,13 @@ public class BoardService {
                 .distinct()
                 .map(b -> {
                     BoardResponse.BoardListRespDTO boardDTO = new BoardResponse.BoardListRespDTO(b);
-                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null
+                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null                    
                             : b.getBoardPics().stream()
                                     .limit(1)
                                     .map(bp -> new BoardResponse.BoardListRespDTO.BoardPicDTO(bp))
                                     .collect(Collectors.toList());
                     boardDTO.setBoardPics(boardPicDTOs);
+
                     return boardDTO;
                 })
                 .collect(Collectors.toList());
@@ -51,9 +63,7 @@ public class BoardService {
         Board board = boardJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("게시물을 찾을 수 없습니다. ID:" + id));
 
-        List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
-        // TODO: boardPics에 값이 없으면 빈 리스트가 아닌 null이 출력되게 수정해야 함
-        return new BoardResponse.BoardDetailRespDTO(board, boardPics);
+        return new BoardResponse.BoardDetailRespDTO(board);
     }
 
     // 동네 생활 게시글 등록
@@ -69,10 +79,10 @@ public class BoardService {
         }
 
         List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
-        BoardCategory boardcCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
+        BoardCategory boardCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())
                 .orElseThrow(() -> new Exception404("Category를 찾을 수 없습니다."));
 
-        return new BoardResponse.BoardWriteRespDTO(board, boardPics, boardcCategory);
+        return new BoardResponse.BoardWriteRespDTO(board, boardPics, boardCategory);
     }
 
     // 동네 생활 게시글 수정
@@ -86,20 +96,24 @@ public class BoardService {
                 updateReqDTO.getBoardContent(),
                 updateReqDTO.getBoardTitle());
 
-        List<BoardPic> boardPics = updateReqDTO.getBoardPics();
+        List<String> boardPics = updateReqDTO.getBoardPics();
 
-        for (BoardPic boardPic : boardPics) {
+        for (String boardPic : boardPics) {
             boardPicJPARepository.updateBoardPic(board.getId(),
-                    boardPic.getBoardPicUrl());
+                    boardPic);
         }
 
         Integer boardCategoryId = updateReqDTO.getBoardCategoryId();
-        Optional<BoardCategory> optionalCategory = boardCategoryJPARepository.findById(boardCategoryId);
-        BoardCategory newCategory = optionalCategory.get();
-        board.setBoardCategory(newCategory);
-        boardJPARepository.save(board);
 
-        return new BoardResponse.BoardUpdateRespDTO(board, boardPics);
+        Optional<BoardCategory> optionalCategory = boardCategoryJPARepository.findById(boardCategoryId);
+
+        BoardCategory newCategory = optionalCategory.orElseThrow(() -> new Exception404("카테고리를 찾을 수 없습니다."));
+
+        board.setBoardCategory(newCategory);
+
+        Board boardDTO = boardJPARepository.save(board);
+
+        return new BoardResponse.BoardUpdateRespDTO(boardDTO);
     }
 
     // 동네 생활 게시글 삭제
@@ -137,4 +151,22 @@ public class BoardService {
 
         return responseDTO;
     }
+
+    // 게시글 좋아요
+    @Transactional
+    public BoardResponse.BoardLikeRespDTO LikeBoard(BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
+        // BoardLike entity 생성 및 저장
+        // BoardLike boardLike = new BoardLike(boardLikeReqDTO.getBoardId(),
+        // boardLikeReqDTO.getUserId());
+        BoardLike boardLike = boardLikeJPARepository.save(boardLikeReqDTO.toEntiy());
+        return new BoardResponse.BoardLikeRespDTO(boardLike);
+    }
+
+    @Transactional
+    //게시글 좋아요 삭제
+    public void deleteLikeBoard (BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
+        boardLikeJPARepository.delete(boardLikeReqDTO.toEntiy());
+    }
+        
+    
 }
