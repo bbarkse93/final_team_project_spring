@@ -1,5 +1,6 @@
 package com.example.team_project.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,7 +37,7 @@ public class BoardService {
                 .distinct()
                 .map(b -> {
                     BoardResponse.BoardListRespDTO boardDTO = new BoardResponse.BoardListRespDTO(b);
-                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null                    
+                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null
                             : b.getBoardPics().stream()
                                     .limit(1)
                                     .map(bp -> new BoardResponse.BoardListRespDTO.BoardPicDTO(bp))
@@ -88,24 +89,24 @@ public class BoardService {
                 updateReqDTO.getBoardContent(),
                 updateReqDTO.getBoardTitle());
 
-        List<String> boardPics = updateReqDTO.getBoardPics();
-
-        for (String boardPic : boardPics) {
-            boardPicJPARepository.updateBoardPic(board.getId(),
-                    boardPic);
+        // 1. 해당 보드 id에 담긴 원래 사진들을 가져옴.
+        List<BoardPic> boardPicsOld = boardPicJPARepository.findByBoardId(board.getId());
+        // 2. DTO에 담겨있던 사진을 가져옴.
+        List<String> boardPicsDTO = updateReqDTO.getBoardPics();
+        for (BoardPic boardPic : boardPicsOld) {
+            boardPicJPARepository.updateBoardPic(boardPic.getId(), boardPicsDTO.get(boardPicsOld.indexOf(boardPic))); // 수정
         }
 
-        Integer boardCategoryId = updateReqDTO.getBoardCategoryId();
+        BoardCategory optionalCategory = boardCategoryJPARepository.findById(updateReqDTO.getBoardCategoryId())
+                .orElseThrow(() -> new Exception404("카테고리를 찾을 수 없습니다."));
 
-        Optional<BoardCategory> optionalCategory = boardCategoryJPARepository.findById(boardCategoryId);
+        board.setBoardCategory(optionalCategory);
 
-        BoardCategory newCategory = optionalCategory.orElseThrow(() -> new Exception404("카테고리를 찾을 수 없습니다."));
+        board = boardJPARepository.save(board);
 
-        board.setBoardCategory(newCategory);
+        em.refresh(board);
 
-        Board boardDTO = boardJPARepository.save(board);
-
-        return new BoardResponse.BoardUpdateRespDTO(boardDTO);
+        return new BoardResponse.BoardUpdateRespDTO(board);
     }
 
     // 동네 생활 게시글 삭제
