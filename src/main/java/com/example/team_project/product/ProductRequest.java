@@ -42,5 +42,18 @@ public class ProductRequest {
         private Integer userId;
         private List<String> productPics;
     }
+//상품북마크
+    @Getter
+    @Setter
+    @ToString
+    public class ProductBookMarkReqDTO{
+        private Integer bookmarkId;
+        private Integer productId;
+        public ProductBookMarkReqDTO(Integer bookmarkId, Integer productId) {
+            this.bookmarkId = bookmarkId;
+            this.productId = productId;
+        }
+    }
 
 }
+

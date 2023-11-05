@@ -69,4 +69,10 @@ public class ProductRestController {
         List<ProductResponse.ProductSearchRespDTO> responseDTO = productService.searchProductsByKeyword(keyword);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
+
+    //상품북마크
+    @PostMapping("/products/bookmark/{id}")
+    public void bookmarkProducts(@PathVariable Integer id,@RequestBody ProductRequest.ProductBookMarkReqDTO productBookMarkReqDTO){
+    
+    }
 }
