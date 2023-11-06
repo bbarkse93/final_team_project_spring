@@ -84,13 +84,12 @@ public class BoardRequest {
     @Setter
 
     public static class BoardLikeReqDTO {
-        @Id
-        // @GeneratedValue(strategy = GenerationType.IDENTITY) // 또는 다른 ID 생성 전략을 선택
+
         private Integer Id;
         private Integer boardId;
         private Integer userId;
 
-        public BoardLike toEntiy() {
+        public BoardLike toEntity() {
             return BoardLike.builder()
                     .board(Board.builder().id(Id).build())
                     .board(Board.builder().id(getBoardId()).build())
