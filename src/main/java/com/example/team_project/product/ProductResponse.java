@@ -273,4 +273,16 @@ public class ProductResponse {
             }
         }
     }
+
+    //상품북마크
+    @Getter
+    @Setter
+    public static class ProductBookMarkDTO{
+        private Integer bookmarkId;
+        private Integer productId;
+        public ProductBookMarkDTO(ProductBookMark productBookMark) {
+            this.bookmarkId = bookmarkId;
+            this.productId = productId;
+        }
+    }
 }

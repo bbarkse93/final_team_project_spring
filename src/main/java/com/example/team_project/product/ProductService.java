@@ -24,6 +24,7 @@ public class ProductService {
     private final ProductJPARepository productJPARepository;
     private final ProductPicJPARepository productPicJPARepository;
     private final EntityManager em;
+    public Object bookmarkProducts;
 
     // 상품 리스트
     public List<ProductResponse.ProductListRespDTO> findAll() {
