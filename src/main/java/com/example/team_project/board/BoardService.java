@@ -155,18 +155,18 @@ public class BoardService {
 
     // 게시글 좋아요
     @Transactional
-    public BoardResponse.BoardLikeRespDTO LikeBoard(BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
-        // BoardLike entity 생성 및 저장
-        // BoardLike boardLike = new BoardLike(boardLikeReqDTO.getBoardId(),
-        // boardLikeReqDTO.getUserId());
-        BoardLike boardLike = boardLikeJPARepository.save(boardLikeReqDTO.toEntiy());
+    public BoardResponse.BoardLikeRespDTO likeBoard(BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
+
+        BoardLike boardLike = boardLikeJPARepository.save(boardLikeReqDTO.toEntity());
         return new BoardResponse.BoardLikeRespDTO(boardLike);
     }
 
     @Transactional
     // 게시글 좋아요 삭제
-    public void deleteLikeBoard(BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
-        boardLikeJPARepository.delete(boardLikeReqDTO.toEntiy());
+
+    public void deleteLikeBoard(int bodardsId, int id) {
+        boardLikeJPARepository.deleteById(id);
+
     }
 
 }

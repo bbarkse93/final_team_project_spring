@@ -76,11 +76,12 @@ public class BoardRestController {
 
     // 게시글 좋아요 추가
     @PostMapping("/boards/like/{id}")
-    public ResponseEntity<?> LikeBoard(@PathVariable Integer id,
+    public ResponseEntity<?> likeBoard(@PathVariable Integer id,
             @RequestBody @Valid BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
-        BoardResponse.BoardLikeRespDTO responseDTO = boardService.LikeBoard(boardLikeReqDTO);
+        BoardResponse.BoardLikeRespDTO responseDTO = boardService.likeBoard(boardLikeReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
+
 
     // 게시글 좋아요 삭제
     @PostMapping("/boards/like/delete/{id}")
@@ -93,6 +94,13 @@ public class BoardRestController {
         boardService.deleteLikeBoard(boardLikeReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success("ok"));
 
+    @PostMapping("/boards/{boardsId}/like/delete/{id}")
+    public ResponseEntity<?> deleteLikeBoard(@PathVariable("boardsId") Integer boardsId,
+            @PathVariable("id") Integer id) {
+
+        boardService.deleteLikeBoard(boardsId, id);
+
+        return null;
     }
 
 }
