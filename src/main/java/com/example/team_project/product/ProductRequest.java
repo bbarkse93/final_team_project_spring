@@ -1,9 +1,8 @@
 package com.example.team_project.product;
 
-import java.sql.Timestamp;
 import java.util.List;
 
-import com.example.team_project.product.product_pic.ProductPic;
+import com.example.team_project.product.product_book_mark.ProductBookMark;
 import com.example.team_project.user.User;
 
 import lombok.Getter;
@@ -30,6 +29,7 @@ public class ProductRequest {
                     .user(User.builder().id(getUserId()).build())
                     .build();
         }
+
     }
 
     @Getter
@@ -42,18 +42,21 @@ public class ProductRequest {
         private Integer userId;
         private List<String> productPics;
     }
-//상품북마크
+
+    // 상품북마크
     @Getter
     @Setter
     @ToString
-    public class ProductBookMarkReqDTO{
-        private Integer bookmarkId;
+    public static class ProductBookMarkReqDTO {
+        private Integer userId;
         private Integer productId;
-        public ProductBookMarkReqDTO(Integer bookmarkId, Integer productId) {
-            this.bookmarkId = bookmarkId;
-            this.productId = productId;
+
+        public ProductBookMark toEntity() {
+            return ProductBookMark.builder()
+                    .user(User.builder().id(getUserId()).build())
+                    .product(Product.builder().id(getProductId()).build())
+                    .build();
         }
     }
 
 }
-

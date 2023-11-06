@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project.board.BoardRequest;
+import com.example.team_project.board.BoardResponse;
 import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
 
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -70,9 +74,12 @@ public class ProductRestController {
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
-    //상품북마크
-    @PostMapping("/products/bookmark/{id}")
-    public void bookmarkProducts(@PathVariable Integer id,@RequestBody ProductRequest.ProductBookMarkReqDTO productBookMarkReqDTO){
-    
+    // 상품북마크
+    @PostMapping("/products/bookmark")
+    public ResponseEntity<?> bookmarkProducts(@RequestBody ProductRequest.ProductBookMarkReqDTO productBookMarkReqDTO) {
+        System.out.println("dto 값 잘 들어오지? : " + productBookMarkReqDTO);
+        ProductResponse.ProductBookMarkRespDTO responseDTO = productService.bookmarkProducts(productBookMarkReqDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
+
 }
