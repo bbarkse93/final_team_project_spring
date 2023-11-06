@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.product.product_pic.ProductPicJPARepository;
@@ -87,10 +88,14 @@ public class ProductService {
                 productUpdateReqDTO.getProductDescription(),
                 productUpdateReqDTO.getProductName());
 
-        List<String> productPics = productUpdateReqDTO.getProductPics();
+        // 1. 해당 보드 id에 담긴 원래 사진들을 삭제.
+        productPicJPARepository.deleteByProductId(product.getId());
+        // 2. DTO에 담겨있던 사진을 저장.
+        List<String> productPicList = productUpdateReqDTO.getProductPics();
 
-        for (String productPic : productPics) {
-            productPicJPARepository.updateProductPic(product.getId(), productPic);
+        for (String productPic : productPicList) {
+
+            productPicJPARepository.mSave(productPic, product.getId());
         }
         em.refresh(product);
         List<ProductPic> productPicsUpdate = productPicJPARepository.findByProductId(product.getId());

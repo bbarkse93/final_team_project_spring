@@ -1,5 +1,6 @@
 package com.example.team_project.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -94,24 +95,26 @@ public class BoardService {
                 updateReqDTO.getBoardContent(),
                 updateReqDTO.getBoardTitle());
 
-        List<String> boardPics = updateReqDTO.getBoardPics();
+        // 1. 해당 보드 id에 담긴 원래 사진들을 삭제.
+        boardPicJPARepository.deleteByBoardId(board.getId());
+        // 2. DTO에 담겨있던 사진을 저장.
+        List<String> boardPicList = updateReqDTO.getBoardPics();
 
-        for (String boardPic : boardPics) {
-            boardPicJPARepository.updateBoardPic(board.getId(),
-                    boardPic);
+        for (String boardPic : boardPicList) {
+
+            boardPicJPARepository.mSave(boardPic, board.getId());
         }
 
-        Integer boardCategoryId = updateReqDTO.getBoardCategoryId();
+        BoardCategory optionalCategory = boardCategoryJPARepository.findById(updateReqDTO.getBoardCategoryId())
+                .orElseThrow(() -> new Exception404("카테고리를 찾을 수 없습니다."));
 
-        Optional<BoardCategory> optionalCategory = boardCategoryJPARepository.findById(boardCategoryId);
+        board.setBoardCategory(optionalCategory);
 
-        BoardCategory newCategory = optionalCategory.orElseThrow(() -> new Exception404("카테고리를 찾을 수 없습니다."));
+        board = boardJPARepository.save(board);
 
-        board.setBoardCategory(newCategory);
+        em.refresh(board);
 
-        Board boardDTO = boardJPARepository.save(board);
-
-        return new BoardResponse.BoardUpdateRespDTO(boardDTO);
+        return new BoardResponse.BoardUpdateRespDTO(board);
     }
 
     // 동네 생활 게시글 삭제
@@ -160,8 +163,10 @@ public class BoardService {
 
     @Transactional
     // 게시글 좋아요 삭제
+
     public void deleteLikeBoard(int bodardsId, int id) {
         boardLikeJPARepository.deleteById(id);
+
     }
 
 }

@@ -23,6 +23,7 @@ public class ReplyResponse {
         private String comment;
         private Integer boardId;
         private Timestamp replyCreatedAt;
+        private long replyLikes;
         private UserDTO user;
 
         public ReplyWriteRespDTO(Reply reply) {
