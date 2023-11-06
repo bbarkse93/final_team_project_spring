@@ -24,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
-
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -35,7 +34,6 @@ public class BoardService {
     private final BoardCategoryJPARepository boardCategoryJPARepository;
     private final BoardLikeJPARepository boardLikeJPARepository;
     private final EntityManager em;
-
 
     // 동네 생활 전체 보기
     public List<BoardResponse.BoardListRespDTO> FindAll() {
@@ -97,12 +95,14 @@ public class BoardService {
                 updateReqDTO.getBoardContent(),
                 updateReqDTO.getBoardTitle());
 
-        // 1. 해당 보드 id에 담긴 원래 사진들을 가져옴.
-        List<BoardPic> boardPicsOld = boardPicJPARepository.findByBoardId(board.getId());
-        // 2. DTO에 담겨있던 사진을 가져옴.
-        List<String> boardPicsDTO = updateReqDTO.getBoardPics();
-        for (BoardPic boardPic : boardPicsOld) {
-            boardPicJPARepository.updateBoardPic(boardPic.getId(), boardPicsDTO.get(boardPicsOld.indexOf(boardPic))); // 수정
+        // 1. 해당 보드 id에 담긴 원래 사진들을 삭제.
+        boardPicJPARepository.deleteByBoardId(board.getId());
+        // 2. DTO에 담겨있던 사진을 저장.
+        List<String> boardPicList = updateReqDTO.getBoardPics();
+
+        for (String boardPic : boardPicList) {
+
+            boardPicJPARepository.mSave(boardPic, board.getId());
         }
 
         BoardCategory optionalCategory = boardCategoryJPARepository.findById(updateReqDTO.getBoardCategoryId())
@@ -164,11 +164,9 @@ public class BoardService {
     }
 
     @Transactional
-    //게시글 좋아요 삭제
-    public void deleteLikeBoard (BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
+    // 게시글 좋아요 삭제
+    public void deleteLikeBoard(BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
         boardLikeJPARepository.delete(boardLikeReqDTO.toEntiy());
     }
-        
-    
-}
 
+}

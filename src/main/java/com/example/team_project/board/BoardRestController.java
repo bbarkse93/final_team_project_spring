@@ -50,8 +50,8 @@ public class BoardRestController {
 
     // 동네 생활 게시글 수정
     @PostMapping("/boards/update/{id}")
-    public ResponseEntity<?> updateBoard(@RequestBody Integer id,
-            @RequestBody BoardUpdateReqDTO updateReqDTO) {
+    public ResponseEntity<?> updateBoard(@PathVariable Integer id, @RequestBody BoardUpdateReqDTO updateReqDTO) {
+
         BoardResponse.BoardUpdateRespDTO responseDTO = boardService.updateBoardWithBoardPics(id, updateReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
@@ -81,19 +81,18 @@ public class BoardRestController {
         BoardResponse.BoardLikeRespDTO responseDTO = boardService.LikeBoard(boardLikeReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
-    //게시글 좋아요 삭제
+
+    // 게시글 좋아요 삭제
     @PostMapping("/boards/like/delete/{id}")
     public ResponseEntity<?> deleteLikeBoard(@PathVariable Integer id,
-            @RequestBody @Valid BoardRequest.BoardLikeReqDTO boardLikeReqDTO){
-                
-                    System.out.println("getId value : " + boardLikeReqDTO.getId());
-                    System.out.println("getBoardId value : " + boardLikeReqDTO.getBoardId());
-                    System.out.println("getUserId value : " + boardLikeReqDTO.getUserId());
-                boardService.deleteLikeBoard(boardLikeReqDTO);
-                return ResponseEntity.ok().body(ApiUtils.success("ok"));
+            @RequestBody @Valid BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
 
+        System.out.println("getId value : " + boardLikeReqDTO.getId());
+        System.out.println("getBoardId value : " + boardLikeReqDTO.getBoardId());
+        System.out.println("getUserId value : " + boardLikeReqDTO.getUserId());
+        boardService.deleteLikeBoard(boardLikeReqDTO);
+        return ResponseEntity.ok().body(ApiUtils.success("ok"));
 
     }
-
 
 }
