@@ -82,7 +82,6 @@ public class BoardRestController {
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
-
     // 게시글 좋아요 삭제
     @PostMapping("/boards/like/delete/{id}")
     public ResponseEntity<?> deleteLikeBoard(@PathVariable Integer id,
@@ -93,6 +92,7 @@ public class BoardRestController {
         System.out.println("getUserId value : " + boardLikeReqDTO.getUserId());
         boardService.deleteLikeBoard(boardLikeReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success("ok"));
+    }
 
     @PostMapping("/boards/{boardsId}/like/delete/{id}")
     public ResponseEntity<?> deleteLikeBoard(@PathVariable("boardsId") Integer boardsId,
