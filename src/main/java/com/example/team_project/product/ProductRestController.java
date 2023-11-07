@@ -83,7 +83,7 @@ public class ProductRestController {
     }
 
     // 상품북마크삭제
-    @PostMapping("/products/{productsId}/like/delete/{id}")
+    @PostMapping("/products/{productId}/bookmark/delete/{id}")
     public ResponseEntity<?> deleteLikeProducts(@PathVariable("productId") Integer productId,
             @PathVariable("id") Integer id) {
 
