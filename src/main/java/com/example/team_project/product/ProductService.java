@@ -7,8 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
+
+import com.example.team_project.product.ProductRequest.ProductBookMarkReqDTO;
+
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
+import com.example.team_project.product.product_book_mark.ProductBookMark;
+import com.example.team_project.product.product_book_mark.ProductBookMarkJPARepository;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.product.product_pic.ProductPicJPARepository;
 
@@ -24,6 +29,7 @@ public class ProductService {
 
     private final ProductJPARepository productJPARepository;
     private final ProductPicJPARepository productPicJPARepository;
+    private final ProductBookMarkJPARepository productBookMarkJPARepository;
     private final EntityManager em;
 
     // 상품 리스트
@@ -138,6 +144,21 @@ public class ProductService {
                 .collect(Collectors.toList());
 
         return responseDTO;
+    }
+
+    // 상품북마크
+    public ProductResponse.ProductBookMarkRespDTO bookmarkProducts(
+            ProductRequest.ProductBookMarkReqDTO productBookMarkReqDTO) {
+        System.out.println("DTO 서비스 : " + productBookMarkReqDTO);
+
+        ProductBookMark productBookMark = productBookMarkJPARepository.save(productBookMarkReqDTO.toEntity());
+        return new ProductResponse.ProductBookMarkRespDTO(productBookMark);
+    }
+
+    // 상품북마크삭제
+    @Transactional
+    public void deleteLikeProducts(Integer productId, Integer id) {
+        productBookMarkJPARepository.deleteById(id);
     }
 
 }

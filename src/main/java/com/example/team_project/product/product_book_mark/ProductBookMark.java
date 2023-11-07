@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="product_like_tb")
+@Table(name = "product_like_tb")
 public class ProductBookMark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
