@@ -22,6 +22,7 @@ public class UserResponse {
         private String username;
         private String password;
         private String email;
+        private String location;
         private Timestamp createdAt;
 
         public UserJoinRespDTO(User user) {
@@ -29,6 +30,7 @@ public class UserResponse {
             this.username = user.getUsername();
             this.password = null;
             this.email = user.getEmail();
+            this.location = user.getLocation();
             this.createdAt = user.getUserCreatedAt();
 
         }
