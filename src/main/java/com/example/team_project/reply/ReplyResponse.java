@@ -86,5 +86,6 @@ public class ReplyResponse {
     @Setter
     public static class ReplyDeleteRespDTO{
 
+
     }
 }
