@@ -25,4 +25,8 @@ public interface BoardJPARepository extends JpaRepository<Board, Integer> {
             @Param("boardTitle") String boardTitle);
 
     List<Board> findByBoardTitleContaining(String keyword);
+
+    @Query("select b from Board b where b.user.id = :id")
+    List<Board> findbyUserId(Integer id);
+    
 }

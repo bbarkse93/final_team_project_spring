@@ -1,5 +1,7 @@
 package com.example.team_project.user;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -52,4 +54,14 @@ public class UserRestController {
         UserResponse.UserUpdateRespDTO responseDTO = userService.update(userUpdateReqDTO, id);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
+
+    // 나의 당근 - 동네생활 내가 쓴글, 댓글
+    @GetMapping("user/myboards")
+    public ResponseEntity<?> myboards(int id) {
+        // 이따 유저정보 가져오는걸로 바꿔야함!
+        
+        UserResponse.MyWriteRespDTO responseDTO = userService.myboards(1);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 }
+ 
