@@ -72,11 +72,7 @@ public class UserService {
         }
         userJPARepository.mUpdateUser(userId, userUpdateReqDTO.getUsername(),
                 userUpdateReqDTO.getPassword(), userUpdateReqDTO.getNickname());
-
-        System.out.println("user 값은? " + user.getEmail());
-        System.out.println("user 값은? " + user.getUsername());
-        System.out.println("user 값은? " + user.getNickname());
-
+        
         // 변경 내용을 데이터베이스에 반영
         userJPARepository.flush();
 
@@ -90,7 +86,7 @@ public class UserService {
     }
 
     // 나의 당근 - 동네생활 내가 쓴글, 댓글
-    public UserResponse.MyWriteRespDTO myboards(int id) {
+    public UserResponse.MyWriteRespDTO myBoards(int id) {
 
         // 글쓴이의 유저아이디가 일치하는 보드들 들고오기
         List<Board> boardWriteList = boardJPARepository.findbyUserId(1);

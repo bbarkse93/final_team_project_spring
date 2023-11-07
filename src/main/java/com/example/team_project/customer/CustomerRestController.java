@@ -3,9 +3,7 @@ package com.example.team_project.customer;
 import com.example.team_project._core.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,21 +18,21 @@ public class CustomerRestController {
 
     // 문의 상세 조회
     @GetMapping("/customers/{id}")
-    public ResponseEntity<?> CustomerDetail(){
+    public ResponseEntity<?> customerDetail(@PathVariable Integer id){
 
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     // 문의 등록
     @PostMapping("/customers/write")
-    public ResponseEntity<?> CustomerWrite(){
+    public ResponseEntity<?> customerWrite(){
 
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     // 문의 삭제
-    @GetMapping("/customers/delete")
-    public ResponseEntity<?> CustomerDelete(){
+    @DeleteMapping("/customers/{id}")
+    public ResponseEntity<?> customerDelete(@PathVariable Integer id){
 
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }

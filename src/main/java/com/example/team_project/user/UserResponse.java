@@ -87,12 +87,12 @@ public class UserResponse {
     @Getter
     @Setter
     public static class MyWriteRespDTO {
-        private List<WriteBoardsDTO> boardwrites;
-        private List<WriteBoardsDTO> replywrites;
+        private List<WriteBoardsDTO> boardWrites;
+        private List<WriteBoardsDTO> replyWrites;
 
         public MyWriteRespDTO(List<Board> board, List<Board> replies) {
-            this.boardwrites = board.stream().map(b -> new WriteBoardsDTO(b)).collect(Collectors.toList());
-            this.replywrites = replies.stream().map(r -> new WriteBoardsDTO(r)).collect(Collectors.toList());
+            this.boardWrites = board.stream().map(b -> new WriteBoardsDTO(b)).collect(Collectors.toList());
+            this.replyWrites = replies.stream().map(r -> new WriteBoardsDTO(r)).collect(Collectors.toList());
         }
 
         @Getter

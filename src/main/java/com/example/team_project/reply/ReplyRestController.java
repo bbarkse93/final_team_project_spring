@@ -17,7 +17,7 @@ public class ReplyRestController {
 
     // 댓글 등록
     @PostMapping("/replies/write")
-    public ResponseEntity<?> WriteReply(@RequestBody ReplyRequest.ReplyWriteReqDTO replyWriteReqDTO) {
+    public ResponseEntity<?> writeReply(@RequestBody ReplyRequest.ReplyWriteReqDTO replyWriteReqDTO) {
         ReplyResponse.ReplyWriteRespDTO responseDTO = replyService.save(replyWriteReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
@@ -25,15 +25,15 @@ public class ReplyRestController {
 
     // 댓글 수정
     @PostMapping("/replies/update/{id}")
-    public ResponseEntity<?> UpdateReply(@PathVariable Integer id, @RequestBody ReplyRequest.ReplyUpdateReqDTO replyUpdateReqDTO) {
+    public ResponseEntity<?> updateReply(@PathVariable Integer id, @RequestBody ReplyRequest.ReplyUpdateReqDTO replyUpdateReqDTO) {
         ReplyResponse.ReplyUpdateRespDTO responseDTO = replyService.update(id, replyUpdateReqDTO);
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
     // 댓글 삭제
-    @GetMapping("/replies/delete/{id}")
-    public ResponseEntity<?> DeleteReply(@PathVariable Integer id) {
+    @DeleteMapping("/replies/{id}")
+    public ResponseEntity<?> deleteReply(@PathVariable Integer id) {
         replyService.delete(id);
         return ResponseEntity.ok().body(ApiUtils.success("댓글 삭제 완료"));
     }

@@ -45,10 +45,10 @@ INSERT INTO reply_tb (`id`, `comment`, `reply_created_at`, `board_id`, `user_id`
 INSERT INTO reply_tb (`id`, `comment`, `reply_created_at`, `board_id`, `user_id`) VALUES (2, '댓글 2',NOW(), 1, 1);
 
 -- Product 북마크
-INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (1, 1, 1);
-INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (2, 1, 2);
-INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (3, 2, 1);
-INSERT INTO product_like_tb (`id`, `product_id`, `user_id`) VALUES (4, 3, 2);
+INSERT INTO product_bookmark_tb (`id`, `product_id`, `user_id`) VALUES (1, 1, 1);
+INSERT INTO product_bookmark_tb (`id`, `product_id`, `user_id`) VALUES (2, 1, 2);
+INSERT INTO product_bookmark_tb (`id`, `product_id`, `user_id`) VALUES (3, 2, 1);
+INSERT INTO product_bookmark_tb (`id`, `product_id`, `user_id`) VALUES (4, 3, 2);
 
 -- Board 좋아요
 INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (1, 1, 1);

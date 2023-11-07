@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.team_project.product.product_book_mark.ProductBookMark;
+import com.example.team_project.product.product_book_mark.ProductBookmark;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.user.User;
 
@@ -31,7 +31,7 @@ public class ProductResponse {
             this.productPrice = product.getProductPrice();
             this.productCreatedAt = product.getProductCreatedAt();
             this.user = new UserDTO(product.getUser());
-            this.productLikes = product.getProductBookMarks().stream().map(bl -> new ProductLikeDTO(bl)).count();
+            this.productLikes = product.getProductBookmarks().stream().map(bl -> new ProductLikeDTO(bl)).count();
             this.productPics = product.getProductPics().stream()
                     .limit(1)
                     .map(p -> new ProductPicDTO(p))
@@ -68,7 +68,7 @@ public class ProductResponse {
             private Integer likeId;
             private Integer userId;
 
-            public ProductLikeDTO(ProductBookMark boardLike) {
+            public ProductLikeDTO(ProductBookmark boardLike) {
                 this.likeId = likeId;
                 this.userId = userId;
             }
@@ -95,7 +95,7 @@ public class ProductResponse {
             this.productPrice = product.getProductPrice();
             this.productCreatedAt = product.getProductCreatedAt();
             this.user = new UserDTO(product.getUser());
-            this.productLikes = product.getProductBookMarks().stream().map(bl -> new ProductLikeDTO(bl)).count();
+            this.productLikes = product.getProductBookmarks().stream().map(bl -> new ProductLikeDTO(bl)).count();
             this.productPics = productPics.stream().map(t -> new ProductPicDTO(t)).collect(Collectors.toList());
 
         }
@@ -134,7 +134,7 @@ public class ProductResponse {
             private Integer likeId;
             private Integer userId;
 
-            public ProductLikeDTO(ProductBookMark boardLike) {
+            public ProductLikeDTO(ProductBookmark boardLike) {
                 this.likeId = likeId;
                 this.userId = userId;
             }
@@ -281,9 +281,15 @@ public class ProductResponse {
         private Integer bookmarkId;
         private Integer productId;
 
-        public ProductBookMarkRespDTO(ProductBookMark productBookMark) {
+        public ProductBookMarkRespDTO(ProductBookmark productBookMark) {
             this.bookmarkId = productBookMark.getId();
             this.productId = productBookMark.getProduct().getId();
         }
+    }
+
+    @Getter
+    @Setter
+    public static class DeleteBookmarkRespDTO{
+
     }
 }

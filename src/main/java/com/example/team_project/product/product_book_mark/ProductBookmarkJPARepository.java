@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-public interface ProductBookMarkJPARepository extends JpaRepository<ProductBookMark, Integer> {
+public interface ProductBookmarkJPARepository extends JpaRepository<ProductBookmark, Integer> {
 
     @Modifying
     @Query(value = "INSERT INTO product_bookmark_tb (`id`, `product_id`,`user_id`) VALUES (:Id, :productId,:userId)", nativeQuery = true)
