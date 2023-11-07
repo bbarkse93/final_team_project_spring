@@ -1,11 +1,19 @@
 package com.example.team_project.user;
 
 import com.example.team_project._core.utils.JwtTokenUtils;
+import com.example.team_project.board.Board;
+import com.example.team_project.board.BoardJPARepository;
+import com.example.team_project.reply.Reply;
+import com.example.team_project.reply.ReplyJPARepository;
 import com.example.team_project.user.UserResponse.UserUpdateRespDTO;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +30,8 @@ public class UserService {
 
     private final UserJPARepository userJPARepository;
     private final EntityManager em;
+    private final BoardJPARepository boardJPARepository;
+    private final ReplyJPARepository replyJPARepository;
 
     // 회원가입
     @Transactional
@@ -79,4 +89,24 @@ public class UserService {
 
     }
 
+    // 나의 당근 - 동네생활 내가 쓴글, 댓글
+    public UserResponse.MyWriteRespDTO myboards(int id) {
+
+        // 글쓴이의 유저아이디가 일치하는 보드들 들고오기
+        List<Board> boardWriteList = boardJPARepository.findbyUserId(1);
+
+        // 유저아이디가 일치하는 댓글을 찾기 (보드아이디도 알수있음.)
+        List<Reply> replyList = replyJPARepository.findbyUserId(1);
+        // 새로운 객체에 List<Board>형태로 담기
+        List<Board> replyWriteList = new ArrayList<>();
+
+        for (Reply reply : replyList) {
+            Integer boardId = reply.getBoard().getId();
+            Board replyboard = boardJPARepository.findById(boardId).orElse(null);
+            if (replyboard != null) {
+                replyWriteList.add(replyboard);
+            }
+        }
+        return new UserResponse.MyWriteRespDTO(boardWriteList, replyWriteList);
+    }
 }

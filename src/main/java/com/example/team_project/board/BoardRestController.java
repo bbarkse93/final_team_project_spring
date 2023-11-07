@@ -50,8 +50,8 @@ public class BoardRestController {
 
     // 동네 생활 게시글 수정
     @PostMapping("/boards/update/{id}")
-    public ResponseEntity<?> updateBoard(@RequestBody Integer id,
-            @RequestBody BoardUpdateReqDTO updateReqDTO) {
+    public ResponseEntity<?> updateBoard(@PathVariable Integer id, @RequestBody BoardUpdateReqDTO updateReqDTO) {
+
         BoardResponse.BoardUpdateRespDTO responseDTO = boardService.updateBoardWithBoardPics(id, updateReqDTO);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
@@ -87,9 +87,9 @@ public class BoardRestController {
     @PostMapping("/boards/{boardsId}/like/delete/{id}")
     public ResponseEntity<?> deleteLikeBoard(@PathVariable("boardsId") Integer boardsId,
             @PathVariable("id") Integer id) {
-
         boardService.deleteLikeBoard(boardsId, id);
 
         return null;
     }
+
 }
