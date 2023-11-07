@@ -5,36 +5,40 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
+
 public class CustomerRestController {
+    private final CustomerService customerService;
 
     // 문의 전체 조회
     @GetMapping("/customers")
-    public ResponseEntity<?> CustomerList(){
+    public ResponseEntity<?> CustomerList() {
 
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     // 문의 상세 조회
     @GetMapping("/customers/{id}")
-    public ResponseEntity<?> CustomerDetail(){
+    public ResponseEntity<?> CustomerDetail() {
 
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     // 문의 등록
     @PostMapping("/customers/write")
-    public ResponseEntity<?> CustomerWrite(){
+    public ResponseEntity<?> CustomerWrite(@RequestBody CustomerRequest.CustomerWriteReqDTO customerWriteReqDTO) {
+        CustomerResponse.CustomerWriteRespDTO responseDTO = customerService.save(customerWriteReqDTO);
 
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     // 문의 삭제
     @GetMapping("/customers/delete")
-    public ResponseEntity<?> CustomerDelete(){
+    public ResponseEntity<?> CustomerDelete() {
 
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }

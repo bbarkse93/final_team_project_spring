@@ -16,22 +16,23 @@ public class CustomerService {
 
     private final CustomerJPARepository customerJPARepository;
 
-    public List<CustomerResponse.CustomerListRespDTO> findAll(){
+    public List<CustomerResponse.CustomerListRespDTO> findAll() {
 
         return null;
     }
 
-    public CustomerResponse.CustomerDeleteRespDTO findById(){
+    public CustomerResponse.CustomerDeleteRespDTO findById() {
 
         return null;
     }
 
-    public CustomerResponse.CustomerWriteRespDTO save(){
+    public CustomerResponse.CustomerWriteRespDTO save(CustomerRequest.CustomerWriteReqDTO customerWriteReqDTO) {
+        Customer customer = customerJPARepository.save(customerWriteReqDTO.toEntity());
+        return new CustomerResponse.CustomerWriteRespDTO(customer);
 
-        return null;
     }
 
-    public CustomerResponse.CustomerDeleteRespDTO delete(){
+    public CustomerResponse.CustomerDeleteRespDTO delete() {
 
         return null;
     }
