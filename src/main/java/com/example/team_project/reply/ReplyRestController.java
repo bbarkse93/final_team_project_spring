@@ -25,8 +25,7 @@ public class ReplyRestController {
 
     // 댓글 수정
     @PostMapping("/replies/update/{id}")
-    public ResponseEntity<?> UpdateReply(@RequestBody @PathVariable Integer id, ReplyRequest.ReplyUpdateReqDTO replyUpdateReqDTO) {
-        System.out.println("컨트롤러의 dto"+replyUpdateReqDTO.getComment());
+    public ResponseEntity<?> UpdateReply(@PathVariable Integer id, @RequestBody ReplyRequest.ReplyUpdateReqDTO replyUpdateReqDTO) {
         ReplyResponse.ReplyUpdateRespDTO responseDTO = replyService.update(id, replyUpdateReqDTO);
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));

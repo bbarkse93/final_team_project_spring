@@ -27,9 +27,7 @@ public class ReplyService {
     // 댓글 수정
     @Transactional
     public ReplyResponse.ReplyUpdateRespDTO update(Integer id, ReplyRequest.ReplyUpdateReqDTO replyUpdateReqDTO){
-        System.out.println("나여기" + replyUpdateReqDTO.getComment());
         Reply reply = replyJPARepository.findById(id).orElseThrow(() -> new Exception404("댓글을 찾을 수 없습니다."));
-        System.out.println(replyUpdateReqDTO.getComment());
         reply.ReplyUpdate(replyUpdateReqDTO.getComment());
 
         return new ReplyResponse.ReplyUpdateRespDTO(reply);
