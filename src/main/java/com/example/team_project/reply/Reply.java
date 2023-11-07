@@ -45,4 +45,8 @@ public class Reply {
         this.user = user;
         this.board = board;
     }
+
+    public void ReplyUpdate (String comment) {
+        this.comment = comment;
+    }
 }
