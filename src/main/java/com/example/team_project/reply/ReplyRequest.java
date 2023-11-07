@@ -29,6 +29,7 @@ public class ReplyRequest {
     @Setter
     @ToString
     public static class ReplyUpdateReqDTO{
+        private String comment;
 
     }
 

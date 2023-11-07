@@ -2,7 +2,7 @@ package com.example.team_project.product;
 
 import java.util.List;
 
-import com.example.team_project.product.product_book_mark.ProductBookMark;
+import com.example.team_project.product.product_book_mark.ProductBookmark;
 import com.example.team_project.user.User;
 
 import lombok.Getter;
@@ -51,8 +51,8 @@ public class ProductRequest {
         private Integer userId;
         private Integer productId;
 
-        public ProductBookMark toEntity() {
-            return ProductBookMark.builder()
+        public ProductBookmark toEntity() {
+            return ProductBookmark.builder()
                     .user(User.builder().id(getUserId()).build())
                     .product(Product.builder().id(getProductId()).build())
                     .build();

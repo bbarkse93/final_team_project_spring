@@ -156,16 +156,15 @@ public class BoardService {
     // 게시글 좋아요
     @Transactional
     public BoardResponse.BoardLikeRespDTO likeBoard(BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
-
         BoardLike boardLike = boardLikeJPARepository.save(boardLikeReqDTO.toEntity());
         return new BoardResponse.BoardLikeRespDTO(boardLike);
     }
 
-    @Transactional
     // 게시글 좋아요 삭제
-
-    public void deleteLikeBoard(int bodardsId, int id) {
+    @Transactional
+    public BoardResponse.BoardDeleteRespDTO deleteLikeBoard(Integer id) {
         boardLikeJPARepository.deleteById(id);
+        return null;
     }
 
 }

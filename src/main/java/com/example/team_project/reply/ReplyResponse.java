@@ -53,13 +53,39 @@ public class ReplyResponse {
     @Getter
     @Setter
     public static class ReplyUpdateRespDTO{
+        private Integer id;
+        private String comment;
+        private Integer boardId;
+        private Timestamp replyCreatedAt;
+        private UserDTO user;
 
+        public ReplyUpdateRespDTO(Reply reply) {
+            this.id = reply.getId();
+            this.comment = reply.getComment();
+            this.boardId = reply.getBoard().getId();
+            this.user = new UserDTO(reply.getUser());
+            this.replyCreatedAt = reply.getReplyCreatedAt();
+        }
+
+        @Getter
+        @Setter
+        public static class UserDTO{
+            private Integer userId;
+            private String username;
+            private String userPicUrl;
+
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.username = user.getUsername();
+                this.userPicUrl = user.getUserPicUrl();
+            }
+        }
     }
-
     // 댓글 삭제
     @Getter
     @Setter
     public static class ReplyDeleteRespDTO{
+
 
     }
 }

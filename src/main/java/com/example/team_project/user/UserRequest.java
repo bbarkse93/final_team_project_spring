@@ -39,11 +39,14 @@ public class UserRequest {
         @Size(min = 8, max = 20, message = "8에서 20자 이내여야 합니다.")
         private String password;
 
+        private String location;
+
         public User toEntity() {
             return User.builder()
                     .username(username)
                     .email(email)
                     .password(password)
+                    .location(location)
                     .build();
         }
     }

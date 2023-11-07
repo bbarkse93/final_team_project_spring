@@ -34,7 +34,7 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
-    @OneToMany(mappedBy = "reply", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reply", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ReplyLike> replyLikes = new ArrayList<>();
 
     @Builder
@@ -44,5 +44,9 @@ public class Reply {
         this.replyCreatedAt = replyCreatedAt;
         this.user = user;
         this.board = board;
+    }
+
+    public void ReplyUpdate (String comment) {
+        this.comment = comment;
     }
 }

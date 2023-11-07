@@ -52,46 +52,16 @@ public class BoardRequest {
         private List<String> boardPics;
     }
 
+
+    // 동네생활 게시글 좋아요
     @Getter
     @Setter
-    @ToString
-    public static class BoardListReqDTO {
-
-    }
-
-    @Getter
-    @Setter
-    @ToString
-    public static class BoardDetailReqDTO {
-
-    }
-
-    @Getter
-    @Setter
-    public static class BoardCategoryDTO {
-        private Integer id;
-        private String boardCategory;
-
-        public BoardCategoryDTO(BoardCategory boardCategory) {
-            this.id = boardCategory.getId();
-            this.boardCategory = boardCategory.getCategory();
-        }
-
-    }
-
-    // 동네생활게시글 좋아요
-    @Getter
-    @Setter
-
     public static class BoardLikeReqDTO {
-
-        private Integer Id;
         private Integer boardId;
         private Integer userId;
 
         public BoardLike toEntity() {
             return BoardLike.builder()
-                    .board(Board.builder().id(Id).build())
                     .board(Board.builder().id(getBoardId()).build())
                     .user(User.builder().id(getUserId()).build())
                     .build();

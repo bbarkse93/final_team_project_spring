@@ -69,4 +69,10 @@ public class User {
         this.distinguish = distinguish;
         this.userCreatedAt = userCreatedAt;
     }
+
+    public void UserUpdate(String username, String password, String nickname) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+    }
 }
