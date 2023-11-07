@@ -83,21 +83,10 @@ public class BoardRestController {
     }
 
     // 게시글 좋아요 삭제
-    @PostMapping("/boards/like/delete/{id}")
-    public ResponseEntity<?> deleteLikeBoard(@PathVariable Integer id,
-            @RequestBody @Valid BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
-
-        System.out.println("getId value : " + boardLikeReqDTO.getId());
-        System.out.println("getBoardId value : " + boardLikeReqDTO.getBoardId());
-        System.out.println("getUserId value : " + boardLikeReqDTO.getUserId());
-        boardService.deleteLikeBoard(boardLikeReqDTO);
-        return ResponseEntity.ok().body(ApiUtils.success("ok"));
-    }
 
     @PostMapping("/boards/{boardsId}/like/delete/{id}")
     public ResponseEntity<?> deleteLikeBoard(@PathVariable("boardsId") Integer boardsId,
             @PathVariable("id") Integer id) {
-
         boardService.deleteLikeBoard(boardsId, id);
 
         return null;

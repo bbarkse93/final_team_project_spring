@@ -166,7 +166,6 @@ public class BoardService {
 
     public void deleteLikeBoard(int bodardsId, int id) {
         boardLikeJPARepository.deleteById(id);
-
     }
 
 }
