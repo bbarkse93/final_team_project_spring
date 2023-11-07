@@ -32,10 +32,10 @@ public class ReplyRestController {
     }
 
     // 댓글 삭제
-    @GetMapping("/replies/delete")
-    public ResponseEntity<?> DeleteReply() {
-
-        return ResponseEntity.ok().body(ApiUtils.success(null));
+    @GetMapping("/replies/delete/{id}")
+    public ResponseEntity<?> DeleteReply(@PathVariable Integer id) {
+        replyService.delete(id);
+        return ResponseEntity.ok().body(ApiUtils.success("댓글 삭제 완료"));
     }
 
 }
