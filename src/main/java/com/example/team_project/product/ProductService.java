@@ -148,4 +148,10 @@ public class ProductService {
         return new ProductResponse.ProductBookMarkRespDTO(productBookMark);
     }
 
+    // 상품북마크삭제
+    @Transactional
+    public void deleteLikeProducts(Integer productId, Integer id) {
+        productBookMarkJPARepository.deleteById(id);
+    }
+
 }

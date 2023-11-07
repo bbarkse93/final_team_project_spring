@@ -82,4 +82,14 @@ public class ProductRestController {
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
+    // 상품북마크삭제
+    @PostMapping("/products/{productsId}/like/delete/{id}")
+    public ResponseEntity<?> deleteLikeProducts(@PathVariable("productId") Integer productId,
+            @PathVariable("id") Integer id) {
+
+        productService.deleteLikeProducts(productId, id);
+
+        return null;
+    }
+
 }
