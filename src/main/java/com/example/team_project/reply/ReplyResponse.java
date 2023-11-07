@@ -81,5 +81,11 @@ public class ReplyResponse {
             }
         }
     }
+    // 댓글 삭제
+    @Getter
+    @Setter
+    public static class ReplyDeleteRespDTO{
 
+
+    }
 }
