@@ -82,7 +82,7 @@ public class ProductResponse {
         private Integer id;
         private String productName;
         private String productDescription;
-        private Integer productPrice;        
+        private Integer productPrice;
         private long productLikes;
         private Timestamp productCreatedAt;
         private UserDTO user;
@@ -92,7 +92,7 @@ public class ProductResponse {
             this.id = product.getId();
             this.productName = product.getProductName();
             this.productDescription = product.getProductDescription();
-            this.productPrice = product.getProductPrice();            
+            this.productPrice = product.getProductPrice();
             this.productCreatedAt = product.getProductCreatedAt();
             this.user = new UserDTO(product.getUser());
             this.productLikes = product.getProductBookMarks().stream().map(bl -> new ProductLikeDTO(bl)).count();
@@ -271,6 +271,19 @@ public class ProductResponse {
                 this.nickname = user.getNickname();
                 this.location = user.getLocation();
             }
+        }
+    }
+
+    // 상품북마크
+    @Getter
+    @Setter
+    public static class ProductBookMarkRespDTO {
+        private Integer bookmarkId;
+        private Integer productId;
+
+        public ProductBookMarkRespDTO(ProductBookMark productBookMark) {
+            this.bookmarkId = productBookMark.getId();
+            this.productId = productBookMark.getProduct().getId();
         }
     }
 }

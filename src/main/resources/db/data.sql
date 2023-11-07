@@ -57,7 +57,7 @@ INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (3, 2, 1);
 INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (4, 2, 2);
 INSERT INTO board_like_tb (`id`, `board_id`, `user_id`) VALUES (5, 3, 1);
 
-
+-- reply 좋아요
 INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (1, 1, 1);
 INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (2, 1, 2);
 INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (3, 2, 1);

@@ -1,5 +1,6 @@
 package com.example.team_project.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,14 +10,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
 import com.example.team_project.board.BoardRequest.BoardUpdateReqDTO;
+import com.example.team_project.board.BoardResponse.BoardDeleteRespDTO;
+import com.example.team_project.board.BoardResponse.BoardLikeRespDTO;
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_category.BoardCategoryJPARepository;
+import com.example.team_project.board.board_like.BoardLike;
+import com.example.team_project.board.board_like.BoardLikeJPARepository;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.board.board_pic.BoardPicJPARepository;
 
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
+import javax.validation.Valid;
 
 @Transactional
 @RequiredArgsConstructor
@@ -26,6 +32,7 @@ public class BoardService {
     private final BoardJPARepository boardJPARepository;
     private final BoardPicJPARepository boardPicJPARepository;
     private final BoardCategoryJPARepository boardCategoryJPARepository;
+    private final BoardLikeJPARepository boardLikeJPARepository;
     private final EntityManager em;
 
     // 동네 생활 전체 보기
@@ -36,7 +43,7 @@ public class BoardService {
                 .distinct()
                 .map(b -> {
                     BoardResponse.BoardListRespDTO boardDTO = new BoardResponse.BoardListRespDTO(b);
-                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null                    
+                    List<BoardResponse.BoardListRespDTO.BoardPicDTO> boardPicDTOs = b.getBoardPics().isEmpty() ? null
                             : b.getBoardPics().stream()
                                     .limit(1)
                                     .map(bp -> new BoardResponse.BoardListRespDTO.BoardPicDTO(bp))
@@ -88,24 +95,26 @@ public class BoardService {
                 updateReqDTO.getBoardContent(),
                 updateReqDTO.getBoardTitle());
 
-        List<String> boardPics = updateReqDTO.getBoardPics();
+        // 1. 해당 보드 id에 담긴 원래 사진들을 삭제.
+        boardPicJPARepository.deleteByBoardId(board.getId());
+        // 2. DTO에 담겨있던 사진을 저장.
+        List<String> boardPicList = updateReqDTO.getBoardPics();
 
-        for (String boardPic : boardPics) {
-            boardPicJPARepository.updateBoardPic(board.getId(),
-                    boardPic);
+        for (String boardPic : boardPicList) {
+
+            boardPicJPARepository.mSave(boardPic, board.getId());
         }
 
-        Integer boardCategoryId = updateReqDTO.getBoardCategoryId();
+        BoardCategory optionalCategory = boardCategoryJPARepository.findById(updateReqDTO.getBoardCategoryId())
+                .orElseThrow(() -> new Exception404("카테고리를 찾을 수 없습니다."));
 
-        Optional<BoardCategory> optionalCategory = boardCategoryJPARepository.findById(boardCategoryId);
+        board.setBoardCategory(optionalCategory);
 
-        BoardCategory newCategory = optionalCategory.orElseThrow(() -> new Exception404("카테고리를 찾을 수 없습니다."));
+        board = boardJPARepository.save(board);
 
-        board.setBoardCategory(newCategory);
+        em.refresh(board);
 
-        Board boardDTO = boardJPARepository.save(board);
-
-        return new BoardResponse.BoardUpdateRespDTO(boardDTO);
+        return new BoardResponse.BoardUpdateRespDTO(board);
     }
 
     // 동네 생활 게시글 삭제
@@ -143,4 +152,20 @@ public class BoardService {
 
         return responseDTO;
     }
+
+    // 게시글 좋아요
+    @Transactional
+    public BoardResponse.BoardLikeRespDTO likeBoard(BoardRequest.BoardLikeReqDTO boardLikeReqDTO) {
+
+        BoardLike boardLike = boardLikeJPARepository.save(boardLikeReqDTO.toEntity());
+        return new BoardResponse.BoardLikeRespDTO(boardLike);
+    }
+
+    @Transactional
+    // 게시글 좋아요 삭제
+
+    public void deleteLikeBoard(int bodardsId, int id) {
+        boardLikeJPARepository.deleteById(id);
+    }
+
 }

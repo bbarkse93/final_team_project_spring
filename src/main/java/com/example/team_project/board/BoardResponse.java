@@ -4,10 +4,12 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.team_project.board.BoardResponse.BoardListRespDTO.BoardLikeDTO;
 import com.example.team_project.board.board_category.BoardCategory;
 import com.example.team_project.board.board_like.BoardLike;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.reply.Reply;
+import com.example.team_project.reply.reply_like.ReplyLike;
 import com.example.team_project.user.User;
 
 import lombok.Getter;
@@ -25,6 +27,7 @@ public class BoardResponse {
         private Timestamp createdAt;
         private String boardCategory;
         private long boardLikes;
+        private long replyCount;
         private UserDTO user;
         private List<BoardPicDTO> boardPics;
 
@@ -35,6 +38,7 @@ public class BoardResponse {
             this.createdAt = board.getBoardCreatedAt();
             this.boardCategory = board.getBoardCategory().getCategory();
             this.boardLikes = board.getBoardLikes().stream().map(bl -> new BoardLikeDTO(bl)).count();
+            this.replyCount = board.getReplies().stream().map(bl -> new ReplyDTO(bl)).count();
             this.user = new UserDTO(board.getUser());
             this.boardPics = board.getBoardPics().stream().map(b -> new BoardPicDTO(b)).collect(Collectors.toList());
 
@@ -77,6 +81,16 @@ public class BoardResponse {
                 this.userId = boardLike.getUser().getId();
             }
         }
+
+        @Getter
+        @Setter
+        public static class ReplyDTO{
+            private Integer replyId;
+
+            public ReplyDTO(Reply reply) {
+                this.replyId = reply.getId();
+            }
+        }
     }
 
     // 동네생활 상세보기
@@ -89,6 +103,7 @@ public class BoardResponse {
         private String boardCategory;
         private Timestamp boardCreatedAt;
         private long boardLikes;
+        private long replyCount;
         private UserDTO user;
         private List<BoardPicDTO> boardPics;
         private List<ReplyDTO> replies;
@@ -100,6 +115,7 @@ public class BoardResponse {
             this.boardCategory = board.getBoardCategory().getCategory();
             this.boardCreatedAt = board.getBoardCreatedAt();
             this.boardLikes = board.getBoardLikes().stream().map(bl -> new BoardLikeDTO(bl)).count();
+            this.replyCount = board.getReplies().stream().map(bl -> new ReplyDTO(bl)).count();
             this.user = new UserDTO(board.getUser());
             this.boardPics = board.getBoardPics().stream()
                     .map(t -> new BoardPicDTO(t))
@@ -141,10 +157,11 @@ public class BoardResponse {
 
         @Getter
         @Setter
-        public static class ReplyDTO{
+        public static class ReplyDTO {
             private Integer replyId;
             private String comment;
             private Timestamp replyCreatedAt;
+            private long replyLikes;
             private UserDTO user;
 
             public ReplyDTO(Reply reply) {
@@ -152,11 +169,13 @@ public class BoardResponse {
                 this.comment = reply.getComment();
                 this.user = new UserDTO(reply.getUser());
                 this.replyCreatedAt = reply.getReplyCreatedAt();
+                this.replyLikes = reply.getReplyLikes().stream().map(rl -> new ReplyLikeDTO(rl)).count();
+
             }
 
             @Getter
             @Setter
-            public static class UserDTO{
+            public static class UserDTO {
                 private Integer replyUserId;
                 private String userPicUrl;
                 private String nickname;
@@ -169,18 +188,29 @@ public class BoardResponse {
                     this.location = user.getLocation();
                 }
             }
-        }
 
+            @Getter
+            @Setter
+            public static class BoardLikeDTO {
+                private Integer likeId;
+                private Integer userId;
 
-        @Getter
-        @Setter
-        public static class BoardLikeDTO {
-            private Integer likeId;
-            private Integer userId;
+                public BoardLikeDTO(BoardLike boardLike) {
+                    this.likeId = boardLike.getId();
+                    this.userId = boardLike.getUser().getId();
+                }
+            }
 
-            public BoardLikeDTO(BoardLike boardLike) {
-                this.likeId = boardLike.getId();
-                this.userId = boardLike.getUser().getId();
+            @Getter
+            @Setter
+            public static class ReplyLikeDTO {
+                private Integer likeId;
+                private Integer userId;
+
+                public ReplyLikeDTO(ReplyLike replyLike) {
+                    this.likeId = replyLike.getId();
+                    this.userId = replyLike.getUser().getId();
+                }
             }
         }
     }
@@ -343,4 +373,20 @@ public class BoardResponse {
             }
         }
     }
+
+    @Getter
+    @Setter
+    // 게시글좋아요
+    public static class BoardLikeRespDTO {
+        private Integer id;
+        private Integer boardId;
+        private Integer userId;
+
+        public BoardLikeRespDTO(BoardLike boardLike) {
+            this.id = boardLike.getId();
+            this.boardId = boardLike.getBoard().getId();
+            this.userId = boardLike.getUser().getId();
+        }
+    }
 }
+

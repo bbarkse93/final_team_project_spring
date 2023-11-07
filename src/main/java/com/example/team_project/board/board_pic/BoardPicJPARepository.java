@@ -12,8 +12,6 @@ public interface BoardPicJPARepository extends JpaRepository<BoardPic, Integer> 
     @Query(value = "select b from BoardPic b where b.board.id = :id")
     List<BoardPic> findByBoardId(@Param("id") Integer id);
 
-    // List<BoardPic> findByBoardId(Integer boardId);
-
     @Modifying
     @Query(value = "INSERT INTO board_pic_tb (`board_pic_url`, `board_id`) VALUES (:boardPicUrl, :boardId)", nativeQuery = true)
     int mSave(@Param("boardPicUrl") String boardPicUrl, @Param("boardId") Integer boardId);
@@ -21,4 +19,6 @@ public interface BoardPicJPARepository extends JpaRepository<BoardPic, Integer> 
     @Modifying
     @Query("UPDATE BoardPic b SET b.boardPicUrl = :boardPicUrl WHERE b.id = :id")
     int updateBoardPic(@Param("id") int id, @Param("boardPicUrl") String boardPicUrl);
+
+    void deleteByBoardId(Integer boardId);
 }

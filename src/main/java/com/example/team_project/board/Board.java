@@ -51,6 +51,9 @@ public class Board {
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<BoardLike> boardLikes = new ArrayList<>();
 
+    // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    // private List<Board> boards = new ArrayList<>();
+    
     @Builder
     public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory, Timestamp boardCreatedAt, List<BoardPic> boardPics, List<Reply> replies, List<BoardLike> boardLikes) {
         this.id = id;

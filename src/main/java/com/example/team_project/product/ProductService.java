@@ -7,7 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception404;
+
+import com.example.team_project.product.ProductRequest.ProductBookMarkReqDTO;
+
+import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
+import com.example.team_project.product.product_book_mark.ProductBookMark;
+import com.example.team_project.product.product_book_mark.ProductBookMarkJPARepository;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.product.product_pic.ProductPicJPARepository;
 
@@ -23,6 +29,7 @@ public class ProductService {
 
     private final ProductJPARepository productJPARepository;
     private final ProductPicJPARepository productPicJPARepository;
+    private final ProductBookMarkJPARepository productBookMarkJPARepository;
     private final EntityManager em;
 
     // 상품 리스트
@@ -87,10 +94,14 @@ public class ProductService {
                 productUpdateReqDTO.getProductDescription(),
                 productUpdateReqDTO.getProductName());
 
-        List<String> productPics = productUpdateReqDTO.getProductPics();
+        // 1. 해당 보드 id에 담긴 원래 사진들을 삭제.
+        productPicJPARepository.deleteByProductId(product.getId());
+        // 2. DTO에 담겨있던 사진을 저장.
+        List<String> productPicList = productUpdateReqDTO.getProductPics();
 
-        for (String productPic : productPics) {
-            productPicJPARepository.updateProductPic(product.getId(), productPic);
+        for (String productPic : productPicList) {
+
+            productPicJPARepository.mSave(productPic, product.getId());
         }
         em.refresh(product);
         List<ProductPic> productPicsUpdate = productPicJPARepository.findByProductId(product.getId());
@@ -133,6 +144,21 @@ public class ProductService {
                 .collect(Collectors.toList());
 
         return responseDTO;
+    }
+
+    // 상품북마크
+    public ProductResponse.ProductBookMarkRespDTO bookmarkProducts(
+            ProductRequest.ProductBookMarkReqDTO productBookMarkReqDTO) {
+        System.out.println("DTO 서비스 : " + productBookMarkReqDTO);
+
+        ProductBookMark productBookMark = productBookMarkJPARepository.save(productBookMarkReqDTO.toEntity());
+        return new ProductResponse.ProductBookMarkRespDTO(productBookMark);
+    }
+
+    // 상품북마크삭제
+    @Transactional
+    public void deleteLikeProducts(Integer productId, Integer id) {
+        productBookMarkJPARepository.deleteById(id);
     }
 
 }
