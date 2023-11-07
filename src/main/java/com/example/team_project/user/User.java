@@ -6,8 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.example.team_project.board.Board;
+import com.example.team_project.board.board_like.BoardLike;
+import com.example.team_project.board.board_pic.BoardPic;
+import com.example.team_project.reply.Reply;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -39,8 +47,18 @@ public class User {
     @CreationTimestamp
     private Timestamp userCreatedAt;
 
+    // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    // private List<BoardPic> boardPics = new ArrayList<>();
+
+    // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    // private List<Board> boardwrites = new ArrayList<>();
+    
+    // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    // private List<Reply> replies = new ArrayList<>();    
+
     @Builder
-    public User(Integer id, String username, String password, String email, String nickname, String userPicUrl, String location, Boolean distinguish, Timestamp userCreatedAt) {
+    public User(Integer id, String username, String password, String email, String nickname, String userPicUrl,
+            String location, Boolean distinguish, Timestamp userCreatedAt) {
         this.id = id;
         this.username = username;
         this.password = password;
