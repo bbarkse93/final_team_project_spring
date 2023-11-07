@@ -26,14 +26,16 @@ public class CustomerService {
         return null;
     }
 
+    // 문의글등록
     public CustomerResponse.CustomerWriteRespDTO save(CustomerRequest.CustomerWriteReqDTO customerWriteReqDTO) {
         Customer customer = customerJPARepository.save(customerWriteReqDTO.toEntity());
         return new CustomerResponse.CustomerWriteRespDTO(customer);
 
     }
 
-    public CustomerResponse.CustomerDeleteRespDTO delete() {
-
+    // 문의글삭제
+    public CustomerResponse.CustomerDeleteRespDTO delete(Integer id) {
+        customerJPARepository.deleteById(id);
         return null;
     }
 
