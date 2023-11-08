@@ -4,19 +4,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.example.team_project.product.product_book_mark.ProductBookMark;
+import com.example.team_project.product.product_book_mark.ProductBookmark;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.user.User;
 
@@ -48,14 +40,14 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductPic> productPics = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private List<ProductBookMark> productBookMarks = new ArrayList<>();
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ProductBookmark> productBookmarks = new ArrayList<>();
 
     @Builder
-    public Product(Integer id, String productName, String productDescription, Integer productPrice, Timestamp productCreatedAt, User user, List<ProductPic> productPics, List<ProductBookMark> productBookMarks) {
+    public Product(Integer id, String productName, String productDescription, Integer productPrice, Timestamp productCreatedAt, User user, List<ProductPic> productPics, List<ProductBookmark> productBookmarks) {
         this.id = id;
         this.productName = productName;
         this.productDescription = productDescription;
@@ -63,6 +55,6 @@ public class Product {
         this.productCreatedAt = productCreatedAt;
         this.user = user;
         this.productPics = productPics;
-        this.productBookMarks = productBookMarks;
+        this.productBookmarks = productBookmarks;
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-
 public class CustomerRestController {
     private final CustomerService customerService;
 
@@ -44,5 +43,4 @@ public class CustomerRestController {
         customerService.delete(id);
         return ResponseEntity.ok().body(ApiUtils.success("문의 삭제 완료"));
     }
-
 }

@@ -374,9 +374,9 @@ public class BoardResponse {
         }
     }
 
+    // 게시글 좋아요
     @Getter
     @Setter
-    // 게시글좋아요
     public static class BoardLikeRespDTO {
         private Integer id;
         private Integer boardId;

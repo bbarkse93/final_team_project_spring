@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "product_like_tb")
-public class ProductBookMark {
+@Table(name = "product_bookmark_tb")
+public class ProductBookmark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -26,7 +26,7 @@ public class ProductBookMark {
     private Product product;
 
     @Builder
-    public ProductBookMark(Integer id, User user, Product product) {
+    public ProductBookmark(Integer id, User user, Product product) {
         this.id = id;
         this.user = user;
         this.product = product;
