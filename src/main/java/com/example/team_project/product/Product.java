@@ -34,6 +34,8 @@ public class Product {
 
     private Integer productPrice;
 
+    private boolean saleStatus = true;
+
     @CreationTimestamp
     private Timestamp productCreatedAt;
 
