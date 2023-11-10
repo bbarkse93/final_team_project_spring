@@ -1,20 +1,22 @@
 package com.example.team_project.product;
 
-import com.example.team_project.user.User;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import com.example.team_project._core.utils.ApiUtils;
-import com.example.team_project.board.BoardRequest;
-import com.example.team_project.board.BoardResponse;
-import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
-
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
@@ -79,7 +81,11 @@ public class ProductRestController {
     // 상품 북마크 해제
     @DeleteMapping("/products/bookmark/{id}")
     public ResponseEntity<?> bookmarkDelete(@PathVariable Integer id){
-        productService.DeleteBookmarkProducts(id);
+        try {
+            productService.DeleteBookmarkProducts(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return ResponseEntity.ok().body(ApiUtils.success("북마크 해제 완료"));
     }
 

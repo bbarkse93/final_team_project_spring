@@ -1,19 +1,20 @@
 package com.example.team_project.user;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.team_project._core.utils.ApiUtils;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
@@ -59,5 +60,18 @@ public class UserRestController {
         UserResponse.MyWriteRespDTO responseDTO = userService.myBoards(1);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
+
+    // 나의 당근 - 판매목록
+    @GetMapping("user/saleproducts")
+    public ResponseEntity<?> saleproducts(Integer id) {
+        UserResponse.MyProductsListRespDTO responseDTO = userService.saleproducts(1);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
+
+    // 나의 당근 - 구매목록
+    @GetMapping("user/buyproducts")
+    public ResponseEntity<?> buyproducts(Integer id) {
+
+        return ResponseEntity.ok().body(ApiUtils.success(null));
+    }
 }
- 

@@ -1,27 +1,25 @@
 package com.example.team_project.user;
 
-import com.example.team_project._core.utils.JwtTokenUtils;
-import com.example.team_project.board.Board;
-import com.example.team_project.board.BoardJPARepository;
-import com.example.team_project.reply.Reply;
-import com.example.team_project.reply.ReplyJPARepository;
-import com.example.team_project.user.UserResponse.UserUpdateRespDTO;
-
-import lombok.RequiredArgsConstructor;
-
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team_project._core.erroes.exception.Exception400;
 import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project._core.utils.JwtTokenUtils;
+import com.example.team_project.board.Board;
+import com.example.team_project.board.BoardJPARepository;
+import com.example.team_project.product.Product;
+import com.example.team_project.product.ProductJPARepository;
+import com.example.team_project.reply.Reply;
+import com.example.team_project.reply.ReplyJPARepository;
 
-import javax.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 
 @Transactional
 @RequiredArgsConstructor
@@ -32,6 +30,7 @@ public class UserService {
     private final EntityManager em;
     private final BoardJPARepository boardJPARepository;
     private final ReplyJPARepository replyJPARepository;
+    private final ProductJPARepository productJPARepository;
 
     // 회원가입
     @Transactional
@@ -72,7 +71,7 @@ public class UserService {
         }
         userJPARepository.mUpdateUser(userId, userUpdateReqDTO.getUsername(),
                 userUpdateReqDTO.getPassword(), userUpdateReqDTO.getNickname());
-        
+
         // 변경 내용을 데이터베이스에 반영
         userJPARepository.flush();
 
@@ -104,5 +103,21 @@ public class UserService {
             }
         }
         return new UserResponse.MyWriteRespDTO(boardWriteList, replyWriteList);
+    }
+
+    // 나의 당근 - 판매목록
+    public UserResponse.MyProductsListRespDTO saleproducts(Integer id) {
+
+        // 유저아이디가 일치하는 상품들 들고오기
+        List<Product> sales = productJPARepository.findByUserId(1);
+
+        List<Product> complements = productJPARepository.findByUserId(1);
+
+        return new UserResponse.MyProductsListRespDTO(sales, complements);
+    }
+
+    // 나의 당근 - 구매목록
+    public void buyproducts(Integer id) {
+
     }
 }
