@@ -10,6 +10,7 @@ import com.example.team_project.board.Board;
 import com.example.team_project.board.board_like.BoardLike;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.reply.Reply;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

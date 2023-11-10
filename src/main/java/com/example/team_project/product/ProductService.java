@@ -1,8 +1,14 @@
 package com.example.team_project.product;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.example.team_project._core.vo.MyPath;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,8 +75,19 @@ public class ProductService {
         List<String> productPicList = productWriteReqDTO.getProductPics();
 
         for (String productPic : productPicList) {
-            productPicJPARepository.mSave(productPic, product.getId());
+            try {
+                byte[] productImages = Base64.getDecoder().decode(productPic);
+                UUID uuid = UUID.randomUUID();
+                String filename = product.getProductName() + "_" + uuid + ".png";
+                Path filePath = Paths.get(MyPath.IMG_PATH, filename);
+                Files.write(filePath, productImages);
+                String productPicUrl = filePath.toString();
+                productPicJPARepository.mSave(productPicUrl, product.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         List<ProductPic> productPics = productPicJPARepository.findByProductId(product.getId());
 
         return new ProductResponse.ProductWriteRespDTO(product, productPics);
@@ -156,9 +173,9 @@ public class ProductService {
 //    }
 
     @Transactional
-    public ProductResponse.DeleteBookmarkRespDTO DeleteBookmarkProducts(Integer id){
+    public void DeleteBookmarkProducts(Integer id){
 //        ProductBookMark bookMark = productBookMarkJPARepository.findById(id).orElseThrow(() -> new Exception404("없어"));
         productBookMarkJPARepository.deleteById(id);
-        return null;
+
     }
 }

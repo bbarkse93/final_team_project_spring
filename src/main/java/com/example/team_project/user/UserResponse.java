@@ -12,6 +12,7 @@ import com.example.team_project.board.Board;
 import com.example.team_project.board.board_like.BoardLike;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.reply.Reply;
+import org.springframework.web.multipart.MultipartFile;
 
 public class UserResponse {
 
@@ -54,6 +55,7 @@ public class UserResponse {
             private String username;
             private String nickname;
             private String password;
+            private String location;
             private Timestamp createdAt;
 
             public UserDTO(User user) {
@@ -61,6 +63,7 @@ public class UserResponse {
                 this.username = user.getUsername();
                 this.nickname = user.getNickname();
                 this.password = null;
+                this.location = user.getLocation();
                 this.createdAt = user.getUserCreatedAt();
 
             }

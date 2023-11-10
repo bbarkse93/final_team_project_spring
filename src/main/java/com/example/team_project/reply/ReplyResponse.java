@@ -3,6 +3,7 @@ package com.example.team_project.reply;
 import com.example.team_project.user.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 

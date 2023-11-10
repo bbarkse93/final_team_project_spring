@@ -79,7 +79,11 @@ public class ProductRestController {
     // 상품 북마크 해제
     @DeleteMapping("/products/bookmark/{id}")
     public ResponseEntity<?> bookmarkDelete(@PathVariable Integer id){
-        productService.DeleteBookmarkProducts(id);
+        try {
+            productService.DeleteBookmarkProducts(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return ResponseEntity.ok().body(ApiUtils.success("북마크 해제 완료"));
     }
 

@@ -10,6 +10,7 @@ import com.example.team_project.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 public class ProductResponse {
 
@@ -135,8 +136,8 @@ public class ProductResponse {
             private Integer userId;
 
             public ProductLikeDTO(ProductBookmark boardLike) {
-                this.likeId = likeId;
-                this.userId = userId;
+                this.likeId = boardLike.getId();
+                this.userId = boardLike.getUser().getId();
             }
         }
     }
@@ -192,6 +193,7 @@ public class ProductResponse {
         }
     }
 
+
     // 상품 수정
     @Getter
     @Setter
@@ -201,7 +203,9 @@ public class ProductResponse {
         private String productDescription;
         private Integer productPrice;
         private Timestamp createdAt;
+        private UserDTO user;
         private List<ProductPicDTO> productPics;
+        private boolean saleStatus;
 
         public ProductUpdateRespDTO(Product product, List<ProductPic> productPics) {
             this.id = product.getId();
@@ -209,7 +213,9 @@ public class ProductResponse {
             this.productDescription = product.getProductDescription();
             this.productPrice = product.getProductPrice();
             this.createdAt = product.getProductCreatedAt();
+            this.user = new UserDTO(product.getUser());
             this.productPics = productPics.stream().map(p -> new ProductPicDTO(p)).collect(Collectors.toList());
+            this.saleStatus = product.saleStatus();
         }
 
         @Getter
@@ -223,8 +229,25 @@ public class ProductResponse {
                 this.productPicUrl = productPic.getProductPicUrl();
             }
         }
+
+        @Getter
+        @Setter
+        public static class UserDTO {
+            private Integer userId;
+            private String username;
+            private String nickname;
+            private String location;
+
+            public UserDTO(User user) {
+                this.userId = user.getId();
+                this.username = user.getUsername();
+                this.nickname = user.getNickname();
+                this.location = user.getLocation();
+            }
+        }
     }
 
+    // 상품 검색
     @Getter
     @Setter
     public static class ProductSearchRespDTO {

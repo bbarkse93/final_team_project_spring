@@ -1,10 +1,12 @@
 package com.example.team_project.board;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.team_project._core.vo.MyPath;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,8 +75,18 @@ public class BoardService {
         List<String> boardPicList = boardWriteReqDTO.getBoardPics();
 
         for (String boardPic : boardPicList) {
+            try {
+                byte[] boardImages= Base64.getDecoder().decode(boardPic);
+                UUID uuid = UUID.randomUUID();
+                String filename = board.getBoardTitle() + "_" + uuid + ".png";
+                Path filePath = Paths.get(MyPath.IMG_PATH, filename);
+                String boardPicUrl = filePath.toString();
+                Files.write(filePath, boardImages);
+                boardPicJPARepository.mSave(boardPicUrl, board.getId());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
-            boardPicJPARepository.mSave(boardPic, board.getId());
         }
 
         List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
