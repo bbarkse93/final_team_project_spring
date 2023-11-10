@@ -79,16 +79,6 @@ public class ProductRestController {
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
-    // 상품 북마크 해제
-    // @DeleteMapping("/products/bookmark/{id}")
-    // public ResponseEntity<?> bookmarkDelete(@PathVariable Integer id){
-    // try {
-    // productService.DeleteBookmarkProducts(id);
-    // }catch (Exception e){
-    // e.printStackTrace();
-    // }
-    // return ResponseEntity.ok().body(ApiUtils.success("북마크 해제 완료"));
-    // }
     // 북마크삭제
     @DeleteMapping("/products/delete/{id}")
     public ResponseEntity<?> ProductDelete(@PathVariable Integer id) {
