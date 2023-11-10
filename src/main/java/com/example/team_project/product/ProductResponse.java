@@ -25,6 +25,7 @@ public class ProductResponse {
         private Timestamp productCreatedAt;
         private UserDTO user;
         private List<ProductPicDTO> productPics;
+        private boolean saleStatus;
 
         public ProductListRespDTO(Product product) {
             this.id = product.getId();
@@ -37,6 +38,7 @@ public class ProductResponse {
                     .limit(1)
                     .map(p -> new ProductPicDTO(p))
                     .collect(Collectors.toList());
+            this.saleStatus = product.isSaleStatus();
         }
 
         @Getter
@@ -88,6 +90,7 @@ public class ProductResponse {
         private Timestamp productCreatedAt;
         private UserDTO user;
         private List<ProductPicDTO> productPics;
+        private boolean saleStatus;
 
         public ProductDetailRespDTO(Product product, List<ProductPic> productPics) {
             this.id = product.getId();
@@ -98,7 +101,7 @@ public class ProductResponse {
             this.user = new UserDTO(product.getUser());
             this.productLikes = product.getProductBookmarks().stream().map(bl -> new ProductLikeDTO(bl)).count();
             this.productPics = productPics.stream().map(t -> new ProductPicDTO(t)).collect(Collectors.toList());
-
+            this.saleStatus = product.isSaleStatus();
         }
 
         @Getter
@@ -153,6 +156,7 @@ public class ProductResponse {
         private Timestamp createdAt;
         private UserDTO user;
         private List<ProductPicDTO> productPics;
+        private boolean saleStatus;
 
         public ProductWriteRespDTO(Product product, List<ProductPic> productPics) {
             this.id = product.getId();
@@ -162,6 +166,7 @@ public class ProductResponse {
             this.createdAt = product.getProductCreatedAt();
             this.user = new UserDTO(product.getUser());
             this.productPics = productPics.stream().map(p -> new ProductPicDTO(p)).collect(Collectors.toList());
+            this.saleStatus = product.isSaleStatus();
         }
 
         @Getter
@@ -215,7 +220,8 @@ public class ProductResponse {
             this.createdAt = product.getProductCreatedAt();
             this.user = new UserDTO(product.getUser());
             this.productPics = productPics.stream().map(p -> new ProductPicDTO(p)).collect(Collectors.toList());
-            this.saleStatus = product.saleStatus();
+            this.saleStatus = product.isSaleStatus();
+
         }
 
         @Getter
@@ -312,7 +318,7 @@ public class ProductResponse {
 
     @Getter
     @Setter
-    public static class DeleteBookmarkRespDTO{
+    public static class DeleteBookmarkRespDTO {
 
     }
 }
