@@ -3,10 +3,13 @@ package com.example.team_project.customer;
 import com.example.team_project.reply.ReplyJPARepository;
 import com.example.team_project.reply.ReplyResponse;
 import lombok.RequiredArgsConstructor;
+import com.example.team_project.customer.CustomerResponse;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import com.example.team_project.user.User;
 
 @Transactional
 @RequiredArgsConstructor
@@ -27,9 +30,11 @@ public class CustomerService {
 
     // 문의글등록
     public CustomerResponse.CustomerWriteRespDTO save(CustomerRequest.CustomerWriteReqDTO customerWriteReqDTO) {
-        Customer customer = customerJPARepository.save(customerWriteReqDTO.toEntity());
-        return new CustomerResponse.CustomerWriteRespDTO(customer);
+        Customer responseDTO = customerJPARepository.save(customerWriteReqDTO.toEntity());
 
+        // Customer responseDTO =
+        // customerJPARepository.findByCustomerId(customer.getId());
+        return new CustomerResponse.CustomerWriteRespDTO(responseDTO);
     }
 
     // 문의글삭제
