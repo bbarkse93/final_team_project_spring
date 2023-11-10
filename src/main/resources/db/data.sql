@@ -63,6 +63,11 @@ INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (2, 1, 2);
 INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (3, 2, 1);
 INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (4, 2, 2);
 
+--customer 문의
+INSERT INTO customer_tb (`id`, `title`, `content`,`user_id`) VALUES (1, '제목1', '내용1', 1);
+INSERT INTO customer_tb (`id`, `title`, `content`,`user_id`) VALUES (2, '제목2', '내용2', 1);
+INSERT INTO customer_tb (`id`, `title`, `content`,`user_id`) VALUES (3, '제목3', '내용3', 2);
+
 
 
 

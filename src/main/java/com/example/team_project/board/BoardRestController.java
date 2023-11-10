@@ -80,8 +80,8 @@ public class BoardRestController {
     @DeleteMapping("/boards/like/{id}")
     public ResponseEntity<?> deleteLikeBoard(@PathVariable Integer id) {
         boardService.deleteLikeBoard(id);
-
         return ResponseEntity.ok().body(ApiUtils.success("좋아요 취소 완료"));
+
     }
 
 }

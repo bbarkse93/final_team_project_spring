@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project.customer.CustomerResponse;
 import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -57,11 +58,11 @@ public class ProductRestController {
     }
 
     // 상품 삭제
-     @DeleteMapping("/products/{id}")
-     public ResponseEntity<?> DeleteProduct(@PathVariable Integer id) {
-     productService.deleteProduct(id);
-     return ResponseEntity.ok().body(ApiUtils.success("상품 삭제 완료"));
-     }
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<?> DeleteProduct(@PathVariable Integer id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.ok().body(ApiUtils.success("상품 삭제 완료"));
+    }
 
     // 상품 검색
     @GetMapping("/products/search")
@@ -79,14 +80,20 @@ public class ProductRestController {
     }
 
     // 상품 북마크 해제
-    @DeleteMapping("/products/bookmark/{id}")
-    public ResponseEntity<?> bookmarkDelete(@PathVariable Integer id){
-        try {
-            productService.DeleteBookmarkProducts(id);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return ResponseEntity.ok().body(ApiUtils.success("북마크 해제 완료"));
+    // @DeleteMapping("/products/bookmark/{id}")
+    // public ResponseEntity<?> bookmarkDelete(@PathVariable Integer id){
+    // try {
+    // productService.DeleteBookmarkProducts(id);
+    // }catch (Exception e){
+    // e.printStackTrace();
+    // }
+    // return ResponseEntity.ok().body(ApiUtils.success("북마크 해제 완료"));
+    // }
+    // 북마크삭제
+    @DeleteMapping("/products/delete/{id}")
+    public ResponseEntity<?> ProductDelete(@PathVariable Integer id) {
+        productService.DeleteBookmarkProducts(id);
+        return ResponseEntity.ok().body(ApiUtils.success("북마크삭제 완료"));
     }
 
 }
