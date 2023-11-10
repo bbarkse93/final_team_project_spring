@@ -45,9 +45,9 @@ public class ProductService {
                     List<ProductResponse.ProductListRespDTO.ProductPicDTO> productPicDTOs = p.getProductPics().isEmpty()
                             ? null
                             : p.getProductPics().stream()
-                            .limit(1)
-                            .map(pp -> new ProductResponse.ProductListRespDTO.ProductPicDTO(pp))
-                            .collect(Collectors.toList());
+                                    .limit(1)
+                                    .map(pp -> new ProductResponse.ProductListRespDTO.ProductPicDTO(pp))
+                                    .collect(Collectors.toList());
                     productDTO.setProductPics((productPicDTOs));
                     return productDTO;
                 })
@@ -97,7 +97,7 @@ public class ProductService {
     // 상품 수정
     @Transactional
     public ProductResponse.ProductUpdateRespDTO updateProductWithProductPics(Integer id,
-                                                                             ProductUpdateReqDTO productUpdateReqDTO) {
+            ProductUpdateReqDTO productUpdateReqDTO) {
         Product product = productJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
 
@@ -144,11 +144,11 @@ public class ProductService {
                     ProductResponse.ProductSearchRespDTO productDTO = new ProductResponse.ProductSearchRespDTO(p);
                     List<ProductResponse.ProductSearchRespDTO.ProductPicDTO> productPicDTOs = p.getProductPics()
                             .isEmpty()
-                            ? null
-                            : p.getProductPics().stream()
-                            .limit(1)
-                            .map(pp -> new ProductResponse.ProductSearchRespDTO.ProductPicDTO(pp))
-                            .collect(Collectors.toList());
+                                    ? null
+                                    : p.getProductPics().stream()
+                                            .limit(1)
+                                            .map(pp -> new ProductResponse.ProductSearchRespDTO.ProductPicDTO(pp))
+                                            .collect(Collectors.toList());
                     productDTO.setProductPics((productPicDTOs));
                     return productDTO;
                 })
@@ -166,12 +166,7 @@ public class ProductService {
         return new ProductResponse.ProductBookMarkRespDTO(productBookMark);
     }
 
-    // // 상품북마크삭제
-    // @Transactional
-    // public void deleteLikeProducts(Integer productId, Integer id) {
-    // productBookMarkJPARepository.deleteById(id);
-    // }
-
+    // 상품북마크삭제
     @Transactional
     public ProductResponse.DeleteBookmarkRespDTO DeleteBookmarkProducts(Integer id) {
 
