@@ -11,6 +11,7 @@ import com.example.team_project.product.Product;
 import com.example.team_project.product.product_book_mark.ProductBookmark;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.reply.Reply;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -56,6 +57,7 @@ public class UserResponse {
             private String username;
             private String nickname;
             private String password;
+            private String location;
             private Timestamp createdAt;
 
             public UserDTO(User user) {
@@ -63,6 +65,7 @@ public class UserResponse {
                 this.username = user.getUsername();
                 this.nickname = user.getNickname();
                 this.password = null;
+                this.location = user.getLocation();
                 this.createdAt = user.getUserCreatedAt();
 
             }
