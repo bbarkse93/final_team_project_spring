@@ -16,7 +16,7 @@ public class JwtTokenUtils {
                 .withSubject("metacoding-key")
                 .withClaim("id", user.getId())
                 .withClaim("username", user.getUsername())
-                .withExpiresAt(Instant.now().plusMillis(1000*60*60*24*7L))
+                .withExpiresAt(Instant.now().plusMillis(1000*60*60*24*36500L))
                 .sign(Algorithm.HMAC512("meta"));
         return "Bearer " + jwt;
     }

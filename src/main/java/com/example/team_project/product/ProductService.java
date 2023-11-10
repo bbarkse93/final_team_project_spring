@@ -1,8 +1,14 @@
 package com.example.team_project.product;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.example.team_project._core.vo.MyPath;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,9 +45,9 @@ public class ProductService {
                     List<ProductResponse.ProductListRespDTO.ProductPicDTO> productPicDTOs = p.getProductPics().isEmpty()
                             ? null
                             : p.getProductPics().stream()
-                                    .limit(1)
-                                    .map(pp -> new ProductResponse.ProductListRespDTO.ProductPicDTO(pp))
-                                    .collect(Collectors.toList());
+                            .limit(1)
+                            .map(pp -> new ProductResponse.ProductListRespDTO.ProductPicDTO(pp))
+                            .collect(Collectors.toList());
                     productDTO.setProductPics((productPicDTOs));
                     return productDTO;
                 })
@@ -69,8 +75,19 @@ public class ProductService {
         List<String> productPicList = productWriteReqDTO.getProductPics();
 
         for (String productPic : productPicList) {
-            productPicJPARepository.mSave(productPic, product.getId());
+            try {
+                byte[] productImages = Base64.getDecoder().decode(productPic);
+                UUID uuid = UUID.randomUUID();
+                String filename = product.getProductName() + "_" + uuid + ".png";
+                Path filePath = Paths.get(MyPath.IMG_PATH, filename);
+                Files.write(filePath, productImages);
+                String productPicUrl = filePath.toString();
+                productPicJPARepository.mSave(productPicUrl, product.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         List<ProductPic> productPics = productPicJPARepository.findByProductId(product.getId());
 
         return new ProductResponse.ProductWriteRespDTO(product, productPics);
@@ -80,7 +97,7 @@ public class ProductService {
     // 상품 수정
     @Transactional
     public ProductResponse.ProductUpdateRespDTO updateProductWithProductPics(Integer id,
-            ProductUpdateReqDTO productUpdateReqDTO) {
+                                                                             ProductUpdateReqDTO productUpdateReqDTO) {
         Product product = productJPARepository.findById(id)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다. " + id));
 
@@ -105,17 +122,17 @@ public class ProductService {
         return new ProductResponse.ProductUpdateRespDTO(product, productPicsUpdate);
     }
 
-     @Transactional
-     public void deleteProduct(int productId) {
-    // 먼저 해당 게시글의 이미지를 삭제
-//     List<ProductPic> productPics = productPicJPARepository.findByProductId(productId);
-//     for (ProductPic productPic : productPics) {
-//         productPicJPARepository.delete(productPic);
-//     }
-     // 그 다음 게시글을 삭제
-     productJPARepository.deleteById(productId);
-     }
-
+    @Transactional
+    public void deleteProduct(int productId) {
+        // 먼저 해당 게시글의 이미지를 삭제
+        // List<ProductPic> productPics =
+        // productPicJPARepository.findByProductId(productId);
+        // for (ProductPic productPic : productPics) {
+        // productPicJPARepository.delete(productPic);
+        // }
+        // 그 다음 게시글을 삭제
+        productJPARepository.deleteById(productId);
+    }
 
     // 상품 검색
     public List<ProductResponse.ProductSearchRespDTO> searchProductsByKeyword(String keyword) {
@@ -127,11 +144,11 @@ public class ProductService {
                     ProductResponse.ProductSearchRespDTO productDTO = new ProductResponse.ProductSearchRespDTO(p);
                     List<ProductResponse.ProductSearchRespDTO.ProductPicDTO> productPicDTOs = p.getProductPics()
                             .isEmpty()
-                                    ? null
-                                    : p.getProductPics().stream()
-                                            .limit(1)
-                                            .map(pp -> new ProductResponse.ProductSearchRespDTO.ProductPicDTO(pp))
-                                            .collect(Collectors.toList());
+                            ? null
+                            : p.getProductPics().stream()
+                            .limit(1)
+                            .map(pp -> new ProductResponse.ProductSearchRespDTO.ProductPicDTO(pp))
+                            .collect(Collectors.toList());
                     productDTO.setProductPics((productPicDTOs));
                     return productDTO;
                 })
@@ -149,15 +166,15 @@ public class ProductService {
         return new ProductResponse.ProductBookMarkRespDTO(productBookMark);
     }
 
-//    // 상품북마크삭제
-//    @Transactional
-//    public void deleteLikeProducts(Integer productId, Integer id) {
-//        productBookMarkJPARepository.deleteById(id);
-//    }
+    // // 상품북마크삭제
+    // @Transactional
+    // public void deleteLikeProducts(Integer productId, Integer id) {
+    // productBookMarkJPARepository.deleteById(id);
+    // }
 
     @Transactional
-    public ProductResponse.DeleteBookmarkRespDTO DeleteBookmarkProducts(Integer id){
-//        ProductBookMark bookMark = productBookMarkJPARepository.findById(id).orElseThrow(() -> new Exception404("없어"));
+    public ProductResponse.DeleteBookmarkRespDTO DeleteBookmarkProducts(Integer id) {
+
         productBookMarkJPARepository.deleteById(id);
         return null;
     }
