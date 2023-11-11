@@ -1,23 +1,13 @@
 package com.example.team_project.product;
 
-import java.util.List;
+import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.team_project._core.utils.ApiUtils;
-import com.example.team_project.customer.CustomerResponse;
-import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -48,7 +38,7 @@ public class ProductRestController {
     }
 
     // 상품 수정
-    @PostMapping("/products/update/{id}")
+    @PutMapping("/products/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable Integer id,
             @RequestBody ProductUpdateReqDTO productUpdateReqDTO) {
         ProductResponse.ProductUpdateRespDTO responseDTO = productService.updateProductWithProductPics(id,
@@ -80,15 +70,16 @@ public class ProductRestController {
     }
 
     // 상품 북마크 해제
-    // @DeleteMapping("/products/bookmark/{id}")
-    // public ResponseEntity<?> bookmarkDelete(@PathVariable Integer id){
-    // try {
-    // productService.DeleteBookmarkProducts(id);
-    // }catch (Exception e){
-    // e.printStackTrace();
-    // }
-    // return ResponseEntity.ok().body(ApiUtils.success("북마크 해제 완료"));
-    // }
+//    @DeleteMapping("/products/bookmark/{id}")
+//    public ResponseEntity<?> bookmarkDelete(@PathVariable Integer id) {
+//        try {
+//            productService.DeleteBookmarkProducts(id);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return ResponseEntity.ok().body(ApiUtils.success("북마크 해제 완료"));
+//    }
+
     // 북마크삭제
     @DeleteMapping("/products/delete/{id}")
     public ResponseEntity<?> ProductDelete(@PathVariable Integer id) {

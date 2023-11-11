@@ -1,5 +1,17 @@
 package com.example.team_project.product;
 
+import com.example.team_project._core.erroes.exception.Exception404;
+import com.example.team_project._core.vo.MyPath;
+import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
+import com.example.team_project.product.product_book_mark.ProductBookmark;
+import com.example.team_project.product.product_book_mark.ProductBookmarkJPARepository;
+import com.example.team_project.product.product_pic.ProductPic;
+import com.example.team_project.product.product_pic.ProductPicJPARepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -7,22 +19,6 @@ import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import com.example.team_project._core.vo.MyPath;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.example.team_project._core.erroes.exception.Exception404;
-
-import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
-import com.example.team_project.product.product_book_mark.ProductBookmark;
-import com.example.team_project.product.product_book_mark.ProductBookmarkJPARepository;
-import com.example.team_project.product.product_pic.ProductPic;
-import com.example.team_project.product.product_pic.ProductPicJPARepository;
-
-import lombok.RequiredArgsConstructor;
-
-import javax.persistence.EntityManager;
 
 @Transactional
 @RequiredArgsConstructor
@@ -34,7 +30,7 @@ public class ProductService {
     private final ProductBookmarkJPARepository productBookMarkJPARepository;
     private final EntityManager em;
 
-    // 상품 리스트
+    // 상품 목록 보기
     public List<ProductResponse.ProductListRespDTO> findAll() {
         List<Product> dtos = productJPARepository.findAll();
 
