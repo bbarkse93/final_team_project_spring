@@ -3,6 +3,7 @@ package com.example.team_project.product;
 import com.example.team_project._core.utils.ApiUtils;
 import com.example.team_project.product.ProductRequest.ProductUpdateReqDTO;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Session;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +33,9 @@ public class ProductRestController {
 
     // 상품 등록
     @PostMapping("/products/write")
-    public ResponseEntity<?> writeProduct(@RequestBody ProductRequest.ProductWriteReqDTO productWriteReqDTO) {
-        ProductResponse.ProductWriteRespDTO responseDTO = productService.saveProductWithProductPics(productWriteReqDTO);
+    public ResponseEntity<?> writeProduct(@RequestBody ProductRequest.ProductWriteReqDTO productWriteReqDTO, Session sessionUser) {
+        System.out.println("sessionUser = "+ sessionUser);
+        ProductResponse.ProductWriteRespDTO responseDTO = productService.saveProductWithProductPics(productWriteReqDTO, sessionUser);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 

@@ -1,14 +1,5 @@
 package com.example.team_project.user;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.example.team_project._core.erroes.exception.Exception400;
 import com.example.team_project._core.erroes.exception.Exception404;
 import com.example.team_project._core.utils.JwtTokenUtils;
@@ -18,8 +9,14 @@ import com.example.team_project.product.Product;
 import com.example.team_project.product.ProductJPARepository;
 import com.example.team_project.reply.Reply;
 import com.example.team_project.reply.ReplyJPARepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Transactional
 @RequiredArgsConstructor
@@ -31,6 +28,7 @@ public class UserService {
     private final BoardJPARepository boardJPARepository;
     private final ReplyJPARepository replyJPARepository;
     private final ProductJPARepository productJPARepository;
+
 
     // 회원가입
     @Transactional
@@ -46,44 +44,47 @@ public class UserService {
     }
 
     // 로그인
-    public UserResponse.UserLoginRespDTO login(UserRequest.UserLoginReqDTO userLoginReqDTO) {
+    public UserResponse.UserLoginRespDTO login(UserRequest.UserLoginReqDTO userLoginReqDTO, HttpSession session) {
 
-        User user = userJPARepository.findByUsername(userLoginReqDTO.getUsername());
-        if (user == null) {
+        User sessionUser = userJPARepository.findByUsername(userLoginReqDTO.getUsername());
+
+//        User sessionUsers = (User) session.getAttribute("sessionUser");
+
+        System.out.println("jpa에서 받아오는 값"+sessionUser.getUsername());
+        if (sessionUser == null) {
             throw new Exception400("유저네임이 없습니다.");
         }
 
-        if (!user.getPassword().equals(userLoginReqDTO.getPassword())) {
+        if (!sessionUser.getPassword().equals(userLoginReqDTO.getPassword())) {
             throw new Exception400("패스워드가 잘못되었습니다.");
         }
 
-        String jwt = JwtTokenUtils.create(user);
+        session.setAttribute("sessionUser", sessionUser);
+        User session1 = (User) session.getAttribute("sessionUser");
 
-        return new UserResponse.UserLoginRespDTO(jwt, user);
+        System.out.println("session: " + session1.getUsername());
+//        System.out.println("session: " + session.getAttribute(sessionUser.getUsername()));
+//        System.out.println("session: " + session.getAttribute(sessionUser.getPassword()));
+
+
+        String jwt = JwtTokenUtils.create(sessionUser);
+
+        return new UserResponse.UserLoginRespDTO(jwt, sessionUser);
     }
 
     // 회원정보수정
     @Transactional
-    public UserResponse.UserUpdateRespDTO update(UserRequest.UserUpdateReqDTO userUpdateReqDTO, Integer userId) {
-        User user = userJPARepository.findByUsername(userUpdateReqDTO.getUsername()); // 영속화
-        if (user.getUsername() == null) {
+    public UserResponse.UserUpdateRespDTO update(UserRequest.UserUpdateReqDTO userUpdateReqDTO, Integer id) {
+        User user = userJPARepository.findById(id).orElseThrow(() -> new Exception404("찾을 수 없습니다.")); // 영속화
+        if (user.getId() == null) {
             throw new Exception404("사용자를 찾을 수 없습니다.");
         }
-        userJPARepository.mUpdateUser(userId, userUpdateReqDTO.getUsername(),
-                userUpdateReqDTO.getPassword(), userUpdateReqDTO.getNickname());
 
-        // 변경 내용을 데이터베이스에 반영
-        userJPARepository.flush();
+        user.UserUpdate(userUpdateReqDTO.getUserPicUrl(),userUpdateReqDTO.getPassword(),userUpdateReqDTO.getNickname());
 
-        // 강제초기화하기
-        user = userJPARepository.findById(userId).orElseThrow(() -> new Exception400("유저정보가 없습니다."));
-        em.refresh(user);
-
-        System.out.println();
         return new UserResponse.UserUpdateRespDTO(user);
 
     }
-
     // 나의 당근 - 동네생활 내가 쓴글, 댓글
     public UserResponse.MyWriteRespDTO myBoards(int id) {
 
@@ -119,5 +120,12 @@ public class UserService {
     // 나의 당근 - 구매목록
     public void buyproducts(Integer id) {
 
+    }
+
+    public UserResponse.UserDTO findById(Integer id) {
+
+        User user = userJPARepository.findById(id).orElseThrow(() -> new Exception404("user를 찾을 수 없습니다,"));
+
+        return new UserResponse.UserDTO(user);
     }
 }
