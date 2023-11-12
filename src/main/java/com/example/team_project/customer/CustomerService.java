@@ -38,20 +38,13 @@ public class CustomerService {
     // 문의글등록
     public CustomerResponse.CustomerWriteRespDTO save(CustomerRequest.CustomerWriteReqDTO customerWriteReqDTO) {
         Customer responseDTO = customerJPARepository.save(customerWriteReqDTO.toEntity());
-        //User responseUserDTO = customerJPARepository.findByUserId(customerWriteReqDTO.getId());
-        // Customer responseDTO =
-        System.out.println(customerWriteReqDTO.getId());
-        String username = customerJPARepository.findByUserId(responseDTO.getUser().getId());
-        System.out.println(username);
 
-        
+        String username = customerJPARepository.findByUserId(responseDTO.getUser().getId());
+
         User user = new User(responseDTO.getUser().getId(), username);
         Customer customer = new Customer(responseDTO.getId(), responseDTO.getTitle(), responseDTO.getContent(), responseDTO.getCreatedAt(), user);
 
-        System.out.println(user.getUsername());
-        CustomerResponse.CustomerWriteRespDTO dto = new CustomerResponse.CustomerWriteRespDTO(customer);
-        
-        return dto;
+        return new CustomerResponse.CustomerWriteRespDTO(customer);
     }
 
     // 문의글삭제
