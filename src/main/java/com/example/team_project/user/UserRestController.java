@@ -45,8 +45,9 @@ public class UserRestController {
         return ResponseEntity.ok().body(ApiUtils.success(ResponseDTO));
     }
 
-    @PutMapping("/users/update")
+    @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserRequest.UserUpdateReqDTO userUpdateReqDTO,
+            @PathVariable Integer id,
             HttpServletRequest request, Error error) {
         User sessionUser = (User) session.getAttribute("sessionUser");
         System.out.println("session : " + sessionUser.getId());
