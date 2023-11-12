@@ -76,4 +76,9 @@ public class User {
         this.password = password;
         this.nickname = nickname;
     }
+
+    public User(Integer id, String username){
+        this.id = id;
+        this.username = username;
+    }
 }
