@@ -32,7 +32,7 @@ public class CustomerRestController {
     // 문의 등록
     @PostMapping("/customers/write")
     public ResponseEntity<?> CustomerWrite(@RequestBody CustomerRequest.CustomerWriteReqDTO customerWriteReqDTO) {
-        CustomerResponse.CustomerWriteRespDTO responseDTO = customerService.save(customerWriteReqDTO);
+                CustomerResponse.CustomerWriteRespDTO responseDTO = customerService.save(customerWriteReqDTO);
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
