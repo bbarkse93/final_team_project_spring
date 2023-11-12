@@ -53,7 +53,7 @@ public class UserResponse {
         @Getter
         @Setter
         public static class UserDTO {
-            private Integer id;
+            private Integer userId;
             private String username;
             private String nickname;
             private String password;
@@ -61,7 +61,7 @@ public class UserResponse {
             private Timestamp createdAt;
 
             public UserDTO(User user) {
-                this.id = user.getId();
+                this.userId = user.getId();
                 this.username = user.getUsername();
                 this.nickname = user.getNickname();
                 this.password = null;
