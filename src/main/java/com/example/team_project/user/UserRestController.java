@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -39,16 +40,17 @@ public class UserRestController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<?> findUser(@PathVariable Integer id){
+    public ResponseEntity<?> findUser(@PathVariable Integer id) {
         UserResponse.UserDTO ResponseDTO = userService.findById(id);
         return ResponseEntity.ok().body(ApiUtils.success(ResponseDTO));
     }
 
-    // 회원정보 수정
-    @PutMapping("/users/{id}")
+    @PutMapping("/users/update")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserRequest.UserUpdateReqDTO userUpdateReqDTO,
-                                        @PathVariable Integer id, Error error) {
-        UserResponse.UserUpdateRespDTO responseDTO = userService.update(userUpdateReqDTO, id);
+            HttpServletRequest request, Error error) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        System.out.println("session : " + sessionUser.getId());
+        UserResponse.UserUpdateRespDTO responseDTO = userService.update(userUpdateReqDTO, sessionUser.getId());
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 

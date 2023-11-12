@@ -63,8 +63,9 @@ public class UserService {
         User session1 = (User) session.getAttribute("sessionUser");
 
         System.out.println("session: " + session1.getUsername());
-//        System.out.println("session: " + session.getAttribute(sessionUser.getUsername()));
-//        System.out.println("session: " + session.getAttribute(sessionUser.getPassword()));
+        System.out.println("session: " + session1.getId());
+    //    System.out.println("session: " + session.getAttribute(sessionUser.getUsername()));
+    //    System.out.println("session: " + session.getAttribute(sessionUser.getPassword()));
 
 
         String jwt = JwtTokenUtils.create(sessionUser);
@@ -85,6 +86,7 @@ public class UserService {
         return new UserResponse.UserUpdateRespDTO(user);
 
     }
+    
     // 나의 당근 - 동네생활 내가 쓴글, 댓글
     public UserResponse.MyWriteRespDTO myBoards(int id) {
 
@@ -127,5 +129,6 @@ public class UserService {
         User user = userJPARepository.findById(id).orElseThrow(() -> new Exception404("user를 찾을 수 없습니다,"));
 
         return new UserResponse.UserDTO(user);
+
     }
 }
