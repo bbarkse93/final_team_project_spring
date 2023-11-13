@@ -1,94 +1,207 @@
- package com.example.team_project.user;
+package com.example.team_project.user;
 
- import org.springframework.beans.factory.annotation.Autowired;
- import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
- import org.springframework.boot.test.context.SpringBootTest;
- import org.springframework.boot.test.mock.mockito.MockBean;
- import org.springframework.test.web.servlet.MockMvc;
+import com.example.team_project.MyWithRestDoc;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.core.IsNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
- import java.util.List;
 
- @AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
- @SpringBootTest
- public class UserRestControllerTest {
+@AutoConfigureMockMvc //MockMVC띄우기
+@SpringBootTest // 통합테스트 모든것을 메모리에 다 띄워짐
+public class UserRestControllerTest extends MyWithRestDoc {
 
-     @Autowired
-     MockMvc mvc;
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final String TEST_TOKEN = "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtZXRhY29kaW5nLWtleSIsImlkIjoxLCJ1c2VybmFtZSI6InNzYXIiLCJleHAiOjQ4NTM0Njg0NzZ9.SlXcvYRnnwP1IJDtjd0Q0oYz56ohHiYpz5KyJBk5HmsZ-0UnvT16WQt43D0pax4hz1cVH2Gyz9sPq7jqlJH2Xg";
+    private MockHttpSession httpSession;
 
-     @MockBean
-     private UserService userService;
+    @BeforeEach
+    public void setUp() {
+        httpSession = new MockHttpSession();
+        User sessionUser = User.builder().id(1).username("ssar").build();
+        httpSession.setAttribute("sessionUser", sessionUser);
+    }
 
-     // 내가 쓴글, 댓글 조회
-     // 나의 당근 - 동네생활 내가 쓴글, 댓글
-     public List<UserResponse.MyWriteRespDTO> myboards(int id) {
-         // // 글쓴이의 유저아이디가 일치하는 보드들 들고오기
-         // List<Board> boardList = boardJPARepository.findbyUserId(1);
+    private User createMockUser() {
+        return User.builder()
+                .id(1)
+                .username("ssar")
+                .build();
+    }
 
-         // // 내가 쓴글 스트림
-         // List<UserResponse.MyWriteRespDTO.WriteBoardsDTO> responseBoardWriteDTO =
-         // boardList.stream()
-         // .distinct()
-         // .map(b -> {
-         // UserResponse.MyWriteRespDTO.WriteBoardsDTO writeDTO = new
-         // UserResponse.MyWriteRespDTO.WriteBoardsDTO(
-         // b);
-         // List<UserResponse.MyWriteRespDTO.WriteBoardsDTO.BoardPicDTO> boardPicDTO =
-         // b.getBoardPics()
-         // .isEmpty() ? null
-         // : b.getBoardPics().stream()
-         // .limit(1)
-         // .map(bp -> new UserResponse.MyWriteRespDTO.WriteBoardsDTO.BoardPicDTO(bp))
-         // .collect(Collectors.toList());
-         // writeDTO.setBoardPics(boardPicDTO);
+    @Test
+    public void join_test() throws Exception {
+        //given
+        UserRequest.UserJoinReqDTO requsetDTO = new UserRequest.UserJoinReqDTO();
+        requsetDTO.setEmail("ssarr@nate.com");
+        requsetDTO.setPassword("1q2w3e4r!");
+        requsetDTO.setLocation("부전동");
+        requsetDTO.setUsername("ssarr");
 
-         // return writeDTO;
-         // })
-         // .collect(Collectors.toList());
+        //Json으로 바꿔주는애 DTO -> JSON
+        ObjectMapper om = new ObjectMapper();
+        String requestBody = om.writeValueAsString(requsetDTO);
 
-         // // 1. 유저아이디가 일치하는 댓글을 찾기 (보드아이디도 알수있음.)
-         // List<Reply> replyList = replyJPARepository.findbyUserId(1);
+        // when
+        ResultActions resultActions =
+                mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/join")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("성공" + responseBody);
 
-         // List<UserResponse.MyWriteRespDTO.WriteBoardsDTO> responseRDTO =
-         // replyList.stream()
-         // .map(r -> new UserResponse.MyWriteRespDTO.WriteBoardsDTO(r.getBoard()))
-         // .collect(Collectors.toList());
+        // then
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.id").value(4))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.email").value("ssarr@nate.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.password").value(IsNull.nullValue()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.location").value("부전동"))
+                .andDo(MockMvcResultHandlers.print())
+                .andDo(document);
+    }
 
-         // // 글쓴이의 유저아이디가 일치하는 보드들 들고오기
-         // List<Board> boardList = boardJPARepository.findbyUserId(1);
-         // // 유저아이디가 일치하는 댓글을 찾기 (보드아이디도 알수있음.)
-         // List<Reply> replyList = replyJPARepository.findbyUserId(1);
+    @Test
+    public void login_test() throws Exception {
+        //given
+        UserRequest.UserLoginReqDTO requestDTO = new UserRequest.UserLoginReqDTO();
+        requestDTO.setUsername("ssar");
+        requestDTO.setPassword("1q2w3e4r!");
 
-         // // 내가 쓴글 스트림
-         // List<UserResponse.MyWriteRespDTO.WriteBoardsDTO> responseBoardWriteDTO = boardList.stream()
-         //         .distinct()
-         //         .map(b -> {
-         //             UserResponse.MyWriteRespDTO.WriteBoardsDTO writeDTO = new UserResponse.MyWriteRespDTO.WriteBoardsDTO(
-         //                     b);
-         //             List<UserResponse.MyWriteRespDTO.WriteBoardsDTO.BoardPicDTO> boardPicDTO = b.getBoardPics()
-         //                     .isEmpty() ? null
-         //                             : b.getBoardPics().stream()
-         //                                     .limit(1)
-         //                                     .map(bp -> new UserResponse.MyWriteRespDTO.WriteBoardsDTO.BoardPicDTO(bp))
-         //                                     .collect(Collectors.toList());
-         //             writeDTO.setBoardPics(boardPicDTO);
+        //Json으로 바꿔주는애 DTO -> JSON
+        ObjectMapper om = new ObjectMapper();
+        String requestBody = om.writeValueAsString(requestDTO);
 
-         //             return writeDTO;
-         //         })
-         //         .collect(Collectors.toList());
+        //when
+        ResultActions resultActions =
+                mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/login")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("성공" + responseBody);
 
-         // List<UserResponse.MyWriteRespDTO.WriteBoardsDTO> responseRDTO = replyList.stream()
-         //         .map(r -> new UserResponse.MyWriteRespDTO.WriteBoardsDTO(r.getBoard()))
-         //         .collect(Collectors.toList());
+        //then
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.userId").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.username").value("ssar"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("쌀"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.password").value(IsNull.nullValue()))
+                .andDo(MockMvcResultHandlers.print())
+                .andDo(document);
+    }
 
-         // List<UserResponse.MyWriteRespDTO> responseDTO = Stream
-         // .concat(responseBoardWriteDTO.stream(), responseRDTO.stream())
-         // .collect(Collectors.toList());
+    @Test
+    public void findUser_test() throws Exception {
+        //given
+        UserResponse.UserDTO responseDTO = new UserResponse.UserDTO(User.builder().id(1).build());
 
-         // List<UserResponse.MyWriteRespDTO> responseDTO = new
-         // ArrayList<>(responseBoardWriteDTO);
-         // responseDTO.addAll(responseRDTO);
 
-         return null;
-     }
+        //Json으로 바꿔주는애 DTO -> JSON
+        ObjectMapper om = new ObjectMapper();
+        String requestBody = om.writeValueAsString(responseDTO);
 
- }
+        //when
+        ResultActions resultActions =
+                mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/users/1")
+                                .header(AUTHORIZATION_HEADER, TEST_TOKEN)
+                                .session(httpSession)
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("성공" + responseBody);
+
+        //then
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.username").value("ssar"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("쌀"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.userPicUrl").value(".\\images\\default-profile.png"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.location").value("부전동"))
+                .andDo(MockMvcResultHandlers.print())
+                .andDo(document);
+
+    }
+
+    @Test
+    public void updateUser_test() throws Exception {
+        //given
+        UserRequest.UserUpdateReqDTO requestDTO = new UserRequest.UserUpdateReqDTO();
+        requestDTO.setPassword("asdgsdgsgsdf!");
+        requestDTO.setNickname("코스");
+        requestDTO.setUserPicUrl("맛있는쌀.png");
+
+        //Json으로 바꿔주는애 DTO -> JSON
+        ObjectMapper om = new ObjectMapper();
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        //when
+        ResultActions resultActions =
+                mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .put("/users/1")
+                                .session(httpSession)
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("성공" + responseBody);
+
+        //then
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.nickname").value("코스"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.userPicUrl").value("맛있는쌀.png"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.password").value(IsNull.nullValue()))
+                .andDo(MockMvcResultHandlers.print())
+                .andDo(document);
+    }
+
+    @Test
+    public void myBoards_test() throws Exception {
+        //given
+
+
+        //Json으로 바꿔주는애 DTO -> JSON
+
+        //when
+
+        //then
+    }
+
+
+    @Test
+    public void saleproducts_test() throws Exception {
+        //given
+
+        //Json으로 바꿔주는애 DTO -> JSON
+
+        //when
+
+        //then
+
+    }
+}
