@@ -6,8 +6,8 @@ INSERT INTO board_category_tb (`id`, `category`) VALUES (4, '생활정보');
 INSERT INTO board_category_tb (`id`, `category`) VALUES (5, '취미생활');
 
 -- User 정보
-INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (1, 'ssar', '1q2w3e4r!', 'ssar@nate.com', '쌀', 'ssar_profile.png', '부전동', true, NOW());
-INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (2, 'cos', '1q2w3e4r!', 'cos@nate.com', '코스',  'cos_profile.png', '전포동', true, NOW());
+INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (1, 'ssar', '1q2w3e4r!', 'ssar@nate.com', '쌀', '.\images\default-profile.png', '부전동', true, NOW());
+INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (2, 'cos', '1q2w3e4r!', 'cos@nate.com', '코스',  '.\images\default-profile.png', '전포동', true, NOW());
 
 
 -- Product 정보
@@ -32,9 +32,8 @@ INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, 
 INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (4, '아침 지하철', '지옥 그자체', NOW(), 2, 4);
 
 -- Board 사진
-INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (1, '날씨 사진 1', 1);
-INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (2, '날씨 사진 2', 1);
-INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (3, '날씨 사진 3', 1);
+INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (1, '.\images\날씨_0fb15a92-cea9-43e4-9703-7c6f44876214.png', 1);
+INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (2, '.\images\날씨_06756463-7503-4150-828a-698981f1ad92.png', 1);
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (4, '.\images\들꽃_733b3169-1d6d-4d79-a591-02dd326dbcfb.png', 2);
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (5, '.\images\길냥이_6012592b-ee4d-42e5-9724-772a17018415.png', 3);
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (6, '.\images\길냥이_b82132d8-7d0d-4e91-b4aa-6df63fc7009c.png', 3);

@@ -1,16 +1,11 @@
 package com.example.team_project.user;
 
+import com.example.team_project.board.Board;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-
-import com.example.team_project.board.Board;
-import com.example.team_project.board.board_like.BoardLike;
-import com.example.team_project.board.board_pic.BoardPic;
-import com.example.team_project.reply.Reply;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -48,14 +43,14 @@ public class User {
     @CreationTimestamp
     private Timestamp userCreatedAt;
 
-    // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
-    // private List<BoardPic> boardPics = new ArrayList<>();
+     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+     private List<Board> boards = new ArrayList<>();
 
     // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     // private List<Board> boardwrites = new ArrayList<>();
-    
-    // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
-    // private List<Reply> replies = new ArrayList<>();    
+
+//     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//     private List<Reply> replies = new ArrayList<>();
 
     @Builder
     public User(Integer id, String username, String password, String email, String nickname, String userPicUrl,
@@ -71,8 +66,8 @@ public class User {
         this.userCreatedAt = userCreatedAt;
     }
 
-    public void UserUpdate(String username, String password, String nickname) {
-        this.username = username;
+    public void UserUpdate(String userPicUrl, String password, String nickname) {
+        this.userPicUrl = userPicUrl;
         this.password = password;
         this.nickname = nickname;
     }

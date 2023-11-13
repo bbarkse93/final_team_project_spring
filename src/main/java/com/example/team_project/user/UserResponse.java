@@ -1,9 +1,5 @@
 package com.example.team_project.user;
 
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.example.team_project.board.Board;
 import com.example.team_project.board.board_like.BoardLike;
 import com.example.team_project.board.board_pic.BoardPic;
@@ -11,10 +7,12 @@ import com.example.team_project.product.Product;
 import com.example.team_project.product.product_book_mark.ProductBookmark;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.reply.Reply;
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserResponse {
 
@@ -26,6 +24,7 @@ public class UserResponse {
         private String password;
         private String email;
         private String location;
+        private String userPicUrl;
         private Timestamp createdAt;
 
         public UserJoinRespDTO(User user) {
@@ -34,6 +33,7 @@ public class UserResponse {
             this.password = null;
             this.email = user.getEmail();
             this.location = user.getLocation();
+            this.userPicUrl = user.getUserPicUrl();
             this.createdAt = user.getUserCreatedAt();
 
         }
@@ -53,7 +53,7 @@ public class UserResponse {
         @Getter
         @Setter
         public static class UserDTO {
-            private Integer id;
+            private Integer userId;
             private String username;
             private String nickname;
             private String password;
@@ -61,7 +61,7 @@ public class UserResponse {
             private Timestamp createdAt;
 
             public UserDTO(User user) {
-                this.id = user.getId();
+                this.userId = user.getId();
                 this.username = user.getUsername();
                 this.nickname = user.getNickname();
                 this.password = null;
@@ -75,20 +75,42 @@ public class UserResponse {
 
     @Getter
     @Setter
-    public static class UserUpdateRespDTO {
+    public static class UserDTO {
         private Integer id;
         private String username;
         private String nickname;
+        private String userPicUrl;
+        private String location;
+        private Timestamp userCreatedAt;
+
+        public UserDTO(User user) {
+            this.id = user.getId();
+            this.username = user.getUsername();
+            this.nickname = user.getNickname();
+            this.userPicUrl = user.getUserPicUrl();
+            this.location = user.getLocation();
+            this.userCreatedAt = user.getUserCreatedAt();
+        }
+    }
+
+
+    // 회원정보 수정
+    @Getter
+    @Setter
+    public static class UserUpdateRespDTO {
+        private Integer id;
+        private String nickname;
+        private String userPicUrl;
         private String password;
 
         public UserUpdateRespDTO(User user) {
             this.id = user.getId();
-            this.username = user.getUsername();
+            this.userPicUrl = user.getUserPicUrl();
             this.nickname = user.getNickname();
             this.password = null;
         }
-
     }
+
 
     // 동네생활 쓴글,댓글
     @Getter
