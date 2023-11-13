@@ -23,7 +23,7 @@ import com.example.team_project.user.UserService;
 public class CustomerService {
 
     private final CustomerJPARepository customerJPARepository;
-    // private final UserJPARepository userJPARepository; 
+    // private final UserJPARepository userJPARepository;
 
     public List<CustomerResponse.CustomerListRespDTO> findAll() {
 
@@ -36,13 +36,16 @@ public class CustomerService {
     }
 
     // 문의글등록
-    public CustomerResponse.CustomerWriteRespDTO save(CustomerRequest.CustomerWriteReqDTO customerWriteReqDTO) {
+    public CustomerResponse.CustomerWriteRespDTO save(CustomerRequest.CustomerWriteReqDTO customerWriteReqDTO,
+            User sessionUser) {
+        customerWriteReqDTO.setUserId(sessionUser.getId());
         Customer responseDTO = customerJPARepository.save(customerWriteReqDTO.toEntity());
 
         String username = customerJPARepository.findByUserId(responseDTO.getUser().getId());
 
         User user = new User(responseDTO.getUser().getId(), username);
-        Customer customer = new Customer(responseDTO.getId(), responseDTO.getTitle(), responseDTO.getContent(), responseDTO.getCreatedAt(), user);
+        Customer customer = new Customer(responseDTO.getId(), responseDTO.getTitle(), responseDTO.getContent(),
+                responseDTO.getCreatedAt(), user);
 
         return new CustomerResponse.CustomerWriteRespDTO(customer);
     }

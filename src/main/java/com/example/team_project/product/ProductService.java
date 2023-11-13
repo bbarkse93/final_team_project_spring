@@ -77,6 +77,7 @@ public class ProductService {
             ProductRequest.ProductWriteReqDTO productWriteReqDTO, User sessionUser) {
         productWriteReqDTO.setUserId(sessionUser.getId());
         Product sproduct = productJPARepository.save(productWriteReqDTO.toEntity());
+        
         System.out.println("테스트" + sproduct.getUser().getId());
         List<String> productPicList = productWriteReqDTO.getProductPics();
 
