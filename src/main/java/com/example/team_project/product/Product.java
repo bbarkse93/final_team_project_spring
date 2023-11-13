@@ -45,7 +45,9 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProductBookmark> productBookmarks = new ArrayList<>();
 
-
+    public void addUserInfo(User user){
+        this.user = user;
+    }
 
     @Builder
     public Product(Integer id, String productName, String productDescription, Integer productPrice, Timestamp productCreatedAt, User user, List<ProductPic> productPics, List<ProductBookmark> productBookmarks) {
