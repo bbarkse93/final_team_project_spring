@@ -60,7 +60,9 @@ public class UserRestController {
     @GetMapping("users/myboards")
     public ResponseEntity<?> myBoards(Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
+        System.out.println("세션 : " + sessionUser.getId());
         UserResponse.MyWriteRespDTO responseDTO = userService.myBoards(sessionUser.getId());
+
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
