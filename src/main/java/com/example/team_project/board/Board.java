@@ -18,7 +18,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -53,9 +52,14 @@ public class Board {
 
     // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     // private List<Board> boards = new ArrayList<>();
-    
+
+    public void addUserInfo(User user) {
+        this.user = user;
+    }
+
     @Builder
-    public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory, Timestamp boardCreatedAt, List<BoardPic> boardPics, List<Reply> replies, List<BoardLike> boardLikes) {
+    public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory,
+            Timestamp boardCreatedAt, List<BoardPic> boardPics, List<Reply> replies, List<BoardLike> boardLikes) {
         this.id = id;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
