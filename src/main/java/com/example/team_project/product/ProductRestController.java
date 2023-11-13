@@ -34,7 +34,7 @@ public class ProductRestController {
     // 상품 등록
     @PostMapping("/products/write")
     public ResponseEntity<?> writeProduct(@RequestBody ProductRequest.ProductWriteReqDTO productWriteReqDTO, Session sessionUser) {
-        System.out.println("sessionUser = "+ sessionUser);
+        System.out.println("세션 테스트 : sessionUser = "+ sessionUser);
         ProductResponse.ProductWriteRespDTO responseDTO = productService.saveProductWithProductPics(productWriteReqDTO, sessionUser);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
