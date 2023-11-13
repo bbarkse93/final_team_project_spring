@@ -1,16 +1,15 @@
 package com.example.team_project.product;
 
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.example.team_project.product.product_book_mark.ProductBookmark;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.user.User;
-
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
+import org.hibernate.Session;
+
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductResponse {
 
@@ -158,7 +157,7 @@ public class ProductResponse {
         private List<ProductPicDTO> productPics;
         private boolean saleStatus;
 
-        public ProductWriteRespDTO(Product product, List<ProductPic> productPics) {
+        public ProductWriteRespDTO(Product product, List<ProductPic> productPics, Session sessionUser) {
             this.id = product.getId();
             this.productName = product.getProductName();
             this.productDescription = product.getProductDescription();
