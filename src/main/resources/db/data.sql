@@ -6,24 +6,32 @@ INSERT INTO board_category_tb (`id`, `category`) VALUES (4, '생활정보');
 INSERT INTO board_category_tb (`id`, `category`) VALUES (5, '취미생활');
 
 -- User 정보
-<<<<<<< HEAD
 INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (1, 'ssar', '1q2w3e4r!', 'ssar@nate.com', '쌀', 'ssar_profile.png', '부전동', true, NOW());
 INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (2, 'cos', '1q2w3e4r!', 'cos@nate.com', '코스',  'cos_profile.png', '전포동', true, NOW());
 INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (3, 'love', '1q2w3e4r!', 'love@nate.com', 'fjqm',  'lovw_profile.png', '연산동', true, NOW());
-=======
-INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (1, 'ssar', '1q2w3e4r!', 'ssar@nate.com', '쌀', '.\images\default-profile.png', '부전동', true, NOW());
-INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (2, 'cos', '1q2w3e4r!', 'cos@nate.com', '코스',  '.\images\default-profile.png', '전포동', true, NOW());
-
->>>>>>> f7fb2ef7773bbcbaf1ad4dc0c5bfa245020805d0
 
 -- Product 정보
 INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (1, '다이슨 에어랩', '혹시 머리를 길러볼까해서 미리 구매했는데 팔려구요', 350000, NOW(), 1, 'true');
 INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (2, '상품권 팝니다.', '신세계 상품권 10만원권 팝니다', 95000, NOW(), 1, 'false');
 INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (3, '아이폰 15Pro 블루티타늄 256기가', '미개봉입니다.', 1550000, NOW(), 2, 'true');
 INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (4, '냉장고팔아요', '1년사용했어요 이사가면서팝니다.', 2560000, NOW(), 2, 'false');
-INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (5, '속커텐팝니다', '새거에요.', 2560000, NOW(), 2, 'false');
-INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (6, '쇼파 급처분', '1년사용했어요 이사가면서팝니다.', 2560000, NOW(), 2, 'false');
-INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (7, '전자레인지 싸게 가져가실분', '2년사용했어요 이사가면서팝니다.', 2560000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (5, '속커텐팝니다', '새거에요.', 20000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (6, '쇼파 급처분', '1년사용했어요 이사가면서팝니다.', 70000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (7, '전자레인지 싸게 가져가실분', '2년사용했어요 이사가면서팝니다.', 45000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (8, '1인쇼파', '새거에요.', 70000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (9, '러그', '한번사용했는데 깨끗해요.', 20000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (10, '목걸이', '목걸이 선물받았는데 급처분할께요.', 120000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (11, '반지', '사진말고도 여러개 더있어요 채팅주세요.', 50000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (12, '애플워치 팝니다', '케이스도 같이드릴께요.', 220000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (13, '에어팟 2번사용했어요', '거의새거에요.', 300000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (14, '의자 판매', '2개더있어요 채팅주세요 개당 3만원입니다.', 30000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (15, '정수기판매합니다', '사용감있어요.', 150000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (16, '침대', '새거에요.', 200000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (17, '커피머신 판매 폐업해서 싸게 드립니다', '폐업해서 싸게 드립니다.', 1000000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (18, '팔찌', '24k입니다.', 1000000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (19, '화분분양해가실분', '제 아이들이라 생각하고 정성껏키웠습니다문의주세요.', 200000, NOW(), 2, 'false');
+
+
 
 -- Product 사진
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (1, '.\images\드라이기_9b9b9028-7697-453c-917a-398378c0f02b.png', 1);
@@ -37,6 +45,21 @@ INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (8, '.\
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (9, '.\images\속커텐_4f94cbd6-510b-4130-a3ed-6e5028d53905.png', 5);
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (10, '.\images\쇼파_36b3a49f-efeb-4384-acd5-af47747285db.png', 6);
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (11, '.\images\전자레인지_5d7ce9a4-4bc5-4071-bc90-357e02e4577c.png', 7);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (12, '.\images\1인쇼파_d84d7716-d263-43d7-bde2-92485caeb1eb.png', 8);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (13, '.\images\러그_a011b88b-7c77-4cdc-8672-fc0399d10d5c.png', 9);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (14, '.\images\목걸이_45f123c4-3bbb-4b73-9173-09b8dd9a29fb.png', 10);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (15, '.\images\반지_69ab634c-b453-441f-b35a-83e375957c25.png', 11);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (16, '.\images\애플워치_34934d29-08bb-4eb4-9a42-f1c5291fa90c.png', 12);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (17, '.\images\에어팟_c28537fe-b50c-4b74-984a-8f910b5dae38.png', 13);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (18, '.\images\의자_53ff0aa5-13ba-4ea1-a5e2-618f4970b1d6.png', 14);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (19, '.\images\정수기-4a76-408e-9585-00cc53b9888b.png', 15);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (20, '.\images\침대_ca665579-7459-4168-9091-2a4699e0fdb8.png', 16);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (21, '.\images\커피머신_83051462-82a1-40bc-8c27-60ede979fd8f.png', 17);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (22, '.\images\팔찌_72f6312c-cdf2-4b5c-91c5-b67b71a17f6e.png', 18);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (23, '.\images\화분_83eebf52-5a9f-4cd8-8ee6-c66181db41cd.png', 19);
+
+
+
 
 
 
