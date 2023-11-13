@@ -5,6 +5,7 @@ import com.example.team_project._core.config.FilterConfig;
 import com.example.team_project._core.filter.JwtAuthorizationFilter;
 import com.example.team_project.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -24,12 +25,14 @@ import java.util.Arrays;
 @Import(FilterConfig.class)
 @SpringBootTest//통합테스트
 public class BoardControllerTest extends MyWithRestDoc {
-
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final String TEST_TOKEN = "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtZXRhY29kaW5nLWtleSIsImlkIjoxLCJ1c2VybmFtZSI6InNzYXIiLCJleHAiOjQ4NTM0NjE4NTZ9.GJUnp7xc1qwgCffzjdTVeUoayYXdDulBWjCoRxMBJ7a8t4dyTKoAHB3au6_TlZGgigXgSsTzNVIUJy8MnuwCdw";
     @Mock
     private MockHttpSession httpSession;
 
     @BeforeEach
     public void setUp(){
+        httpSession = new MockHttpSession();
         User sessionUser = User.builder().id(1).username("ssar").build();
         httpSession.setAttribute("sessionUser", sessionUser);
     }
@@ -48,14 +51,14 @@ public class BoardControllerTest extends MyWithRestDoc {
         String requestBody = om.writeValueAsString(requestDTO);
         System.out.println("test1 : " + requestBody);
 
-
         ResultActions resultActions =
                 mockMvc.perform(
                         MockMvcRequestBuilders
                                 .post("/boards/write")
+//                                .header(AUTHORIZATION_HEADER, TEST_TOKEN)
+                                .session(httpSession)
                                 .content(requestBody)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .session(httpSession)
                 );
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         String responseError = resultActions.andReturn().getResponse().getErrorMessage();
