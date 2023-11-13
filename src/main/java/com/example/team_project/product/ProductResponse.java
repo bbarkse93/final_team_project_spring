@@ -5,7 +5,7 @@ import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.user.User;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.Session;
+import javax.servlet.http.HttpSession;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -157,7 +157,7 @@ public class ProductResponse {
         private List<ProductPicDTO> productPics;
         private boolean saleStatus;
 
-        public ProductWriteRespDTO(Product product, List<ProductPic> productPics, Session sessionUser) {
+        public ProductWriteRespDTO(Product product, List<ProductPic> productPics, User sessionUser) {
             this.id = product.getId();
             this.productName = product.getProductName();
             this.productDescription = product.getProductDescription();

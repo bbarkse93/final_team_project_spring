@@ -7,6 +7,8 @@ import com.example.team_project.product.product_book_mark.ProductBookmark;
 import com.example.team_project.product.product_book_mark.ProductBookmarkJPARepository;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.product.product_pic.ProductPicJPARepository;
+import com.example.team_project.user.User;
+
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
@@ -69,8 +71,11 @@ public class ProductService {
     // 상품 등록
     @Transactional
     public ProductResponse.ProductWriteRespDTO saveProductWithProductPics(
-            ProductRequest.ProductWriteReqDTO productWriteReqDTO, Session sessionUser) {
+            ProductRequest.ProductWriteReqDTO productWriteReqDTO, User sessionUser) {
+        productWriteReqDTO.setUserId(sessionUser.getId());
+        productWriteReqDTO.
         Product product = productJPARepository.save(productWriteReqDTO.toEntity());
+
         List<String> productPicList = productWriteReqDTO.getProductPics();
 
         for (String productPic : productPicList) {
@@ -86,7 +91,7 @@ public class ProductService {
                 e.printStackTrace();
             }
         }
-        System.out.println(sessionUser);
+        System.out.println("세션 테스트 : " + sessionUser.getId());
 
         List<ProductPic> productPics = productPicJPARepository.findByProductId(product.getId());
 
