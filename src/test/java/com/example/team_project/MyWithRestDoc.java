@@ -2,8 +2,6 @@ package com.example.team_project;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
@@ -18,11 +16,14 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import java.nio.charset.StandardCharsets;
 
 @ExtendWith({ SpringExtension.class, RestDocumentationExtension.class })
+
 public class MyWithRestDoc {
     protected MockMvc mockMvc;
     protected RestDocumentationResultHandler document;
 
+
     @BeforeEach // 테스트 코드 직전에
+
     private void setup(WebApplicationContext webApplicationContext,
                        RestDocumentationContextProvider restDocumentation) {
         this.document = MockMvcRestDocumentation.document("{class-name}/{method-name}",
