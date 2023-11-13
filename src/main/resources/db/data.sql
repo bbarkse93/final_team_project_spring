@@ -68,6 +68,19 @@ INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, 
 INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (2, '꽃이 이쁨', '절 닮은듯', NOW(), 1, 2);
 INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (3, '길냥이 발견', '이리오너라', NOW(), 2, 3);
 INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (4, '아침 지하철', '지옥 그자체', NOW(), 2, 4);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (5, '너무추워요', '요즘날씨너무 추워요 집에만있고싶어요', NOW(), 2, 4);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (6, '김치찌개 맛집', '여기 김치찌개맛집이네여', NOW(), 2, 1);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (7, '눈와요', '눈와서 눈사람만들엇어용', NOW(), 2, 4);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (8, '눈썹반영구어디잘하나요?', '사진처럼하고싶어요 추천해주세요', NOW(), 2, 4);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (9, '붕어빵어디파나요?', '붕세권어딘가요?', NOW(), 2, 1);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (10, '피자맛집추천해주세요', '피자집어디가맛잇나요?', NOW(), 2, 1);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (11, '치킨먹고싶어요', '치킨브랜드추천해주세요', NOW(), 3, 1);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (12, '배드민턴치실분', '모집합니다', NOW(), 2, 5);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (13, '같이산책해요', '저녁에 같이 산책하신분', NOW(), 3, 4);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (14, '파스타잘하죠?', '제가만들었어요 자랑글입니다.', NOW(), 2, 4);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (14, '축구하자', '같이축구하실분', NOW(), 2, 5);
+INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (15, '지금공사하나요?', '지금어디공사하고있나요?', NOW(), 3, 4);
+
 
 -- Board 사진
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (1, '.\images\날씨_0fb15a92-cea9-43e4-9703-7c6f44876214.png', 1);
@@ -76,10 +89,18 @@ INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (4, '.\images
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (5, '.\images\길냥이_6012592b-ee4d-42e5-9724-772a17018415.png', 3);
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (6, '.\images\길냥이_b82132d8-7d0d-4e91-b4aa-6df63fc7009c.png', 3);
 INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (7, '.\images\길냥이_76700472-1c21-4442-9aaf-206757f73a9f.png', 3);
+INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (8, '.\images\김치찌개_277d5b41-ec0a-4ea7-a129-9da7a4e94cec.png', 6);
+INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (9, '.\images\눈사람_2225fcaf-eab4-4026-ab1e-0dc3f265954a.png', 7);
+INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (10, '.\images\눈썹반영구_4f53ea2c-bdb1-46d3-a3c1-c30438c93014.png', 8);
+INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (11, '.\images\붕세권_6364ad08-7ece-415f-be8b-f4873786c833.png', 9);
+INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (12, '.\images\파스타_a6c90e22-eeb8-4510-a8b2-9484873ce8a7.png', 14);
+INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (13, '.\images\배드민턴_47dc0b43-8c07-4aa0-888f-000959dff075.png', 12);
+INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (14, '.\images\산책_7d5a1e5c-439c-4a90-b421-30a8114d510c.png', 13);
+INSERT INTO board_pic_tb (`id`,`board_pic_url`, `board_id`) VALUES (15, '.\images\축구_45a448c9-6c49-4f3e-9579-07c11b3846a8.png', 14);
 
 -- Reply 등록
-INSERT INTO reply_tb (`id`, `comment`, `reply_created_at`, `board_id`, `user_id`) VALUES (1, '댓글 1',NOW(), 1, 2);
-INSERT INTO reply_tb (`id`, `comment`, `reply_created_at`, `board_id`, `user_id`) VALUES (2, '댓글 2',NOW(), 1, 1);
+INSERT INTO reply_tb (`id`, `comment`, `reply_created_at`, `board_id`, `user_id`) VALUES (1, '날씨좋네요!!',NOW(), 1, 2);
+INSERT INTO reply_tb (`id`, `comment`, `reply_created_at`, `board_id`, `user_id`) VALUES (2, '여긴어딘가요?',NOW(), 1, 1);
 
 -- Product 북마크
 INSERT INTO product_bookmark_tb (`id`, `product_id`, `user_id`) VALUES (1, 1, 1);
@@ -101,9 +122,9 @@ INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (3, 2, 1);
 INSERT INTO reply_like_tb (`id`, `reply_id`, `user_id`) VALUES (4, 2, 2);
 
 --customer 문의
-INSERT INTO customer_tb (`id`, `title`, `content`,`user_id`) VALUES (1, '제목1', '내용1', 1);
-INSERT INTO customer_tb (`id`, `title`, `content`,`user_id`) VALUES (2, '제목2', '내용2', 1);
-INSERT INTO customer_tb (`id`, `title`, `content`,`user_id`) VALUES (3, '제목3', '내용3', 2);
+INSERT INTO customer_tb (`id`, `title`, `content`,`user_id`) VALUES (1, '닉네임바꿀수있나요?', '닉네임 어떻게 바꾸나요?', 1);
+INSERT INTO customer_tb (`id`, `title`, `content`,`user_id`) VALUES (2, '화면이 너무 작게나오는거같아요', '잘못설정했는지 화면이 작게나오네요', 1);
+INSERT INTO customer_tb (`id`, `title`, `content`,`user_id`) VALUES (3, '비밀번호를 못찾겠어요', '이메일이 바껴서 비밀번호 못찾앗어요 그래서 다시 가입햇어요 해결해주세요', 2);
 
 
 
