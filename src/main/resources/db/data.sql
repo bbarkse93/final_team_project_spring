@@ -6,15 +6,24 @@ INSERT INTO board_category_tb (`id`, `category`) VALUES (4, '생활정보');
 INSERT INTO board_category_tb (`id`, `category`) VALUES (5, '취미생활');
 
 -- User 정보
+<<<<<<< HEAD
+INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (1, 'ssar', '1q2w3e4r!', 'ssar@nate.com', '쌀', 'ssar_profile.png', '부전동', true, NOW());
+INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (2, 'cos', '1q2w3e4r!', 'cos@nate.com', '코스',  'cos_profile.png', '전포동', true, NOW());
+INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (3, 'love', '1q2w3e4r!', 'love@nate.com', 'fjqm',  'lovw_profile.png', '연산동', true, NOW());
+=======
 INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (1, 'ssar', '1q2w3e4r!', 'ssar@nate.com', '쌀', '.\images\default-profile.png', '부전동', true, NOW());
 INSERT INTO user_tb (`id`,`username`, `password`, `email`, `nickname`, `user_pic_url`, `location`, `distinguish`, `user_created_at`) VALUES (2, 'cos', '1q2w3e4r!', 'cos@nate.com', '코스',  '.\images\default-profile.png', '전포동', true, NOW());
 
+>>>>>>> f7fb2ef7773bbcbaf1ad4dc0c5bfa245020805d0
 
 -- Product 정보
 INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (1, '다이슨 에어랩', '혹시 머리를 길러볼까해서 미리 구매했는데 팔려구요', 350000, NOW(), 1, 'true');
 INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (2, '상품권 팝니다.', '신세계 상품권 10만원권 팝니다', 95000, NOW(), 1, 'false');
 INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (3, '아이폰 15Pro 블루티타늄 256기가', '미개봉입니다.', 1550000, NOW(), 2, 'true');
-INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (4, '그림컴퓨터아카데미 컴퓨터', '몰래 팔아요. 사용감 있어요', 4560000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (4, '냉장고팔아요', '1년사용했어요 이사가면서팝니다.', 2560000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (5, '속커텐팝니다', '새거에요.', 2560000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (6, '쇼파 급처분', '1년사용했어요 이사가면서팝니다.', 2560000, NOW(), 2, 'false');
+INSERT INTO product_tb (`id`,`product_name`, `product_description`, `product_price`, `product_created_at`, `user_id`, `sale_status`) VALUES (7, '전자레인지 싸게 가져가실분', '2년사용했어요 이사가면서팝니다.', 2560000, NOW(), 2, 'false');
 
 -- Product 사진
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (1, '.\images\드라이기_9b9b9028-7697-453c-917a-398378c0f02b.png', 1);
@@ -24,6 +33,12 @@ INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (4, '.\
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (5, '.\images\아이폰15_2491dcfb-7d5f-48ad-a30e-21196a0608d4.png', 3);
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (6, '.\images\아이폰15_a894715a-110e-4c53-9faf-06f490c8772d.png', 3);
 INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (7, '.\images\아이폰15_c05a8fbe-2ab4-48a8-bf0a-1949a26d7f16.png', 3);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (8, '.\images\냉장고_1bcc0b65-afd9-4d33-bf9d-e062f56a48a6.png', 4);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (9, '.\images\속커텐_4f94cbd6-510b-4130-a3ed-6e5028d53905.png', 5);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (10, '.\images\쇼파_36b3a49f-efeb-4384-acd5-af47747285db.png', 6);
+INSERT INTO product_pic_tb (`id`,`product_pic_url`, `product_id`) VALUES (11, '.\images\전자레인지_5d7ce9a4-4bc5-4071-bc90-357e02e4577c.png', 7);
+
+
 
 -- Board 정보
 INSERT INTO board_tb (`id`, `board_title`, `board_content`, `board_created_at`, `user_id`, `board_category_id`) VALUES (1, '날씨가 좋네용', '산책하기 딱인듯', NOW(), 1, 1);
