@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -39,31 +40,37 @@ public class UserRestController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<?> findUser(@PathVariable Integer id){
-        UserResponse.UserDTO ResponseDTO = userService.findById(id);
+    public ResponseEntity<?> findUser(@PathVariable Integer id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        UserResponse.UserDTO ResponseDTO = userService.findById(sessionUser.getId());
         return ResponseEntity.ok().body(ApiUtils.success(ResponseDTO));
     }
 
     // 회원정보 수정
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserRequest.UserUpdateReqDTO userUpdateReqDTO,
-                                        @PathVariable Integer id, Error error) {
-        UserResponse.UserUpdateRespDTO responseDTO = userService.update(userUpdateReqDTO, id);
+            @PathVariable Integer id, Error error) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        UserResponse.UserUpdateRespDTO responseDTO = userService.update(userUpdateReqDTO, sessionUser.getId());
+        session.setAttribute("sessionUser", sessionUser);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
     // 나의 당근 - 동네생활 내가 쓴글, 댓글
     @GetMapping("users/myboards")
     public ResponseEntity<?> myBoards(Integer id) {
-        // 이따 유저정보 가져오는걸로 바꿔야함!
-        UserResponse.MyWriteRespDTO responseDTO = userService.myBoards(1);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        System.out.println("세션 : " + sessionUser.getId());
+        UserResponse.MyWriteRespDTO responseDTO = userService.myBoards(sessionUser.getId());
+
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
     // 나의 당근 - 판매목록
     @GetMapping("users/saleproducts")
     public ResponseEntity<?> saleproducts(Integer id) {
-        UserResponse.MyProductsListRespDTO responseDTO = userService.saleproducts(1);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        UserResponse.MyProductsListRespDTO responseDTO = userService.saleproducts(sessionUser.getId());
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 

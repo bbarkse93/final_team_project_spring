@@ -20,6 +20,9 @@ import com.example.team_project.board.board_like.BoardLike;
 import com.example.team_project.board.board_like.BoardLikeJPARepository;
 import com.example.team_project.board.board_pic.BoardPic;
 import com.example.team_project.board.board_pic.BoardPicJPARepository;
+import com.example.team_project.product.Product;
+import com.example.team_project.user.User;
+import com.example.team_project.user.UserJPARepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +38,7 @@ public class BoardService {
     private final BoardPicJPARepository boardPicJPARepository;
     private final BoardCategoryJPARepository boardCategoryJPARepository;
     private final BoardLikeJPARepository boardLikeJPARepository;
+    private final UserJPARepository userJPARepository;
     private final EntityManager em;
 
     // 동네 생활 전체 보기
@@ -69,25 +73,35 @@ public class BoardService {
 
     // 동네 생활 게시글 등록
     @Transactional
-    public BoardResponse.BoardWriteRespDTO saveBoardWithBoardPics(BoardRequest.BoardWriteReqDTO boardWriteReqDTO) {
-        Board board = boardJPARepository.save(boardWriteReqDTO.toEntity()); // board 등록
+    public BoardResponse.BoardWriteRespDTO saveBoardWithBoardPics(BoardRequest.BoardWriteReqDTO boardWriteReqDTO,
+            User sessionUser) {
+        boardWriteReqDTO.setUserId(sessionUser.getId());
+        Board sboard = boardJPARepository.save(boardWriteReqDTO.toEntity()); // board 등록
 
         List<String> boardPicList = boardWriteReqDTO.getBoardPics();
 
         for (String boardPic : boardPicList) {
             try {
-                byte[] boardImages= Base64.getDecoder().decode(boardPic);
+                byte[] boardImages = Base64.getDecoder().decode(boardPic);
                 UUID uuid = UUID.randomUUID();
-                String filename = board.getBoardTitle() + "_" + uuid + ".png";
+                String filename = sboard.getBoardTitle() + "_" + uuid + ".png";
                 Path filePath = Paths.get(MyPath.IMG_PATH, filename);
                 String boardPicUrl = filePath.toString();
                 Files.write(filePath, boardImages);
-                boardPicJPARepository.mSave(boardPicUrl, board.getId());
-            }catch (Exception e){
+                boardPicJPARepository.mSave(boardPicUrl, sboard.getId());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
+
+        User user = userJPARepository.findById(sboard.getUser().getId())
+                .orElseThrow(() -> new Exception404("유저정보 없음"));
+
+        Board board = boardJPARepository.findById(sboard.getId())
+                .orElseThrow(() -> new Exception404("상품을 찾을 수 없습니다. ID: " + sboard.getId()));
+
+        board.addUserInfo(user);
 
         List<BoardPic> boardPics = boardPicJPARepository.findByBoardId(board.getId());
         BoardCategory boardCategory = boardCategoryJPARepository.findById(board.getBoardCategory().getId())

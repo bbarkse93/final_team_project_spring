@@ -1,6 +1,8 @@
 package com.example.team_project.user;
 
 import com.example.team_project.board.Board;
+import com.example.team_project.product.Product;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +13,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,14 +44,17 @@ public class User {
     @CreationTimestamp
     private Timestamp userCreatedAt;
 
-     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-     private List<Board> boards = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Board> boards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Product> products;
 
     // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     // private List<Board> boardwrites = new ArrayList<>();
 
-//     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//     private List<Reply> replies = new ArrayList<>();
+    // @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    // private List<Reply> replies = new ArrayList<>();
 
     @Builder
     public User(Integer id, String username, String password, String email, String nickname, String userPicUrl,
@@ -72,7 +76,7 @@ public class User {
         this.nickname = nickname;
     }
 
-    public User(Integer id, String username){
+    public User(Integer id, String username) {
         this.id = id;
         this.username = username;
     }

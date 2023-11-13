@@ -1,7 +1,12 @@
 package com.example.team_project.customer;
 
 import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project.user.User;
+
 import lombok.RequiredArgsConstructor;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CustomerRestController {
     private final CustomerService customerService;
+    private final HttpSession session;
 
     // 문의 전체 조회
     @GetMapping("/customers")
@@ -32,7 +38,8 @@ public class CustomerRestController {
     // 문의 등록
     @PostMapping("/customers/write")
     public ResponseEntity<?> CustomerWrite(@RequestBody CustomerRequest.CustomerWriteReqDTO customerWriteReqDTO) {
-        CustomerResponse.CustomerWriteRespDTO responseDTO = customerService.save(customerWriteReqDTO);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        CustomerResponse.CustomerWriteRespDTO responseDTO = customerService.save(customerWriteReqDTO, sessionUser);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 

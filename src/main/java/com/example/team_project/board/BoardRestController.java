@@ -2,6 +2,7 @@ package com.example.team_project.board;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.team_project._core.utils.ApiUtils;
 import com.example.team_project.board.BoardRequest.BoardUpdateReqDTO;
+import com.example.team_project.user.User;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardRestController {
 
     private final BoardService boardService;
+    private final HttpSession session;
 
     // 동네생활 전체보기
     @GetMapping("/boards")
@@ -38,7 +41,8 @@ public class BoardRestController {
     // 동네생활 게시글 등록
     @PostMapping("/boards/write")
     public ResponseEntity<?> writeBoard(@RequestBody BoardRequest.BoardWriteReqDTO boardWriteReqDTO) {
-        BoardResponse.BoardWriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(boardWriteReqDTO);
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        BoardResponse.BoardWriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(boardWriteReqDTO, sessionUser);
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }

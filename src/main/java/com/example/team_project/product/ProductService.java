@@ -7,6 +7,9 @@ import com.example.team_project.product.product_book_mark.ProductBookmark;
 import com.example.team_project.product.product_book_mark.ProductBookmarkJPARepository;
 import com.example.team_project.product.product_pic.ProductPic;
 import com.example.team_project.product.product_pic.ProductPicJPARepository;
+import com.example.team_project.user.User;
+import com.example.team_project.user.UserJPARepository;
+
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -30,6 +34,7 @@ public class ProductService {
     private final ProductJPARepository productJPARepository;
     private final ProductPicJPARepository productPicJPARepository;
     private final ProductBookmarkJPARepository productBookMarkJPARepository;
+    private final UserJPARepository userJPARepository;
     private final EntityManager em;
     private final HttpSession session;
 
@@ -69,25 +74,36 @@ public class ProductService {
     // 상품 등록
     @Transactional
     public ProductResponse.ProductWriteRespDTO saveProductWithProductPics(
-            ProductRequest.ProductWriteReqDTO productWriteReqDTO, Session sessionUser) {
-        Product product = productJPARepository.save(productWriteReqDTO.toEntity());
+            ProductRequest.ProductWriteReqDTO productWriteReqDTO, User sessionUser) {
+        productWriteReqDTO.setUserId(sessionUser.getId());
+        Product sproduct = productJPARepository.save(productWriteReqDTO.toEntity());
+        
+        System.out.println("테스트" + sproduct.getUser().getId());
         List<String> productPicList = productWriteReqDTO.getProductPics();
 
         for (String productPic : productPicList) {
             try {
                 byte[] productImages = Base64.getDecoder().decode(productPic);
                 UUID uuid = UUID.randomUUID();
-                String filename = product.getProductName() + "_" + uuid + ".png";
+                String filename = sproduct.getProductName() + "_" + uuid + ".png";
                 Path filePath = Paths.get(MyPath.IMG_PATH, filename);
                 Files.write(filePath, productImages);
                 String productPicUrl = filePath.toString();
-                productPicJPARepository.mSave(productPicUrl, product.getId());
+                productPicJPARepository.mSave(productPicUrl, sproduct.getId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        System.out.println(sessionUser);
+        System.out.println("세션 테스트 : " + sessionUser.getId());
+        
+        User user = userJPARepository.findById(sproduct.getUser().getId())
+                .orElseThrow(() -> new Exception404("유저정보 없음"));
 
+        Product product = productJPARepository.findById(sproduct.getId())
+                .orElseThrow(() -> new Exception404("상품을 찾을 수 없습니다. ID: " + sproduct.getId()));
+
+        product.addUserInfo(user);
+        
         List<ProductPic> productPics = productPicJPARepository.findByProductId(product.getId());
 
         return new ProductResponse.ProductWriteRespDTO(product, productPics, sessionUser);
