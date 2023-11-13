@@ -41,8 +41,9 @@ public class UserRestController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<?> findUser(@PathVariable Integer id) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        UserResponse.UserDTO ResponseDTO = userService.findById(sessionUser.getId());
+//        User sessionUser = (User) session.getAttribute("sessionUser");
+//        System.out.println("세션의 아이디는?"+sessionUser.getId());
+        UserResponse.UserDTO ResponseDTO = userService.findById(id);
         return ResponseEntity.ok().body(ApiUtils.success(ResponseDTO));
     }
 

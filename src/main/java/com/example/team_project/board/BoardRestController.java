@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.team_project._core.utils.ApiUtils;
@@ -40,11 +42,25 @@ public class BoardRestController {
 
     // 동네생활 게시글 등록
     @PostMapping("/boards/write")
-    public ResponseEntity<?> writeBoard(@RequestBody BoardRequest.BoardWriteReqDTO boardWriteReqDTO) {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        BoardResponse.BoardWriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(boardWriteReqDTO, sessionUser);
+    public ResponseEntity<?> writeBoard(@RequestBody BoardRequest.BoardWriteReqDTO boardWriteReqDTO, Errors errors) {
 
-        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        if (errors.hasErrors()){
+            FieldError fieldError = errors.getFieldErrors().get(0);
+            String key = fieldError.getField();
+            String value = fieldError.getDefaultMessage();
+
+        }
+        System.out.println("1.............`````````````````````````````````````````````````````````````");
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        System.out.println("세션 가져오나? : "+sessionUser.getUsername());
+        BoardResponse.BoardWriteRespDTO responseDTO = boardService.saveBoardWithBoardPics(boardWriteReqDTO, sessionUser);
+        try {
+
+    return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        }catch (Exception e){
+    e.printStackTrace();
+}
+    return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
     // 동네 생활 게시글 수정

@@ -107,13 +107,15 @@ public class ProductResponse {
         @Setter
         public static class UserDTO {
             private Integer userId;
-            private String location;
             private String username;
+            private String nickname;
+            private String location;
             private String userPicUrl;
 
             public UserDTO(User user) {
                 this.userId = user.getId();
                 this.username = user.getUsername();
+                this.nickname = user.getNickname();
                 this.location = user.getLocation();
                 this.userPicUrl = user.getUserPicUrl();
             }

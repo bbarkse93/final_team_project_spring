@@ -15,12 +15,15 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.nio.charset.StandardCharsets;
 
-@ExtendWith({SpringExtension.class, RestDocumentationExtension.class})
+@ExtendWith({ SpringExtension.class, RestDocumentationExtension.class })
+
 public class MyWithRestDoc {
     protected MockMvc mockMvc;
     protected RestDocumentationResultHandler document;
 
-    @BeforeEach
+
+    @BeforeEach // 테스트 코드 직전에
+
     private void setup(WebApplicationContext webApplicationContext,
                        RestDocumentationContextProvider restDocumentation) {
         this.document = MockMvcRestDocumentation.document("{class-name}/{method-name}",
