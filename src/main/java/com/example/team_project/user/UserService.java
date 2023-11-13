@@ -59,10 +59,10 @@ public class UserService {
             throw new Exception400("패스워드가 잘못되었습니다.");
         }
 
-        session.setAttribute("sessionUser", sessionUser);
-        User session1 = (User) session.getAttribute("sessionUser");
+//        session.setAttribute("sessionUser", sessionUser);
+//        User session1 = (User) session.getAttribute("sessionUser");
 
-        System.out.println("session: " + session1.getUsername());
+//        System.out.println("session: " + session1.getUsername());
 //        System.out.println("session: " + session.getAttribute(sessionUser.getUsername()));
 //        System.out.println("session: " + session.getAttribute(sessionUser.getPassword()));
 
