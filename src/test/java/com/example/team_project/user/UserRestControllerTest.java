@@ -182,14 +182,29 @@ public class UserRestControllerTest extends MyWithRestDoc {
 
     @Test
     public void myBoards_test() throws Exception {
-        //given
-
-
-        //Json으로 바꿔주는애 DTO -> JSON
-
-        //when
-
-        //then
+//        // given
+//        List<UserResponse.MyWriteRespDTO> responseDTO = Arrays.asList(new UserResponse.MyWriteRespDTO.WriteBoardsDTO(), new UserResponse.MyWriteRespDTO.WriteBoardsDTO());
+//        // when
+//        ResultActions resultActions = mockMvc.perform(
+//                MockMvcRequestBuilders
+//                        .get("/users/myboards")
+//                        .header(AUTHORIZATION_HEADER, TEST_TOKEN)
+//                        .session(httpSession)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//        );
+//
+//        // then
+//        resultActions
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.response.boardWrites", Matchers.hasSize(2)))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.response.replyWrites", Matchers.hasSize(2)))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.response.boardWrites[0].id").value(1))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.response.boardWrites[0].boardTitle").value("게시물 1"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.response.replyWrites[0].replyId").value(1))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.response.replyWrites[0].replyId").value(2))
+//                .andDo(MockMvcResultHandlers.print())
+//                .andDo(document); // 도큐먼트 생성 등의 작업 추가
     }
 
 

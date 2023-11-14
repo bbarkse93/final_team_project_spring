@@ -1,21 +1,18 @@
 package com.example.team_project.board;
 
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
+import com.example.team_project._core.utils.ApiUtils;
+import com.example.team_project.board.BoardRequest.BoardUpdateReqDTO;
+import com.example.team_project.user.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.team_project._core.utils.ApiUtils;
-import com.example.team_project.board.BoardRequest.BoardUpdateReqDTO;
-import com.example.team_project.user.User;
-
-import lombok.RequiredArgsConstructor;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -64,7 +61,7 @@ public class BoardRestController {
     }
 
     // 동네 생활 게시글 수정
-    @PostMapping("/boards/update/{id}")
+    @PutMapping("/boards/update/{id}")
     public ResponseEntity<?> updateBoard(@PathVariable Integer id, @RequestBody BoardUpdateReqDTO updateReqDTO) {
 
         BoardResponse.BoardUpdateRespDTO responseDTO = boardService.updateBoardWithBoardPics(id, updateReqDTO);
@@ -76,7 +73,7 @@ public class BoardRestController {
     public ResponseEntity<?> deleteBoard(@PathVariable Integer id) {
         try {
             boardService.deleteBoard(id);
-            return ResponseEntity.ok().body(ApiUtils.success("ok"));
+            return ResponseEntity.ok().body(ApiUtils.success("게시글 삭제 완료"));
         } catch (Exception e) {
             return new ResponseEntity<>("게시글 삭제 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }

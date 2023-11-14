@@ -37,6 +37,9 @@ public class Reply {
     @OneToMany(mappedBy = "reply", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ReplyLike> replyLikes = new ArrayList<>();
 
+    public void addUserInfo(User user) {
+        this.user = user;
+    }
     @Builder
     public Reply(Integer id, String comment, Timestamp replyCreatedAt, User user, Board board) {
         this.id = id;

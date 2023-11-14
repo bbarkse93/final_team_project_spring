@@ -50,7 +50,7 @@ public class UserService {
 
 //        User sessionUsers = (User) session.getAttribute("sessionUser");
 
-        System.out.println("jpa에서 받아오는 값"+sessionUser.getUsername());
+        System.out.println("jpa에서 받아오는 값" + sessionUser.getUsername());
         if (sessionUser == null) {
             throw new Exception400("유저네임이 없습니다.");
         }
@@ -59,7 +59,8 @@ public class UserService {
             throw new Exception400("패스워드가 잘못되었습니다.");
         }
 
-//        session.setAttribute("sessionUser", sessionUser);
+        session.setAttribute("sessionUser", sessionUser);
+        System.out.println("로그인 세션 : " + sessionUser.getId());
 //        User session1 = (User) session.getAttribute("sessionUser");
 
 //        System.out.println("session: " + session1.getUsername());
@@ -74,17 +75,19 @@ public class UserService {
 
     // 회원정보수정
     @Transactional
-    public UserResponse.UserUpdateRespDTO update(UserRequest.UserUpdateReqDTO userUpdateReqDTO, Integer id) {
-        User user = userJPARepository.findById(id).orElseThrow(() -> new Exception404("찾을 수 없습니다.")); // 영속화
-        if (user.getId() == null) {
+    public UserResponse.UserUpdateRespDTO update(UserRequest.UserUpdateReqDTO userUpdateReqDTO, User sessionUser) {
+
+        User user = userJPARepository.findById(sessionUser.getId()).orElseThrow(() -> new Exception404("찾을 수 없습니다.")); // 영속화
+        if (sessionUser.getId() == null) {
             throw new Exception404("사용자를 찾을 수 없습니다.");
         }
 
-        user.UserUpdate(userUpdateReqDTO.getUserPicUrl(),userUpdateReqDTO.getPassword(),userUpdateReqDTO.getNickname());
+        user.UserUpdate(userUpdateReqDTO.getUserPicUrl(), userUpdateReqDTO.getPassword(), userUpdateReqDTO.getNickname());
 
         return new UserResponse.UserUpdateRespDTO(user);
 
     }
+
     // 나의 당근 - 동네생활 내가 쓴글, 댓글
     public UserResponse.MyWriteRespDTO myBoards(int id) {
 
