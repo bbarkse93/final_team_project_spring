@@ -16,20 +16,26 @@
   - **Backend**
     ![js](https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
    ![js](https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+ ![js](https://img.shields.io/badge/postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
  
   - **Frontend**
  ![js](https://img.shields.io/badge/flutter-F7DF1E?style=for-the-badge&logo=flutter&logoColor=white)
    ![js](https://img.shields.io/badge/dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
- ![js](https://img.shields.io/badge/firestore-C8332D?style=for-the-badge&logo=fireship&logoColor=white)
+
 
 
 
  - **협업도구**
    ![js](https://img.shields.io/badge/git-FC6D26?style=for-the-badge&logo=git&logoColor=white)
 ![js](https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white)
+![js](https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
+![js](https://img.shields.io/badge/notion-181717?style=for-the-badge&logo=notion&logoColor=white)
 
  - **데이터베이스**
 ![js](https://img.shields.io/badge/H2-685EA9?style=for-the-badge&logo=hugo&logoColor=white)
+![js](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+ ![js](https://img.shields.io/badge/firestore-C8332D?style=for-the-badge&logo=fireship&logoColor=white)
+
 
 # ✍기능설명(기능 영상 포함)
 당근마켓을 선택한이유? 
