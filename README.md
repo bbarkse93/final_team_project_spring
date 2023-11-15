@@ -66,9 +66,8 @@ https://github.com/bbarkse93/final_team_project_spring/assets/135561378/69e91098
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 ```
 
-# ✍기능설명
+# ✍당근마켓을 선택한이유?
 
-당근마켓을 선택한이유?
 </hr>
 클론코딩 프로젝트를 시작한 이유는 전문적인 기획자와 디자이너가 없어서였습니다. <br/>UI 완성도를 향상시키기 위해 기존에 완성된 당근마켓을 선택했습니다. <br/>특히 GPS와 채팅 기능을 구현해보고 싶었는데,그러기 위해서는 채팅, 지도, 그리고 GPS와 같은 다양한 API를 활용해야 했습니다. <br/> 
 당근마켓 어플은 다양한 API를 활용할 수 있는 기회라 생각했고, <br/>이를 통해 프로젝트를 더 다양하고 실제적으로 발전시킬 수 있을 것으로 생각해서 이를 선택하게 되었습니다.
@@ -81,6 +80,11 @@ https://github.com/bbarkse93/final_team_project_spring/assets/135561378/69e91098
 
 NOTION을활용한 일정정리
 [노션을 활용한 일정관리](https://paper-danthus-c42.notion.site/f473120179164f3a98cfe8353d668450?v=1266b3496a8142b898bdf4cb8f3311ce&pvs=4, "노션을 활용한 일정관리")
+
+# 아키텍쳐
+* RESTful
+* 리소스를 URI로 식별, HTTP 메소드를 통해 리소스를 조작
+* JSON으로 표현
 
 # DB, 인증/권한 검사
 
