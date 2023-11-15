@@ -12,7 +12,7 @@
 * **이정완**
 * **최봉준**
 
-# 📌시연영상
+# 📌시연영상 
 
 ## 🥕당근마켓기능화면영상
 
@@ -23,7 +23,7 @@ https://github.com/bbarkse93/final_team_project_spring/assets/135561378/dbe6f0c6
 https://github.com/bbarkse93/final_team_project_spring/assets/135561378/69e91098-8564-44b4-b707-cf995284b035
 
 # ⚒️기술스택
-
+r
 - **Backend**
   ![js](https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
   ![js](https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
