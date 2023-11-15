@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -27,7 +26,7 @@ public class UserRestController {
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.UserLoginReqDTO userLoginReqDTO, Errors errors) {
 
         UserResponse.UserLoginRespDTO responseDTO = userService.login(userLoginReqDTO, session);
-
+//        System.out.println("로그인 : " + sessionUser.getId());
         return ResponseEntity.ok().header("Authorization", responseDTO.getJwt())
                 .body(ApiUtils.success(responseDTO.getUser()));
 
@@ -49,9 +48,10 @@ public class UserRestController {
     // 회원정보 수정
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserRequest.UserUpdateReqDTO userUpdateReqDTO,
-            @PathVariable Integer id, Error error) {
+                                        @PathVariable Integer id, Error error) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        UserResponse.UserUpdateRespDTO responseDTO = userService.update(userUpdateReqDTO, sessionUser.getId());
+        System.out.println("세션 테스트세트스테스트1243 : " + sessionUser.getId());
+        UserResponse.UserUpdateRespDTO responseDTO = userService.update(userUpdateReqDTO, sessionUser);
         session.setAttribute("sessionUser", sessionUser);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
@@ -60,7 +60,7 @@ public class UserRestController {
     @GetMapping("users/myboards")
     public ResponseEntity<?> myBoards(Integer id) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        System.out.println("세션 : " + sessionUser.getId());
+        System.out.println("세션 테스트세트스테스트 : " + sessionUser.getId());
         UserResponse.MyWriteRespDTO responseDTO = userService.myBoards(sessionUser.getId());
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));

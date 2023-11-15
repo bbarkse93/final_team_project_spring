@@ -9,11 +9,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-
 import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +39,13 @@ public class Board {
     @CreationTimestamp
     private Timestamp boardCreatedAt;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BoardPic> boardPics = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BoardLike> boardLikes = new ArrayList<>();
 
     // @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
@@ -59,7 +57,7 @@ public class Board {
 
     @Builder
     public Board(Integer id, String boardTitle, String boardContent, User user, BoardCategory boardCategory,
-            Timestamp boardCreatedAt, List<BoardPic> boardPics, List<Reply> replies, List<BoardLike> boardLikes) {
+                 Timestamp boardCreatedAt, List<BoardPic> boardPics, List<Reply> replies, List<BoardLike> boardLikes) {
         this.id = id;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;

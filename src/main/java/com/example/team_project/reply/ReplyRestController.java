@@ -1,15 +1,10 @@
 package com.example.team_project.reply;
 
 import com.example.team_project._core.utils.ApiUtils;
-import com.example.team_project.product.ProductResponse;
 import com.example.team_project.user.User;
-
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,7 +24,7 @@ public class ReplyRestController {
     }
 
     // 댓글 수정
-    @PostMapping("/replies/update/{id}")
+    @PutMapping("/replies/update/{id}")
     public ResponseEntity<?> updateReply(@PathVariable Integer id,
             @RequestBody ReplyRequest.ReplyUpdateReqDTO replyUpdateReqDTO) {
         ReplyResponse.ReplyUpdateRespDTO responseDTO = replyService.update(id, replyUpdateReqDTO);
