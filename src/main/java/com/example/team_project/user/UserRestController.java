@@ -2,6 +2,7 @@ package com.example.team_project.user;
 
 import com.example.team_project._core.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {
+
 
     private final UserService userService;
     private final HttpSession session;

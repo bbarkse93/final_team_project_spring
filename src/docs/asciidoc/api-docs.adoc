@@ -16,3 +16,4 @@ include::{snippets}/{user}/join_test/http-request.adoc[]
 
 ===== Response Example
 include::{snippets}/{user}/join_test/http-response.adoc[]
+

@@ -13,11 +13,6 @@ spring:
   h2:
     console:
       enabled: true
-
-
-
-
-
   sql:
     init:
       encoding: utf-8
@@ -36,14 +31,6 @@ spring:
   output:
     ansi:
       enabled: always
-
-logging:
-  level:
-    "[com.example]": ERROR
-    "[org.hibernate.type]": TRACE
-
-file:
-  path: ./images/
-jackson:
+  jackson:
    serialization:
      FAIL_ON_EMPTY_BEANS: false

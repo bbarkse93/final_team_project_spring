@@ -82,6 +82,5 @@ public class BoardControllerTest extends MyWithRestDoc {
 //                .andDo(MockMvcResultHandlers.print())
 //                .andDo(document);
 
-
     }
 }
